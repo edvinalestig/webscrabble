@@ -15,4 +15,4 @@ Spelare 1 går in på \<adress>/p1 och spelare 2 går in på \<adress>/p2 i sin 
 
 Spelet har en main class som har massa methods som styr spelet. Spelarna har varsin class för att hålla reda på deras speldata (poäng, ev. namn, m.m.).
 
-En modul (eller vad det nu kallas i ruby) sköter all kommunikation med OED:s API.
+En class sköter orden och kollar om de finns. Ändras ev. till OED:s API i senare versioner.
