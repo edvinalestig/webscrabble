@@ -32,7 +32,8 @@ class Letters
             W:4,
             X:8,
             Y:4,
-            Z:10
+            Z:10,
+            BLANK:0
         }
     end
 
