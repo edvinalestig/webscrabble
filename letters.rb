@@ -55,7 +55,7 @@ class Letters
                 bag << "H"
                 bag << "M"
                 bag << "Y"
-                bag << "BLANK"
+                bag << Blank.new
                 bag << "P"
             end
 
@@ -112,6 +112,22 @@ class Letters
     # Get the remaining number of letters in the bag
     def length()
         return @letter_bag.length
+    end
+
+end
+
+
+class Blank 
+    def initialize
+        @letter = nil
+    end
+
+    def letter=(letter)
+        @letter = letter
+    end
+
+    def letter
+        return @letter
     end
 
 end
