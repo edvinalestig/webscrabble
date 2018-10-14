@@ -1,11 +1,24 @@
 class Board
     def initialize()
         @tiles = []
-        (0..14).each do |i|
-            (0..14).each do |j|
-                @tiles << Tile.new(i, j)
+        # Create a 15*15 board in a 2D array
+
+        (0..14).each do |row|
+            column = []
+
+            (0..14).each do |col|
+                column << Tile.new(row, col)
             end
+            @tiles << column
         end
+
+        # Define the centre tile
+        @tiles[7][7].attribute = "centre"
+    end
+
+    # Add a letter to a tile
+    def update_tile(row, col, letter)
+        @tiles[row][col].letter = letter
     end
 end
 
@@ -52,3 +65,5 @@ class Tile
 end
 
 b = Board.new
+b.update_tile(5, 2, "C")
+p b
