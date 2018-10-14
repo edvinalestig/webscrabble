@@ -39,56 +39,46 @@ class Letters
 
 
     def add_letters_to_bag()
-        # I know it's awful, please fix it
         # Loops 12 times and adds the correct number of all letters to the bag
 
         bag = ["Z", "X", "J", "K", "Q"] # Letters which only appear once
         
-        i = 0
-        while i < 12
-            if i < 2 # Letters which appear twice
-                bag << "V"
-                bag << "W"
-                bag << "B"
-                bag << "C"
-                bag << "F"
-                bag << "H"
-                bag << "M"
-                bag << "Y"
-                bag << Blank.new
-                bag << "P"
-            end
-
-            if i < 3
-                bag << "G"
-            end
-
-            if i < 4
-                bag << "D"
-                bag << "L"
-                bag << "S"
-                bag << "U"
-            end
-
-            if i < 6
-                bag << "N"
-                bag << "R"
-                bag << "T"
-            end
-
-            if i < 8
-                bag << "O"
-            end
-
-            if i < 9
-                bag << "A"
-                bag << "I"
-            end
-
-            bag << "E" # Add 12 of the letter E
-
-            i += 1
+        2.times do 
+            bag << "V"
+            bag << "W"
+            bag << "B"
+            bag << "C"
+            bag << "F"
+            bag << "H"
+            bag << "M"
+            bag << "Y"
+            bag << Blank.new
+            bag << "P"
         end
+
+        3.times do bag << "G" end
+
+        4.times do
+            bag << "D"
+            bag << "L"
+            bag << "S"
+            bag << "U"
+        end
+
+        6.times do
+            bag << "N"
+            bag << "R"
+            bag << "T"
+        end
+        
+        8.times do bag << "O" end        
+
+        9.times do
+            bag << "A"
+            bag << "I"
+        end
+
+        12.times do bag << "E" end
 
         return bag
     end
