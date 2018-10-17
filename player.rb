@@ -1,7 +1,8 @@
 class Player
     def initialize()
-        @rack = []
+        @rack = [] # The player's current letters
         @points = 0
+        @my_turn = false
     end
 
     def points
@@ -28,5 +29,13 @@ class Player
                 @rack << letter
             end
         end
+    end
+
+    def my_turn?
+        return @my_turn
+    end
+
+    def my_turn=(t)
+        @my_turn = t
     end
 end
