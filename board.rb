@@ -20,6 +20,25 @@ class Board
     def update_tile(row, col, letter)
         @tiles[row][col].letter = letter
     end
+
+
+    def json()
+        dict = {
+            tiles: []
+        }
+
+        @tiles.each do |row|
+            arr = []
+            row.each do |tile|
+                arr << tile.dictionary()
+            end
+            dict[:tiles] << arr
+        end 
+
+        require('json') # Move later
+
+        return dict.to_json
+    end
 end
 
 
@@ -62,8 +81,21 @@ class Tile
         return "Tile on position #{@row}, #{@col} with the attribute #{@attribute}. The current letter is #{@letter}"
     end
 
+
+    def dictionary()
+        tile = {
+            attribute: @attribute,
+            row: @row,
+            column: @col,
+            letter: @letter
+        }
+        return tile
+    end
+
 end
 
 b = Board.new
 b.update_tile(5, 2, "C")
-p b
+p b.json()
+
+File.write("board.json", b.json())
