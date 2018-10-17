@@ -1,5 +1,9 @@
-require_relative("words.rb")
+require_relative("player.rb")
 
-w = Words.new
+pl = Player.new
 
-p w.check_word("lol")
+p pl.rack
+
+pl.add_to_rack(["l", "h"], "j", "7")
+
+p pl.rack
