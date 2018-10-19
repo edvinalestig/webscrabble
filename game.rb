@@ -7,22 +7,22 @@ class Game
     def initialize(number_of_players)
 
         if number_of_players > 4
-            raise "The maximum amount of players is 4."
+            raise ArgumentError, "The maximum amount of players is 4."
         end
         if number_of_players < 2
-            raise "The minimum amount of players is 2."
+            raise ArgumentError, "The minimum amount of players is 2."
         end
 
         # Create all the necessary classes
         @board = Board.new
-        @letters = Letters.new
+        @letter_bag = Letters.new
         @words = Words.new
 
         # Create the players
         @players = []
         number_of_players.times do
             player = Player.new
-            player.add_to_rack(@letters.draw(7))
+            player.add_to_rack(@letter_bag.draw(7))
 
             @players << player
         end
@@ -32,8 +32,6 @@ class Game
         # Game variables
         @round = 0
 
-        
-        
     end
 
 end

@@ -108,16 +108,11 @@ end
 
 
 class Blank 
+
+    attr_accessor :letter
+
     def initialize
         @letter = nil
-    end
-
-    def letter=(letter)
-        @letter = letter
-    end
-
-    def letter
-        return @letter
     end
 
 end

@@ -43,6 +43,9 @@ end
 
 
 class Tile
+
+    attr_accessor :letter, :attribute
+
     # row & col decide position on the board
     # attribute tells if it's a special tile such as triple word och the centre tile
     # Available attributes are:
@@ -54,26 +57,6 @@ class Tile
         @row = row
         @col = col
         @letter = nil
-    end
-
-
-    def letter
-        return @letter
-    end
-
-
-    def letter=(letter)
-        @letter = letter
-    end
-
-
-    def attribute
-        return @attribute
-    end
-
-
-    def attribute=(attribute)
-        @attribute = attribute
     end
 
 
@@ -94,8 +77,8 @@ class Tile
 
 end
 
-b = Board.new
-b.update_tile(5, 2, "C")
-p b.json()
+# b = Board.new
+# b.update_tile(5, 2, "C")
+# p b.json()
 
-File.write("board.json", b.json())
+# File.write("board.json", b.json())
