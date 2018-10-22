@@ -1,0 +1,37 @@
+{
+    "game": {
+        "board": {
+            "tiles": [
+                {
+                    "attribute": null,
+                    "column": 6,
+                    "row": 4,
+                    "letter": "F"
+                }
+            ],
+            "latestUpdatedTiles": [
+                {
+                    "row": 4,
+                    "column": 9
+                }
+            ]
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "points": 64,
+                "isYou": false
+            }
+        ],
+        "you": {
+            "rack": [
+                "H",
+                "J"
+            ]
+        },
+        "currentTurn": 0,
+        "roundNumber": 6,
+        "lettersLeft": 74
+    },
+    "roomName": "Room 1"
+}
