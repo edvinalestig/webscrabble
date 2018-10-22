@@ -115,9 +115,17 @@ class Game
     def findWords(tiles)
         p "Finding words"
         found_words = []
+
+        board_copy = @board.tiles.dup
+        tiles.each do |tile|
+            r = tile[:row]
+            c = tile[:col]
+
+            board_copy[r][c].letter = tile[:letter]
+        end
         
         # BUGS:
-        # It only checks letters already on the board, not the new ones.
+        # It finds the same words more than once.
 
         # Horizontal words
         tiles.each do |tile|
@@ -127,15 +135,15 @@ class Game
             
             # Check to the left
             k = 1
-            while @board.tiles[row][col - k].letter != nil
-                word.unshift(@board.tiles[row][col - k].letter)
+            while board_copy[row][col - k].letter != nil
+                word.unshift(board_copy[row][col - k].letter)
                 k += 1
             end
 
             # Check to the right
             k = 1
-            while @board.tiles[row][col + k].letter != nil
-                word.push(@board.tiles[row][col + k].letter)
+            while board_copy[row][col + k].letter != nil
+                word.push(board_copy[row][col + k].letter)
                 k += 1
             end
 
@@ -158,15 +166,15 @@ class Game
             
             # Check above
             k = 1
-            while @board.tiles[row - k][col].letter != nil
-                word.unshift(@board.tiles[row - k][col].letter)
+            while board_copy[row - k][col].letter != nil
+                word.unshift(board_copy[row - k][col].letter)
                 k += 1
             end
 
             # Check under
             k = 1
-            while @board.tiles[row + k][col].letter != nil
-                word.push(@board.tiles[row + k][col].letter)
+            while board_copy[row + k][col].letter != nil
+                word.push(board_copy[row + k][col].letter)
                 k += 1
             end
 
