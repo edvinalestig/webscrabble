@@ -1,5 +1,3 @@
-require('json')
-
 class Board
     def initialize()
         @tiles = []
@@ -37,7 +35,7 @@ class Board
             dict[:tiles] << arr
         end 
 
-        return dict.to_json
+        return dict
     end
 end
 
