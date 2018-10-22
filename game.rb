@@ -40,6 +40,19 @@ class Game
     end
 
 
+    def check_placement(tiles)
+        tiles.each do |tile|
+            r = tile[:row]
+            c = tile[:col]
+
+            if @board.tiles[r][c].letter != nil
+                return false
+            end
+        end
+
+        return true
+    end
+
     # Input should be an array of letters with their positions
     # letters = [
     #               {
@@ -49,10 +62,17 @@ class Game
     #               }
     #           ]
     def add_new_letters(letters)
+
+        if !check_placement(letters)
+            # Not a valid turn, return to client
+            puts "INVALID! TILES ALREADY ASSIGNED"
+        end
+        
         invalid_words = []
         
         # Find all new words
-        new_words = []
+        new_words = findWords(letters)
+        p new_words
 
         #Check if they are valid
         new_words.each do |word|
@@ -63,6 +83,7 @@ class Game
 
         if invalid_words.length > 0
             # Not a valid turn, return to the client
+            p "INVALID! #{invalid_words} are not valid words."
         else
             # Update the tiles and calculate the points
             lut = []
@@ -84,15 +105,88 @@ class Game
             end
 
             # Add the points to the player
-            @players[current_turn] += points
+            @players[@current_turn].points += points
 
             end_turn()
         end
     end
 
 
+    def findWords(tiles)
+        p "Finding words"
+        found_words = []
+        
+        # BUGS:
+        # It only checks letters already on the board, not the new ones.
+
+        # Horizontal words
+        tiles.each do |tile|
+            row = tile[:row]
+            col = tile[:col]
+            word = [tile[:letter]]
+            
+            # Check to the left
+            k = 1
+            while @board.tiles[row][col - k].letter != nil
+                word.unshift(@board.tiles[row][col - k].letter)
+                k += 1
+            end
+
+            # Check to the right
+            k = 1
+            while @board.tiles[row][col + k].letter != nil
+                word.push(@board.tiles[row][col + k].letter)
+                k += 1
+            end
+
+            # p word
+            if word.length > 1
+                s = ""
+                word.each do |char|
+                    s += char
+                end
+
+                found_words << s
+            end
+        end
+
+        # Vertical words
+        tiles.each do |tile|
+            row = tile[:row]
+            col = tile[:col]
+            word = [tile[:letter]]
+            
+            # Check above
+            k = 1
+            while @board.tiles[row - k][col].letter != nil
+                word.unshift(@board.tiles[row - k][col].letter)
+                k += 1
+            end
+
+            # Check under
+            k = 1
+            while @board.tiles[row + k][col].letter != nil
+                word.push(@board.tiles[row + k][col].letter)
+                k += 1
+            end
+
+            # p word
+            if word.length > 1
+                s = ""
+                word.each do |char|
+                    s += char
+                end
+
+                found_words << s
+            end
+        end
+
+        return found_words
+    end
+
+
     def calculate_points(word)
-        # Not working with blanks
+        # Does not work with blanks
         
         points = 0
         word.each_char do |letter|

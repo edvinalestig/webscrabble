@@ -692,31 +692,31 @@
                     "attribute": "centre",
                     "row": 7,
                     "column": 7,
-                    "letter": null
+                    "letter": "F"
                 },
                 {
                     "attribute": null,
                     "row": 7,
                     "column": 8,
-                    "letter": null
+                    "letter": "O"
                 },
                 {
                     "attribute": null,
                     "row": 7,
                     "column": 9,
-                    "letter": null
+                    "letter": "R"
                 },
                 {
                     "attribute": null,
                     "row": 7,
                     "column": 10,
-                    "letter": null
+                    "letter": "T"
                 },
                 {
                     "attribute": null,
                     "row": 7,
                     "column": 11,
-                    "letter": null
+                    "letter": "S"
                 },
                 {
                     "attribute": null,
@@ -784,13 +784,13 @@
                     "attribute": null,
                     "row": 8,
                     "column": 7,
-                    "letter": null
+                    "letter": "O"
                 },
                 {
                     "attribute": null,
                     "row": 8,
                     "column": 8,
-                    "letter": null
+                    "letter": "F"
                 },
                 {
                     "attribute": null,
@@ -1382,32 +1382,41 @@
                 }
             ]
         ],
-        "latestUpdatedTiles": []
+        "latestUpdatedTiles": [
+            {
+                "row": 7,
+                "column": 10
+            },
+            {
+                "row": 7,
+                "column": 11
+            }
+        ]
     },
     "players": [
         {
             "name": "Player 1",
-            "points": 0,
+            "points": 7,
             "isYou": true
         },
         {
             "name": "Player 2",
-            "points": 0,
+            "points": 10,
             "isYou": false
         }
     ],
     "you": {
         "rack": [
-            "E",
-            "T",
-            "D",
-            "Y",
             "S",
+            "N",
+            "R",
             "I",
-            "E"
+            "R",
+            "W",
+            "O"
         ]
     },
-    "currentTurn": 0,
-    "roundNumber": 1,
+    "currentTurn": 1,
+    "roundNumber": 2,
     "lettersLeft": 86
 }

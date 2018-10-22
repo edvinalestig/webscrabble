@@ -1,4 +1,7 @@
 class Board
+
+    attr_reader :tiles
+
     def initialize()
         @tiles = []
         # Create a 15*15 board in a 2D array
