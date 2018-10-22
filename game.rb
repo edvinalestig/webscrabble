@@ -65,11 +65,18 @@ class Game
             # Not a valid turn, return to the client
         else
             # Update the tiles and calculate the points
-            @latest_updated_tiles = letters
+            lut = []
 
             letters.each do |letter|
                 @board.update_tile(letter[:row], letter[:col], letter[:letter])
+
+                lut << {
+                    row: letter[:row],
+                    column: letter[:col]
+                }
             end
+
+            @latest_updated_tiles = lut
 
             points = 0
             new_words.each do |word|
@@ -115,6 +122,38 @@ class Game
         end
 
         # Send new info to the clients
+    end
+
+
+    def dictify(playerNumber)
+        # Add all the relevant data to a dictionary following the set json format
+        # playerNumber makes the dict player-specific
+
+        # Add the player data to an array of dicts
+        players = []
+        @players.each_with_index do |player, index|
+            dict = {
+                name: "Player #{index+1}",
+                points: player.points,
+                isYou: index == playerNumber
+            }
+            players << dict
+        end
+        
+
+        dict = {
+            board: @board.json(),
+            players: players,
+            you: {
+                rack: @players[playerNumber].rack
+            },
+            currentTurn: @current_turn,
+            roundNumber: @round,
+            lettersLeft: @letter_bag.length
+        }
+        dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
+
+        return dict
     end
 
 end
