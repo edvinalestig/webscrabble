@@ -30,14 +30,24 @@ class Game
         end
         # Set the turn to be the first player's
         @players[0].my_turn = true
-        @current_turn = 0
+        
 
         # Game variables
-        @round = 0
+        @current_turn = 0
+        @round = 1
+        @latest_updated_tiles = []
 
     end
 
 
+    # Input should be an array of letters with their positions
+    # letters = [
+    #               {
+    #                 letter: f,
+    #                 row: 7,
+    #                 col: 4
+    #               }
+    #           ]
     def add_new_letters(letters)
         invalid_words = []
         
@@ -54,16 +64,22 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
         else
-            # Add the tiles and calculate the points
+            # Update the tiles and calculate the points
+            @latest_updated_tiles = letters
 
+            letters.each do |letter|
+                @board.update_tile(letter[:row], letter[:col], letter[:letter])
+            end
 
             points = 0
             new_words.each do |word|
                 points += calculate_points(word)
             end
+
             # Add the points to the player
             @players[current_turn] += points
 
+            end_turn()
         end
     end
 
@@ -77,6 +93,28 @@ class Game
         end
 
         return points
+    end
+
+
+    def end_turn()
+        @players[@current_turn].my_turn = false
+
+        @current_turn += 1
+        if @current_turn >= @players.length
+            @current_turn = 0
+            @round += 1
+        end
+
+        @players[@current_turn].my_turn = true
+
+        @players.each do |player|
+            if player.rack.length < 7
+                new_letters = @letter_bag.draw(7 - player.rack.length)
+                player.add_to_rack(new_letters)
+            end
+        end
+
+        # Send new info to the clients
     end
 
 end
