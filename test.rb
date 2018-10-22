@@ -1,5 +1,5 @@
 require_relative("game.rb")
 
-game = Game.new(3)
+game = Game.new(2)
 
-# p game
+p game
