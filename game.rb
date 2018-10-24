@@ -115,7 +115,19 @@ class Game
     def findWords(tiles)
         p "Finding words"
         found_words = []
+        axis = nil
 
+        # Check which axis the letters were placed on
+        if tiles.length > 1
+            if tiles[0][:row] == tiles[1][:row]
+                axis = "horizontal"
+            else
+                axis = "vertical"
+            end
+        end
+        p axis
+
+        # Add the new letters to the board to check new words
         board_copy = @board.tiles.dup
         tiles.each do |tile|
             r = tile[:row]
@@ -124,72 +136,105 @@ class Game
             board_copy[r][c].letter = tile[:letter]
         end
         
-        # BUGS:
-        # It finds the same words more than once.
 
         # Horizontal words
-        tiles.each do |tile|
-            row = tile[:row]
-            col = tile[:col]
-            word = [tile[:letter]]
-            
-            # Check to the left
-            k = 1
-            while board_copy[row][col - k].letter != nil
-                word.unshift(board_copy[row][col - k].letter)
-                k += 1
+        if axis == "horizontal"
+            # Check the horizontal word only once to avoid duplicates
+            word = check_row(tiles[0], board_copy)
+            if word != nil
+                found_words << word
             end
-
-            # Check to the right
-            k = 1
-            while board_copy[row][col + k].letter != nil
-                word.push(board_copy[row][col + k].letter)
-                k += 1
-            end
-
-            # p word
-            if word.length > 1
-                s = ""
-                word.each do |char|
-                    s += char
+        else
+            tiles.each do |tile|
+                word = check_row(tile, board_copy)
+                if word != nil
+                    found_words << word
                 end
-
-                found_words << s
             end
         end
 
         # Vertical words
-        tiles.each do |tile|
-            row = tile[:row]
-            col = tile[:col]
-            word = [tile[:letter]]
-            
-            # Check above
-            k = 1
-            while board_copy[row - k][col].letter != nil
-                word.unshift(board_copy[row - k][col].letter)
-                k += 1
+        if axis == "vertical"
+            word = check_column(tiles[0], board_copy)
+            if word != nil
+                found_words << word
             end
-
-            # Check under
-            k = 1
-            while board_copy[row + k][col].letter != nil
-                word.push(board_copy[row + k][col].letter)
-                k += 1
-            end
-
-            # p word
-            if word.length > 1
-                s = ""
-                word.each do |char|
-                    s += char
+        else
+            tiles.each do |tile|
+                word = check_column(tile, board_copy)
+                if word != nil
+                    found_words << word
                 end
-
-                found_words << s
             end
         end
 
         return found_words
+    end
+
+
+    def check_row(tile, board_copy)
+        row = tile[:row]
+        col = tile[:col]
+        word = [tile[:letter]]
+        
+        # Check to the left
+        k = 1
+        while board_copy[row][col - k].letter != nil
+            word.unshift(board_copy[row][col - k].letter)
+            k += 1
+        end
+
+        # Check to the right
+        k = 1
+        while board_copy[row][col + k].letter != nil
+            word.push(board_copy[row][col + k].letter)
+            k += 1
+        end
+
+        # p word
+        if word.length > 1
+            s = ""
+            word.each do |char|
+                s += char
+            end
+
+            return s
+        else
+            return nil
+        end
+    end
+
+
+    def check_column(tile, board_copy)
+        row = tile[:row]
+        col = tile[:col]
+        word = [tile[:letter]]
+        
+        # Check above
+        k = 1
+        while board_copy[row - k][col].letter != nil
+            word.unshift(board_copy[row - k][col].letter)
+            k += 1
+        end
+
+        # Check under
+        k = 1
+        while board_copy[row + k][col].letter != nil
+            word.push(board_copy[row + k][col].letter)
+            k += 1
+        end
+
+        # p word
+        if word.length > 1
+            s = ""
+            word.each do |char|
+                s += char
+            end
+
+            return s
+        else
+            return nil
+        end
     end
 
 
