@@ -9,6 +9,7 @@ class Player
         @my_turn = false
     end
 
+  
     def add_to_rack(*letters)
         # Ability to put in both arrays and single characters
         # Number of inputs is not defined, the user can choose

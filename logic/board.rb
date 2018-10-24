@@ -39,6 +39,7 @@ class Board
         end 
 
         return dict
+
     end
 end
 
@@ -46,7 +47,7 @@ end
 class Tile
 
     attr_accessor :letter, :attribute
-
+  
     # row & col decide position on the board
     # attribute tells if it's a special tile such as triple word och the centre tile
     # Available attributes are:
@@ -59,6 +60,7 @@ class Tile
         @col = col
         @letter = nil
     end
+
 
 
     def description
@@ -77,6 +79,7 @@ class Tile
     end
 
 end
+
 
 # b = Board.new
 # b.update_tile(5, 2, "C")

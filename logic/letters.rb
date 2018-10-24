@@ -114,5 +114,4 @@ class Blank
     def initialize
         @letter = nil
     end
-
 end
