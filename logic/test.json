@@ -1,1 +1,1422 @@
-{"board":{"tiles":[[{"attribute":null,"row":0,"column":0,"letter":null},{"attribute":null,"row":0,"column":1,"letter":null},{"attribute":null,"row":0,"column":2,"letter":null},{"attribute":null,"row":0,"column":3,"letter":null},{"attribute":null,"row":0,"column":4,"letter":null},{"attribute":null,"row":0,"column":5,"letter":null},{"attribute":null,"row":0,"column":6,"letter":null},{"attribute":null,"row":0,"column":7,"letter":null},{"attribute":null,"row":0,"column":8,"letter":null},{"attribute":null,"row":0,"column":9,"letter":null},{"attribute":null,"row":0,"column":10,"letter":null},{"attribute":null,"row":0,"column":11,"letter":null},{"attribute":null,"row":0,"column":12,"letter":null},{"attribute":null,"row":0,"column":13,"letter":null},{"attribute":null,"row":0,"column":14,"letter":null}],[{"attribute":null,"row":1,"column":0,"letter":null},{"attribute":null,"row":1,"column":1,"letter":null},{"attribute":null,"row":1,"column":2,"letter":null},{"attribute":null,"row":1,"column":3,"letter":null},{"attribute":null,"row":1,"column":4,"letter":null},{"attribute":null,"row":1,"column":5,"letter":null},{"attribute":null,"row":1,"column":6,"letter":null},{"attribute":null,"row":1,"column":7,"letter":null},{"attribute":null,"row":1,"column":8,"letter":null},{"attribute":null,"row":1,"column":9,"letter":null},{"attribute":null,"row":1,"column":10,"letter":null},{"attribute":null,"row":1,"column":11,"letter":null},{"attribute":null,"row":1,"column":12,"letter":null},{"attribute":null,"row":1,"column":13,"letter":null},{"attribute":null,"row":1,"column":14,"letter":null}],[{"attribute":null,"row":2,"column":0,"letter":null},{"attribute":null,"row":2,"column":1,"letter":null},{"attribute":null,"row":2,"column":2,"letter":null},{"attribute":null,"row":2,"column":3,"letter":null},{"attribute":null,"row":2,"column":4,"letter":null},{"attribute":null,"row":2,"column":5,"letter":null},{"attribute":null,"row":2,"column":6,"letter":null},{"attribute":null,"row":2,"column":7,"letter":null},{"attribute":null,"row":2,"column":8,"letter":null},{"attribute":null,"row":2,"column":9,"letter":null},{"attribute":null,"row":2,"column":10,"letter":null},{"attribute":null,"row":2,"column":11,"letter":null},{"attribute":null,"row":2,"column":12,"letter":null},{"attribute":null,"row":2,"column":13,"letter":null},{"attribute":null,"row":2,"column":14,"letter":null}],[{"attribute":null,"row":3,"column":0,"letter":null},{"attribute":null,"row":3,"column":1,"letter":null},{"attribute":null,"row":3,"column":2,"letter":null},{"attribute":null,"row":3,"column":3,"letter":null},{"attribute":null,"row":3,"column":4,"letter":null},{"attribute":null,"row":3,"column":5,"letter":null},{"attribute":null,"row":3,"column":6,"letter":null},{"attribute":null,"row":3,"column":7,"letter":null},{"attribute":null,"row":3,"column":8,"letter":null},{"attribute":null,"row":3,"column":9,"letter":null},{"attribute":null,"row":3,"column":10,"letter":null},{"attribute":null,"row":3,"column":11,"letter":null},{"attribute":null,"row":3,"column":12,"letter":null},{"attribute":null,"row":3,"column":13,"letter":null},{"attribute":null,"row":3,"column":14,"letter":null}],[{"attribute":null,"row":4,"column":0,"letter":null},{"attribute":null,"row":4,"column":1,"letter":null},{"attribute":null,"row":4,"column":2,"letter":null},{"attribute":null,"row":4,"column":3,"letter":null},{"attribute":null,"row":4,"column":4,"letter":null},{"attribute":null,"row":4,"column":5,"letter":null},{"attribute":null,"row":4,"column":6,"letter":null},{"attribute":null,"row":4,"column":7,"letter":null},{"attribute":null,"row":4,"column":8,"letter":null},{"attribute":null,"row":4,"column":9,"letter":null},{"attribute":null,"row":4,"column":10,"letter":null},{"attribute":null,"row":4,"column":11,"letter":null},{"attribute":null,"row":4,"column":12,"letter":null},{"attribute":null,"row":4,"column":13,"letter":null},{"attribute":null,"row":4,"column":14,"letter":null}],[{"attribute":null,"row":5,"column":0,"letter":null},{"attribute":null,"row":5,"column":1,"letter":null},{"attribute":null,"row":5,"column":2,"letter":null},{"attribute":null,"row":5,"column":3,"letter":null},{"attribute":null,"row":5,"column":4,"letter":null},{"attribute":null,"row":5,"column":5,"letter":null},{"attribute":null,"row":5,"column":6,"letter":null},{"attribute":null,"row":5,"column":7,"letter":null},{"attribute":null,"row":5,"column":8,"letter":null},{"attribute":null,"row":5,"column":9,"letter":null},{"attribute":null,"row":5,"column":10,"letter":null},{"attribute":null,"row":5,"column":11,"letter":null},{"attribute":null,"row":5,"column":12,"letter":null},{"attribute":null,"row":5,"column":13,"letter":null},{"attribute":null,"row":5,"column":14,"letter":null}],[{"attribute":null,"row":6,"column":0,"letter":null},{"attribute":null,"row":6,"column":1,"letter":null},{"attribute":null,"row":6,"column":2,"letter":null},{"attribute":null,"row":6,"column":3,"letter":null},{"attribute":null,"row":6,"column":4,"letter":null},{"attribute":null,"row":6,"column":5,"letter":null},{"attribute":null,"row":6,"column":6,"letter":null},{"attribute":null,"row":6,"column":7,"letter":null},{"attribute":null,"row":6,"column":8,"letter":null},{"attribute":null,"row":6,"column":9,"letter":null},{"attribute":null,"row":6,"column":10,"letter":null},{"attribute":null,"row":6,"column":11,"letter":null},{"attribute":null,"row":6,"column":12,"letter":null},{"attribute":null,"row":6,"column":13,"letter":null},{"attribute":null,"row":6,"column":14,"letter":null}],[{"attribute":null,"row":7,"column":0,"letter":null},{"attribute":null,"row":7,"column":1,"letter":null},{"attribute":null,"row":7,"column":2,"letter":null},{"attribute":null,"row":7,"column":3,"letter":null},{"attribute":null,"row":7,"column":4,"letter":null},{"attribute":null,"row":7,"column":5,"letter":null},{"attribute":null,"row":7,"column":6,"letter":null},{"attribute":"centre","row":7,"column":7,"letter":"F"},{"attribute":null,"row":7,"column":8,"letter":"O"},{"attribute":null,"row":7,"column":9,"letter":"R"},{"attribute":null,"row":7,"column":10,"letter":"T"},{"attribute":null,"row":7,"column":11,"letter":"S"},{"attribute":null,"row":7,"column":12,"letter":null},{"attribute":null,"row":7,"column":13,"letter":null},{"attribute":null,"row":7,"column":14,"letter":null}],[{"attribute":null,"row":8,"column":0,"letter":null},{"attribute":null,"row":8,"column":1,"letter":null},{"attribute":null,"row":8,"column":2,"letter":null},{"attribute":null,"row":8,"column":3,"letter":null},{"attribute":null,"row":8,"column":4,"letter":null},{"attribute":null,"row":8,"column":5,"letter":null},{"attribute":null,"row":8,"column":6,"letter":null},{"attribute":null,"row":8,"column":7,"letter":"O"},{"attribute":null,"row":8,"column":8,"letter":"F"},{"attribute":null,"row":8,"column":9,"letter":null},{"attribute":null,"row":8,"column":10,"letter":null},{"attribute":null,"row":8,"column":11,"letter":null},{"attribute":null,"row":8,"column":12,"letter":null},{"attribute":null,"row":8,"column":13,"letter":null},{"attribute":null,"row":8,"column":14,"letter":null}],[{"attribute":null,"row":9,"column":0,"letter":null},{"attribute":null,"row":9,"column":1,"letter":null},{"attribute":null,"row":9,"column":2,"letter":null},{"attribute":null,"row":9,"column":3,"letter":null},{"attribute":null,"row":9,"column":4,"letter":null},{"attribute":null,"row":9,"column":5,"letter":null},{"attribute":null,"row":9,"column":6,"letter":null},{"attribute":null,"row":9,"column":7,"letter":null},{"attribute":null,"row":9,"column":8,"letter":null},{"attribute":null,"row":9,"column":9,"letter":null},{"attribute":null,"row":9,"column":10,"letter":null},{"attribute":null,"row":9,"column":11,"letter":null},{"attribute":null,"row":9,"column":12,"letter":null},{"attribute":null,"row":9,"column":13,"letter":null},{"attribute":null,"row":9,"column":14,"letter":null}],[{"attribute":null,"row":10,"column":0,"letter":null},{"attribute":null,"row":10,"column":1,"letter":null},{"attribute":null,"row":10,"column":2,"letter":null},{"attribute":null,"row":10,"column":3,"letter":null},{"attribute":null,"row":10,"column":4,"letter":null},{"attribute":null,"row":10,"column":5,"letter":null},{"attribute":null,"row":10,"column":6,"letter":null},{"attribute":null,"row":10,"column":7,"letter":null},{"attribute":null,"row":10,"column":8,"letter":null},{"attribute":null,"row":10,"column":9,"letter":null},{"attribute":null,"row":10,"column":10,"letter":null},{"attribute":null,"row":10,"column":11,"letter":null},{"attribute":null,"row":10,"column":12,"letter":null},{"attribute":null,"row":10,"column":13,"letter":null},{"attribute":null,"row":10,"column":14,"letter":null}],[{"attribute":null,"row":11,"column":0,"letter":null},{"attribute":null,"row":11,"column":1,"letter":null},{"attribute":null,"row":11,"column":2,"letter":null},{"attribute":null,"row":11,"column":3,"letter":null},{"attribute":null,"row":11,"column":4,"letter":null},{"attribute":null,"row":11,"column":5,"letter":null},{"attribute":null,"row":11,"column":6,"letter":null},{"attribute":null,"row":11,"column":7,"letter":null},{"attribute":null,"row":11,"column":8,"letter":null},{"attribute":null,"row":11,"column":9,"letter":null},{"attribute":null,"row":11,"column":10,"letter":null},{"attribute":null,"row":11,"column":11,"letter":null},{"attribute":null,"row":11,"column":12,"letter":null},{"attribute":null,"row":11,"column":13,"letter":null},{"attribute":null,"row":11,"column":14,"letter":null}],[{"attribute":null,"row":12,"column":0,"letter":null},{"attribute":null,"row":12,"column":1,"letter":null},{"attribute":null,"row":12,"column":2,"letter":null},{"attribute":null,"row":12,"column":3,"letter":null},{"attribute":null,"row":12,"column":4,"letter":null},{"attribute":null,"row":12,"column":5,"letter":null},{"attribute":null,"row":12,"column":6,"letter":null},{"attribute":null,"row":12,"column":7,"letter":null},{"attribute":null,"row":12,"column":8,"letter":null},{"attribute":null,"row":12,"column":9,"letter":null},{"attribute":null,"row":12,"column":10,"letter":null},{"attribute":null,"row":12,"column":11,"letter":null},{"attribute":null,"row":12,"column":12,"letter":null},{"attribute":null,"row":12,"column":13,"letter":null},{"attribute":null,"row":12,"column":14,"letter":null}],[{"attribute":null,"row":13,"column":0,"letter":null},{"attribute":null,"row":13,"column":1,"letter":null},{"attribute":null,"row":13,"column":2,"letter":null},{"attribute":null,"row":13,"column":3,"letter":null},{"attribute":null,"row":13,"column":4,"letter":null},{"attribute":null,"row":13,"column":5,"letter":null},{"attribute":null,"row":13,"column":6,"letter":null},{"attribute":null,"row":13,"column":7,"letter":null},{"attribute":null,"row":13,"column":8,"letter":null},{"attribute":null,"row":13,"column":9,"letter":null},{"attribute":null,"row":13,"column":10,"letter":null},{"attribute":null,"row":13,"column":11,"letter":null},{"attribute":null,"row":13,"column":12,"letter":null},{"attribute":null,"row":13,"column":13,"letter":null},{"attribute":null,"row":13,"column":14,"letter":null}],[{"attribute":null,"row":14,"column":0,"letter":null},{"attribute":null,"row":14,"column":1,"letter":null},{"attribute":null,"row":14,"column":2,"letter":null},{"attribute":null,"row":14,"column":3,"letter":null},{"attribute":null,"row":14,"column":4,"letter":null},{"attribute":null,"row":14,"column":5,"letter":null},{"attribute":null,"row":14,"column":6,"letter":null},{"attribute":null,"row":14,"column":7,"letter":null},{"attribute":null,"row":14,"column":8,"letter":null},{"attribute":null,"row":14,"column":9,"letter":null},{"attribute":null,"row":14,"column":10,"letter":null},{"attribute":null,"row":14,"column":11,"letter":null},{"attribute":null,"row":14,"column":12,"letter":null},{"attribute":null,"row":14,"column":13,"letter":null},{"attribute":null,"row":14,"column":14,"letter":null}]],"latestUpdatedTiles":[{"row":7,"column":10},{"row":7,"column":11}]},"players":[{"name":"Player 1","points":14,"isYou":true},{"name":"Player 2","points":15,"isYou":false}],"you":{"rack":["H","O","E","D","R","D","#<Blank:0x000000000519d6d8>"]},"currentTurn":1,"roundNumber":2,"lettersLeft":86}
+{
+    "board": {
+        "tiles": [
+            [
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 0,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 1,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 2,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 3,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 4,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 5,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 6,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": "centre",
+                    "row": 7,
+                    "column": 7,
+                    "letter": "F"
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 8,
+                    "letter": "O"
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 9,
+                    "letter": "R"
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 10,
+                    "letter": "T"
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 11,
+                    "letter": "S"
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 7,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 7,
+                    "letter": "O"
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 8,
+                    "letter": "F"
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 10,
+                    "letter": "F"
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 11,
+                    "letter": "Q"
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 12,
+                    "letter": "T"
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 8,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 9,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 10,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 11,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 12,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 13,
+                    "column": 14,
+                    "letter": null
+                }
+            ],
+            [
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 0,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 1,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 2,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 3,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 4,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 5,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 6,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 7,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 8,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 9,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 10,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 11,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 12,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 13,
+                    "letter": null
+                },
+                {
+                    "attribute": null,
+                    "row": 14,
+                    "column": 14,
+                    "letter": null
+                }
+            ]
+        ],
+        "latestUpdatedTiles": [
+            {
+                "row": 7,
+                "column": 10
+            },
+            {
+                "row": 7,
+                "column": 11
+            }
+        ]
+    },
+    "players": [
+        {
+            "name": "Player 1",
+            "points": 14,
+            "isYou": true
+        },
+        {
+            "name": "Player 2",
+            "points": 15,
+            "isYou": false
+        }
+    ],
+    "you": {
+        "rack": [
+            "T",
+            "U",
+            "T",
+            "U",
+            "R",
+            "N",
+            "V"
+        ]
+    },
+    "currentTurn": 1,
+    "roundNumber": 2,
+    "lettersLeft": 86
+}
