@@ -40,6 +40,13 @@ class Game
     end
 
 
+    def response(obj)
+        p obj
+
+        add_new_letters(obj[:tiles])
+    end
+
+
     def check_placement(tiles)
         tiles.each do |tile|
             r = tile[:row]
