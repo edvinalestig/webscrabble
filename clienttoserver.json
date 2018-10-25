@@ -1,0 +1,11 @@
+{
+    "tiles": [
+        {
+            "letter": "F",
+            "row": 6,
+            "column": 13
+        }
+    ],
+    "passed": false,
+    "forfeit": false
+}
