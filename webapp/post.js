@@ -15,3 +15,21 @@ function sendpost(url, msg) {
     var data = JSON.stringify(msg);
     xhr.send(data);
 }
+
+
+function toJson() {
+    console.log(arguments.length);
+    let d = {
+        "tiles": []
+    };
+
+    for (let i = 0; i < arguments.length; i++) {
+        d.tiles.push({
+            "letter": arguments[i][0],
+            "row": arguments[i][1],
+            "col": arguments[i][2]
+        });
+    }
+    // .replace(/\"/g, "'")
+    return d;
+}

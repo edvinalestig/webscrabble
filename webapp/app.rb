@@ -45,7 +45,8 @@ end
 
 post("/testpost") do
     request.body.rewind
-    # p JSON.parse(request.body.read)
+    p JSON.parse(request.body.read, symbolize_names: true)
+    request.body.rewind
     game.response(JSON.parse(request.body.read, symbolize_names: true))
     redirect("/p1")
 end
