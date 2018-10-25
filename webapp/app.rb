@@ -10,12 +10,12 @@ end
 
 
 get("/p1") do
-    return "<h1>You are now player 1</h1><p><a href='/getp1'>Get data</a></p>"
+    return "<h1>You are now player 1</h1><p><a href='/getp1'>Get data</a></p><script>#{File.read('post.js')}</script>"
 end
 
 
 get("/p2") do
-    return "<h1>You are now player 2</h1><p><a href='/getp2'>Get data</a></p>"
+    return "<h1>You are now player 2</h1><p><a href='/getp2'>Get data</a></p><script>#{File.read('post.js')}</script>"
 end
 
 
@@ -26,4 +26,18 @@ end
 
 get("/getp2") do
     return game.dictify(1).to_json
+end
+
+
+post("/p1") do
+    p request.body.read
+    game.response(request.body.read)
+    redirect("/p1")
+end
+
+
+post("/p2") do
+    p request.body.read
+    game.response(request.body.read)
+    redirect("/p2")
 end
