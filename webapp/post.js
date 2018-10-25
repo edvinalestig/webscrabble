@@ -1,23 +1,17 @@
-function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
+// Sending and receiving data in JSON format using POST method
+//
 
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
-
-            form.appendChild(hiddenField);
+function sendpost(url, msg) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // var json = JSON.parse(xhr.responseText);
+            // console.log(json.email + ", " + json.password);
+            console.log("Done")
         }
-    }
-
-    document.body.appendChild(form);
-    form.submit();
+    };
+    var data = JSON.stringify(msg);
+    xhr.send(data);
 }

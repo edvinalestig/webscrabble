@@ -30,14 +30,27 @@ end
 
 
 post("/p1") do
-    p request.body.read
-    game.response(request.body.read)
+    p params
+    game.response(params)
     redirect("/p1")
 end
 
 
 post("/p2") do
-    p request.body.read
-    game.response(request.body.read)
+    p params
+    game.response(params)
     redirect("/p2")
+end
+
+
+post("/testpost") do
+    request.body.rewind
+    # p JSON.parse(request.body.read)
+    game.response(JSON.parse(request.body.read))
+    redirect("/p1")
+end
+
+
+get("/testpost") do
+    return "<script>#{File.read('post.js')}; sendpost('/testpost', #{File.read('testjson.json')});</script>"
 end
