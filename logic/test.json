@@ -802,19 +802,19 @@
                     "attribute": null,
                     "row": 8,
                     "column": 10,
-                    "letter": "F"
+                    "letter": null
                 },
                 {
                     "attribute": null,
                     "row": 8,
                     "column": 11,
-                    "letter": "Q"
+                    "letter": null
                 },
                 {
                     "attribute": null,
                     "row": 8,
                     "column": 12,
-                    "letter": "T"
+                    "letter": null
                 },
                 {
                     "attribute": null,
@@ -1407,13 +1407,13 @@
     ],
     "you": {
         "rack": [
-            "T",
-            "U",
-            "T",
-            "U",
-            "R",
+            "E",
+            "A",
+            "E",
+            "E",
             "N",
-            "V"
+            "O",
+            "U"
         ]
     },
     "currentTurn": 1,

@@ -135,7 +135,7 @@ class Game
         p axis
 
         # Add the new letters to the board to check new words
-        board_copy = @board.tiles.dup
+        board_copy = @board.copy()
         tiles.each do |tile|
             r = tile[:row]
             c = tile[:col]
