@@ -74,6 +74,16 @@ class Game
             # Not a valid turn, return to client
             puts "INVALID! TILES ALREADY ASSIGNED"
         end
+
+        p @players[@current_turn].rack
+        letters.each do |tile|
+            if !@players[@current_turn].rack.include? tile[:letter]
+                puts "Letter #{tile[:letter]} not on player's rack."
+
+                # Change later to tell the client
+                return
+            end
+        end
         
         invalid_words = []
         
@@ -113,6 +123,13 @@ class Game
 
             # Add the points to the player
             @players[@current_turn].points += points
+
+            # Remove letters from the player's rack
+            p "Removing #{letters}"
+            letters.each do |tile|
+                index = @players[@current_turn].rack.index(tile[:letter])
+                @players[@current_turn].rack.slice!(index)
+            end
 
             end_turn()
         end
@@ -260,6 +277,7 @@ class Game
     def end_turn()
         @players[@current_turn].my_turn = false
 
+        # Change the turn
         @current_turn += 1
         if @current_turn >= @players.length
             @current_turn = 0
@@ -268,10 +286,12 @@ class Game
 
         @players[@current_turn].my_turn = true
 
+        # Refill the racks
         @players.each do |player|
             if player.rack.length < 7
                 new_letters = @letter_bag.draw(7 - player.rack.length)
                 player.add_to_rack(new_letters)
+                p "Adding: #{new_letters}"
             end
         end
 
