@@ -33,5 +33,19 @@
         "roundNumber": 6,
         "lettersLeft": 74
     },
-    "roomName": "Room 1"
+    "roomName": "Room 1",
+    "error": {
+        "invalidWords": [
+            "FRWQ",
+            "HYRRBN"
+        ],
+        "lettersNotOnRack": false,
+        "invalidPlacement": false,
+        "tileOccupied": [
+            {
+                "row": 5,
+                "column": 14
+            }
+        ]
+    }
 }

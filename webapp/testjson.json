@@ -1,0 +1,19 @@
+{
+    "tiles": [
+        {
+            "letter": "F",
+            "row": 7,
+            "col": 7
+        },
+        {
+            "letter": "O",
+            "row": 7,
+            "col": 8
+        },
+        {
+            "letter": "R",
+            "row": 7,
+            "col": 9
+        }
+    ]
+}

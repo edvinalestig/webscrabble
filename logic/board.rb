@@ -41,12 +41,31 @@ class Board
         return dict
 
     end
+
+
+    def copy()
+        tiles = []
+
+        (0..14).each_with_index do |row, i|
+            column = []
+
+            (0..14).each_with_index do |col, j|
+                att = @tiles[i][j].attribute
+                let = @tiles[i][j].letter
+                column << Tile.new(row, col, att, let)
+            end
+            tiles << column
+        end
+
+        return tiles
+    end
 end
 
 
 class Tile
 
     attr_accessor :letter, :attribute
+    attr_reader :row, :col
   
     # row & col decide position on the board
     # attribute tells if it's a special tile such as triple word och the centre tile
@@ -54,11 +73,11 @@ class Tile
     # centre
     # 2W, 3W, 2L and 3L will be available in future versions
     # letter is the current letter placed on the tile
-    def initialize(row, col) 
-        @attribute = nil
+    def initialize(row, col, attribute=nil, letter=nil) 
+        @attribute = attribute
         @row = row
         @col = col
-        @letter = nil
+        @letter = letter
     end
 
 
@@ -79,10 +98,3 @@ class Tile
     end
 
 end
-
-
-# b = Board.new
-# b.update_tile(5, 2, "C")
-# p b.json()
-
-# File.write("board.json", b.json())
