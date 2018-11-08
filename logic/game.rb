@@ -314,12 +314,21 @@ class Game
             players << dict
         end
         
+        rack = @players[playerNumber].rack
+        rack.each_with_index do |letter, index|
+            if letter.is_a? Blank
+                rack[index] = {
+                    letter: "blank",
+                    value: letter.letter
+                }
+            end
+        end
 
         dict = {
             board: @board.json(),
             players: players,
             you: {
-                rack: @players[playerNumber].rack
+                rack: rack
             },
             currentTurn: @current_turn,
             roundNumber: @round,

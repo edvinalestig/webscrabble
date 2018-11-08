@@ -7,6 +7,15 @@
                     "column": 6,
                     "row": 4,
                     "letter": "F"
+                },
+                {
+                    "attribute": null,
+                    "column": 6,
+                    "row": 4,
+                    "letter": {
+                        "letter": "blank",
+                        "value": "F"
+                    }
                 }
             ],
             "latestUpdatedTiles": [

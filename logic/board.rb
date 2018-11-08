@@ -88,11 +88,19 @@ class Tile
 
 
     def dictionary()
+        l = @letter
+        if l.is_a? Blank
+            l = {
+                letter: "blank",
+                value: @letter.letter
+            }
+        end
+
         tile = {
             attribute: @attribute,
             row: @row,
             column: @col,
-            letter: @letter
+            letter: l
         }
         return tile
     end
