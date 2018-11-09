@@ -69,22 +69,46 @@ class Game
     #               }
     #           ]
     def add_new_letters(letters)
+        p letters
 
         if !check_placement(letters)
             # Not a valid turn, return to client
             puts "INVALID! TILES ALREADY ASSIGNED"
         end
 
+        index = nil
         p @players[@current_turn].rack
+
+        # Go through the letters to confirm they are on the player's rack
         letters.each do |tile|
-            if !@players[@current_turn].rack.include? tile[:letter]
+            found = false
+            begin
+                if tile[:letter][:letter] == "blank"
+                    # Check if there is a blank tile on the rack
+                    @players[@current_turn].rack.each_with_index do |letter, i|
+                        if letter.is_a? Blank
+                            # Save the index for changing the blank to the new letter later
+                            found = true
+                            index = i
+                            break
+                        end
+                    end
+                end
+            rescue TypeError
+                # Normal tile
+                if @players[@current_turn].rack.include? tile[:letter]
+                    found = true
+                end
+            end
+
+            if !found 
                 puts "Letter #{tile[:letter]} not on player's rack."
 
                 # Change later to tell the client
                 return
             end
         end
-        
+
         invalid_words = []
         
         # Find all new words
@@ -127,7 +151,9 @@ class Game
             # Remove letters from the player's rack
             p "Removing #{letters}"
             letters.each do |tile|
-                index = @players[@current_turn].rack.index(tile[:letter])
+                if !index
+                    index = @players[@current_turn].rack.index(tile[:letter])
+                end
                 @players[@current_turn].rack.slice!(index)
             end
 
@@ -137,6 +163,8 @@ class Game
 
 
     def findWords(tiles)
+        # Cheaty way to deep copy
+        tiles = JSON.parse(tiles.to_json, symbolize_names: true)
         p "Finding words"
         found_words = []
         axis = nil
@@ -153,11 +181,17 @@ class Game
 
         # Add the new letters to the board to check new words
         board_copy = @board.copy()
-        tiles.each do |tile|
+        tiles.each_with_index do |tile, i|
             r = tile[:row]
             c = tile[:col]
-
-            board_copy[r][c].letter = tile[:letter]
+            begin
+                if tile[:letter][:letter] == "blank"
+                    board_copy[r][c].letter = tile[:letter][:value]
+                    tiles[i][:letter] = tile[:letter][:value]
+                end
+            rescue TypeError
+                board_copy[r][c].letter = tile[:letter]
+            end
         end
         
 
