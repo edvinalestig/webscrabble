@@ -6,6 +6,7 @@ game.add_new_letters([{letter: "F", row: 7, col: 7}, {letter: "O", row: 7, col: 
 game.add_new_letters([{letter: "O", row: 8, col: 7}, {letter: "F", row: 8, col: 8}])
 game.add_new_letters([{letter: "T", row: 7, col: 10}, {letter: "S", row: 7, col: 11}])
 game.add_new_letters([{letter: "F", row: 8, col: 10}, {letter: "Q", row: 8, col: 11}, {letter: "T", row: 8, col: 12}])
+game.add_new_letters([{letter: {letter: "blank", value: "O"}, row: 9, col: 10}, {letter: "K", row: 9, col: 11}])
 
 
 d = game.dictify(0).to_json()
