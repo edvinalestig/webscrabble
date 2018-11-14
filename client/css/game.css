@@ -23,3 +23,11 @@ h1 {
     width: 32vw;
     margin: auto;
 }
+
+h3 {
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 2.5vw;
+    font-weight: normal;
+    text-align: center;
+}
