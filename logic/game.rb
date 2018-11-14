@@ -74,9 +74,11 @@ class Game
         if !check_placement(letters)
             # Not a valid turn, return to client
             puts "INVALID! TILES ALREADY ASSIGNED"
+            return false
         end
 
-        index = nil
+        # Add indices for the blanks to an array for later removal
+        indices = []
         p @players[@current_turn].rack
 
         # Go through the letters to confirm they are on the player's rack
@@ -86,10 +88,10 @@ class Game
                 if tile[:letter][:letter] == "blank"
                     # Check if there is a blank tile on the rack
                     @players[@current_turn].rack.each_with_index do |letter, i|
-                        if letter.is_a? Blank
+                        if letter.is_a? Blank and !indices.include? i
                             # Save the index for changing the blank to the new letter later
                             found = true
-                            index = i
+                            indices << i
                             break
                         end
                     end
@@ -105,7 +107,7 @@ class Game
                 puts "Letter #{tile[:letter]} not on player's rack."
 
                 # Change later to tell the client
-                return
+                return false
             end
         end
 
@@ -125,6 +127,7 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
+            return false
         else
             # Update the tiles and calculate the points
             lut = []
@@ -151,13 +154,21 @@ class Game
             # Remove letters from the player's rack
             p "Removing #{letters}"
             letters.each do |tile|
-                if !index
-                    index = @players[@current_turn].rack.index(tile[:letter])
+                if !tile.is_a? Blank
+                    # Index is not saved and should be added
+                    indices << @players[@current_turn].rack.index(tile[:letter])
                 end
-                @players[@current_turn].rack.slice!(index)
+            end
+
+            # Go through the array backwards to avoid removing wrong letters because of changing indices
+            indices = indices.sort.reverse
+
+            indices.each do |i|
+                @players[@current_turn].rack.slice!(i)
             end
 
             end_turn()
+            return true
         end
     end
 
