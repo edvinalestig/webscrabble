@@ -98,8 +98,13 @@ class Game
                 end
             rescue TypeError
                 # Normal tile
-                if @players[@current_turn].rack.include? tile[:letter]
-                    found = true
+                @players[@current_turn].rack.each_with_index do |letter, i|
+                    if tile[:letter] == letter and !indices.include? i
+                        # Save the index for removal
+                        found = true
+                        indices << i
+                        break
+                    end
                 end
             end
 
@@ -153,12 +158,6 @@ class Game
 
             # Remove letters from the player's rack
             p "Removing #{letters}"
-            letters.each do |tile|
-                if !tile.is_a? Blank
-                    # Index is not saved and should be added
-                    indices << @players[@current_turn].rack.index(tile[:letter])
-                end
-            end
 
             # Go through the array backwards to avoid removing wrong letters because of changing indices
             indices = indices.sort.reverse
