@@ -1,0 +1,25 @@
+body {
+    background-color: #515151;
+}
+
+.statusWindow {
+    width: 35vw;
+    height: 100vh;
+}
+
+h1 {
+    padding-top: 50px;
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 3.5vw;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.horizLine {
+    background-color: #ffffff;
+    height: 1px;
+    width: 32vw;
+    margin: auto;
+}
