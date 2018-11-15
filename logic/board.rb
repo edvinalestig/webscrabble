@@ -21,13 +21,10 @@ class Board
 
     # Add a letter to a tile
     def update_tile(row, col, letter)
-        begin
-            if letter[:letter] == "blank"
-                l = Blank.new
-                l.letter = letter[:value]
-                letter = l
-            end
-        rescue TypeError
+        if letter.is_a? Hash
+            l = Blank.new
+            l.letter = letter[:value]
+            letter = l
         end
         @tiles[row][col].letter = letter
     end

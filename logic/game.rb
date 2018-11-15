@@ -47,7 +47,7 @@ class Game
     end
 
 
-    def check_placement(tiles)
+    def valid_placement?(tiles)
         tiles.each do |tile|
             r = tile[:row]
             c = tile[:col]
@@ -61,17 +61,11 @@ class Game
     end
 
     # Input should be an array of letters with their positions
-    # letters = [
-    #               {
-    #                 letter: f,
-    #                 row: 7,
-    #                 col: 4
-    #               }
-    #           ]
+    # letters = [{letter: f, row: 7, col: 4}]
     def add_new_letters(letters)
         p letters
 
-        if !check_placement(letters)
+        if !valid_placement?(letters)
             # Not a valid turn, return to client
             puts "INVALID! TILES ALREADY ASSIGNED"
             return false
@@ -100,7 +94,6 @@ class Game
                 end
             end            
 
-
             if !found 
                 puts "Letter #{tile[:letter]} not on player's rack."
 
@@ -112,7 +105,7 @@ class Game
         invalid_words = []
         
         # Find all new words
-        new_words = findWords(letters)
+        new_words = find_words(letters)
         p new_words
 
         if new_words.length == 0
@@ -170,7 +163,7 @@ class Game
     end
 
 
-    def findWords(tiles)
+    def find_words(tiles)
         # Cheaty way to deep copy
         tiles = JSON.parse(tiles.to_json, symbolize_names: true)
         p "Finding words"
@@ -202,34 +195,52 @@ class Game
         end
         
 
-        # Horizontal words
-        if axis == "horizontal"
-            # Check the horizontal word only once to avoid duplicates
-            word = check_row(tiles.first, board_copy)
-            if word != nil
-                found_words << word
+        # # Horizontal words
+        # tiles.each do |tile|
+        #     word = check_row(tile, board_copy)
+        #     if word != nil
+        #         found_words << word
+        #     end
+        #     # Check the horizontal word only once to avoid duplicates
+        #     if axis == "horizontal"
+        #         break
+        #     end
+        # end
+
+        # # Vertical words
+        # tiles.each do |tile|
+        #     word = check_column(tile, board_copy)
+        #     if word != nil
+        #         found_words << word
+        #     end
+        #     # Check the vertical word only once to avoid duplicates
+        #     if axis == "vertical"
+        #         break
+        #     end
+        # end
+
+        check_vertical = true
+        check_horizontal = true
+        tiles.each do |tile|
+            if check_vertical
+                word = check_column(tile, board_copy)
+                if word != nil
+                    found_words << word
+                end
             end
-        else
-            tiles.each do |tile|
+
+            if check_horizontal
                 word = check_row(tile, board_copy)
                 if word != nil
                     found_words << word
                 end
             end
-        end
 
-        # Vertical words
-        if axis == "vertical"
-            word = check_column(tiles.first, board_copy)
-            if word != nil
-                found_words << word
-            end
-        else
-            tiles.each do |tile|
-                word = check_column(tile, board_copy)
-                if word != nil
-                    found_words << word
-                end
+            # Check the word axis only once to avoid duplicates
+            if axis == "vertical"
+                check_vertical = false
+            elsif axis == "horizontal"
+                check_horizontal = false
             end
         end
 
@@ -258,12 +269,7 @@ class Game
 
         # p word
         if word.length > 1
-            s = ""
-            word.each do |char|
-                s += char
-            end
-
-            return s
+            return word.join()
         else
             return nil
         end
@@ -282,7 +288,7 @@ class Game
             k += 1
         end
 
-        # Check under
+        # Check below
         k = 1
         while board_copy[row + k][col].letter != nil
             word.push(board_copy[row + k][col].letter)
@@ -291,12 +297,7 @@ class Game
 
         # p word
         if word.length > 1
-            s = ""
-            word.each do |char|
-                s += char
-            end
-
-            return s
+            return word.join()
         else
             return nil
         end
@@ -340,9 +341,9 @@ class Game
     end
 
 
-    def to_hash(playerNumber)
+    def to_hash(player_number)
         # Add all the relevant data to a dictionary following the set json format
-        # playerNumber makes the dict player-specific
+        # player_number makes the dict player-specific
 
         # Add the player data to an array of dicts
         players = []
@@ -350,12 +351,12 @@ class Game
             dict = {
                 name: "Player #{index+1}",
                 points: player.points,
-                isYou: index == playerNumber
+                isYou: index == player_number
             }
             players << dict
         end
         
-        rack = @players[playerNumber].rack
+        rack = @players[player_number].rack
         rack.each_with_index do |letter, index|
             if letter.is_a? Blank
                 rack[index] = {
