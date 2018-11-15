@@ -13,7 +13,8 @@ while !b
     arr << game.add_new_letters([{letter: "T", row: 7, col: 10}, {letter: "S", row: 7, col: 11}])
     arr << game.add_new_letters([{letter: "F", row: 8, col: 10}, {letter: "Q", row: 8, col: 11}, {letter: "T", row: 8, col: 12}])
     arr << game.add_new_letters([{letter: {letter: "blank", value: "O"}, row: 9, col: 10}, {letter: "K", row: 9, col: 11}])
-    arr << game.add_new_letters([{letter: "E", row: 4, col: 7}, {letter: "E", row: 4, col: 8}])
+    arr << game.add_new_letters([{letter: "E", row: 4, col: 4}])
+    arr << game.add_new_letters([{letter: "E", row: 4, col: 5}])
 
     if arr.include? true
         b = true

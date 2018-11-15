@@ -77,7 +77,7 @@ class Game
             return false
         end
 
-        # Add indices for the blanks to an array for later removal
+        # Store indices for later removal
         indices = []
         p @players[@current_turn].rack
 
@@ -92,7 +92,7 @@ class Game
             @players[@current_turn].rack.each_with_index do |letter, i|
                 if (blank and letter.is_a? Blank) or (!blank and tile[:letter] == letter)
                     if !indices.include? i
-                        # Save the index for changing the blank to the new letter later
+                        # Save the index
                         found = true
                         indices << i
                         break
@@ -114,6 +114,11 @@ class Game
         # Find all new words
         new_words = findWords(letters)
         p new_words
+
+        if new_words.length == 0
+            p "No words found (at least 2 letters)"
+            return false
+        end
 
         #Check if they are valid
         new_words.each do |word|
