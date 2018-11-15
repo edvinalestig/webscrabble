@@ -1,5 +1,5 @@
 # Webscrabble
-A gymnasiearbete (high school exam project) about recreating Scrabble with network support.
+A gymnasiearbete (thesis of upper secondary education) about recreating Scrabble with network support.
 
 ## Where we are right now
 We have the bare bones of the game up and running, the main focus at the moment is the user interface and the web server.

@@ -1,9 +1,9 @@
 # Upplägg av projektet
 
 ## Logiken
-Skriven i ruby med sinatra och slim.
+Skriven i ruby med sinatra.
 
-All spellogik styrs med hjälp av ruby. Uppkopplingen mot klienterna styrs av sinatra och gränssnittet skapas med slim. Gränssnittet använder p5.js för att skapa spelplanen och annan grafik.
+All spellogik styrs med hjälp av ruby. Uppkopplingen mot klienterna styrs av sinatra och gränssnittet skapas med HTML, CSS och javascript. Gränssnittet använder p5.js för att skapa spelplanen och annan grafik.
 
 ## Användargränssnitt
 
