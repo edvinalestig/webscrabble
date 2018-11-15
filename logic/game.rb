@@ -84,29 +84,22 @@ class Game
         # Go through the letters to confirm they are on the player's rack
         letters.each do |tile|
             found = false
-            begin
-                if tile[:letter][:letter] == "blank"
-                    # Check if there is a blank tile on the rack
-                    @players[@current_turn].rack.each_with_index do |letter, i|
-                        if letter.is_a? Blank and !indices.include? i
-                            # Save the index for changing the blank to the new letter later
-                            found = true
-                            indices << i
-                            break
-                        end
-                    end
-                end
-            rescue TypeError
-                # Normal tile
-                @players[@current_turn].rack.each_with_index do |letter, i|
-                    if tile[:letter] == letter and !indices.include? i
-                        # Save the index for removal
+            blank = false
+            if tile[:letter].is_a? Hash
+                blank = tile[:letter][:letter] == "blank"
+            end
+
+            @players[@current_turn].rack.each_with_index do |letter, i|
+                if (blank and letter.is_a? Blank) or (!blank and tile[:letter] == letter)
+                    if !indices.include? i
+                        # Save the index for changing the blank to the new letter later
                         found = true
                         indices << i
                         break
                     end
                 end
-            end
+            end            
+
 
             if !found 
                 puts "Letter #{tile[:letter]} not on player's rack."
@@ -194,12 +187,11 @@ class Game
         tiles.each_with_index do |tile, i|
             r = tile[:row]
             c = tile[:col]
-            begin
-                if tile[:letter][:letter] == "blank"
-                    board_copy[r][c].letter = tile[:letter][:value]
-                    tiles[i][:letter] = tile[:letter][:value]
-                end
-            rescue TypeError
+
+            if tile[:letter].is_a? Hash
+                board_copy[r][c].letter = tile[:letter][:value]
+                tiles[i][:letter] = tile[:letter][:value]
+            else
                 board_copy[r][c].letter = tile[:letter]
             end
         end
