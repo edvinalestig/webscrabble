@@ -21,6 +21,14 @@ class Board
 
     # Add a letter to a tile
     def update_tile(row, col, letter)
+        begin
+            if letter[:letter] == "blank"
+                l = Blank.new
+                l.letter = letter[:value]
+                letter = l
+            end
+        rescue TypeError
+        end
         @tiles[row][col].letter = letter
     end
 
@@ -88,11 +96,19 @@ class Tile
 
 
     def dictionary()
+        l = @letter
+        if l.is_a? Blank
+            l = {
+                letter: "blank",
+                value: @letter.letter
+            }
+        end
+
         tile = {
             attribute: @attribute,
             row: @row,
             column: @col,
-            letter: @letter
+            letter: l
         }
         return tile
     end
