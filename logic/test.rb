@@ -20,6 +20,6 @@ while !b
     end
 end
 
-d = game.dictify(0).to_json()
+d = game.to_hash(0).to_json()
 # p d
 File.write("test.json", d)

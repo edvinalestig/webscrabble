@@ -12,7 +12,7 @@ class Words
     end
 
 
-    def is_word?(word)
+    def word?(word)
         # Checks if a word is in the words array
         return @words.include? word.downcase
     end

@@ -124,7 +124,7 @@ class Game
 
         #Check if they are valid
         new_words.each do |word|
-            if !@words.is_word?(word)
+            if !@words.word?(word)
                 invalid_words << word
             end
         end
@@ -190,7 +190,7 @@ class Game
         p axis
 
         # Add the new letters to the board to check new words
-        board_copy = @board.copy()
+        board_copy = @board.deep_clone()
         tiles.each_with_index do |tile, i|
             r = tile[:row]
             c = tile[:col]
@@ -208,7 +208,7 @@ class Game
         # Horizontal words
         if axis == "horizontal"
             # Check the horizontal word only once to avoid duplicates
-            word = check_row(tiles[0], board_copy)
+            word = check_row(tiles.first, board_copy)
             if word != nil
                 found_words << word
             end
@@ -223,7 +223,7 @@ class Game
 
         # Vertical words
         if axis == "vertical"
-            word = check_column(tiles[0], board_copy)
+            word = check_column(tiles.first, board_copy)
             if word != nil
                 found_words << word
             end
@@ -343,7 +343,7 @@ class Game
     end
 
 
-    def dictify(playerNumber)
+    def to_hash(playerNumber)
         # Add all the relevant data to a dictionary following the set json format
         # playerNumber makes the dict player-specific
 
@@ -369,7 +369,7 @@ class Game
         end
 
         dict = {
-            board: @board.json(),
+            board: @board.to_hash,
             players: players,
             you: {
                 rack: rack
