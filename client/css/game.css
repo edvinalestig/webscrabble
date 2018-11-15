@@ -63,3 +63,32 @@ p {
     margin-top: 3vh;
     margin-left: 5vw;
 }
+
+#playButton {
+    width: 25.3vw;
+    height: 6vw;
+    background-color: #6F9654;
+    margin-top: 6vh;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+
+#endButton {
+    width: 25.3vw;
+    height: 6vw;
+    background-color: #A35051;
+    margin-top: 6vh;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+
+/* .buttonText {
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 3vw;
+    font-weight: normal;
+    text-align: center;
+    padding-bottom: 2vh;
+} */
