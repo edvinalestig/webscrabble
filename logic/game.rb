@@ -195,30 +195,6 @@ class Game
         end
         
 
-        # # Horizontal words
-        # tiles.each do |tile|
-        #     word = check_row(tile, board_copy)
-        #     if word != nil
-        #         found_words << word
-        #     end
-        #     # Check the horizontal word only once to avoid duplicates
-        #     if axis == "horizontal"
-        #         break
-        #     end
-        # end
-
-        # # Vertical words
-        # tiles.each do |tile|
-        #     word = check_column(tile, board_copy)
-        #     if word != nil
-        #         found_words << word
-        #     end
-        #     # Check the vertical word only once to avoid duplicates
-        #     if axis == "vertical"
-        #         break
-        #     end
-        # end
-
         check_vertical = true
         check_horizontal = true
         tiles.each do |tile|
