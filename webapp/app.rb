@@ -20,12 +20,12 @@ end
 
 
 get("/getp1") do
-    return game.dictify(0).to_json
+    return game.to_hash(0).to_json
 end
 
 
 get("/getp2") do
-    return game.dictify(1).to_json
+    return game.to_hash(1).to_json
 end
 
 

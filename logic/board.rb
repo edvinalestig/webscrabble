@@ -21,19 +21,16 @@ class Board
 
     # Add a letter to a tile
     def update_tile(row, col, letter)
-        begin
-            if letter[:letter] == "blank"
-                l = Blank.new
-                l.letter = letter[:value]
-                letter = l
-            end
-        rescue TypeError
+        if letter.is_a? Hash
+            l = Blank.new
+            l.letter = letter[:value]
+            letter = l
         end
         @tiles[row][col].letter = letter
     end
 
 
-    def json()
+    def to_hash
         dict = {
             tiles: []
         }
@@ -41,7 +38,7 @@ class Board
         @tiles.each do |row|
             arr = []
             row.each do |tile|
-                arr << tile.dictionary()
+                arr << tile.to_hash
             end
             dict[:tiles] << arr
         end 
@@ -51,7 +48,7 @@ class Board
     end
 
 
-    def copy()
+    def deep_clone()
         tiles = []
 
         (0..14).each_with_index do |row, i|
@@ -89,13 +86,7 @@ class Tile
     end
 
 
-
-    def description
-        return "Tile on position #{@row}, #{@col} with the attribute #{@attribute}. The current letter is #{@letter}"
-    end
-
-
-    def dictionary()
+    def to_hash
         l = @letter
         if l.is_a? Blank
             l = {
