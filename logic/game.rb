@@ -165,14 +165,16 @@ class Game
 
     def find_words(tiles)
         # Cheaty way to deep copy
-        tiles = JSON.parse(tiles.to_json, symbolize_names: true)
+        # tiles = JSON.parse(tiles.to_json, symbolize_names: true)
+        tiles_dup = tiles.map{ |letter| letter.dup }
+
         p "Finding words"
         found_words = []
         axis = nil
 
         # Check which axis the letters were placed on
-        if tiles.length > 1
-            if tiles[0][:row] == tiles[1][:row]
+        if tiles_dup.length > 1
+            if tiles_dup[0][:row] == tiles_dup[1][:row]
                 axis = "horizontal"
             else
                 axis = "vertical"
@@ -182,13 +184,13 @@ class Game
 
         # Add the new letters to the board to check new words
         board_copy = @board.deep_clone()
-        tiles.each_with_index do |tile, i|
+        tiles_dup.each_with_index do |tile, i|
             r = tile[:row]
             c = tile[:col]
 
             if tile[:letter].is_a? Hash
                 board_copy[r][c].letter = tile[:letter][:value]
-                tiles[i][:letter] = tile[:letter][:value]
+                tiles_dup[i][:letter] = tile[:letter][:value]
             else
                 board_copy[r][c].letter = tile[:letter]
             end
@@ -197,7 +199,7 @@ class Game
 
         check_vertical = true
         check_horizontal = true
-        tiles.each do |tile|
+        tiles_dup.each do |tile|
             if check_vertical
                 word = check_column(tile, board_copy)
                 if word != nil
