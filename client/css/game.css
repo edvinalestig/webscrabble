@@ -84,11 +84,10 @@ p {
     border-radius: 5px;
 }
 
-/* .buttonText {
+.buttonText {
     color: #ffffff;
     font-family: 'inconsolata', monospace;
-    font-size: 3vw;
     font-weight: normal;
     text-align: center;
-    padding-bottom: 2vh;
-} */
+    padding-top: 2vw;
+}
