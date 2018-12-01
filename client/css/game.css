@@ -91,3 +91,14 @@ p {
     text-align: center;
     padding-top: 2vw;
 }
+
+.vertiLine {
+    background-color: #ffffff;
+    width: 1px;
+    height: 100vh;
+    position: absolute;
+    margin-left: 35vw;
+    top: 0px;
+    margin-bottom: 0vh;
+    padding: 0vh;
+}
