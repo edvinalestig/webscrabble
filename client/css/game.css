@@ -11,8 +11,8 @@ main {
 
 .playfield {
     display: inline-block;
-    width: 63vw;
-    height: 100vh;
+    width: 63%;
+    height: 100%;
     margin: 0;
     vertical-align: top;
 }

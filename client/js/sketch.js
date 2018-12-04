@@ -4,3 +4,7 @@ function setup() {
     canvas.parent("playfield");
     background(31, 31, 31);
 }
+
+function draw() {
+    
+}
