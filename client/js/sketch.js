@@ -1,7 +1,12 @@
 let gameObject;
 
+function preload() {
+    getJson()
+}
+
 function setup() {
-    getJson();
+    setCss();
+    
 }
 
 function playButton() {
@@ -16,6 +21,7 @@ function endButton() {
 
 function getJson() {
     gameObject = loadJSON("/getp1");
+    
     // if (Object.keys(gameObject).length === 0 && gameObject.constructor === Object) {
     //     gameObject = undefined;
     // }
@@ -47,7 +53,7 @@ function setCss() {
 
         const playButtonDiv = document.getElementById("playButton");
         const playButtonText = document.getElementById("playButtonText");
-        console.log(playButtonText);
+        
         if (currentTurn == me) {
             playButtonDiv.classList.remove("oppoTurn");
             playButtonDiv.classList.add("myTurn");
