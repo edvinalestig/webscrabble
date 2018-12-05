@@ -24,7 +24,8 @@ end
 
 
 get("/p2") do
-    return "<h1>You are now player 2</h1><p><a href='/getp2'>Get data</a></p><script>#{File.read('post.js')}</script>"
+    # return "<h1>You are now player 2</h1><p><a href='/getp2'>Get data</a></p><script>#{File.read('post.js')}</script>"
+    return File.read('../client/game.html')
 end
 
 

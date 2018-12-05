@@ -1,30 +1,30 @@
 let gameObject;
+// Getting the last character in the url which is the player number
+// Temporary, will be removed when websockets are implemented
+const playerNumber = String(document.location)[String(document.location).length-1];
 
 function preload() {
-    getJson()
+    getJson();
 }
 
 function setup() {
     setCss();
-    
+    setScores();
 }
 
 function playButton() {
-    console.log("PLAY!")
+    console.log("PLAY!");
     getJson();
 }
 
 function endButton() {
-    console.log("END!")
+    console.log("END!");
     setCss();
+    setScores();
 }
 
 function getJson() {
-    gameObject = loadJSON("/getp1");
-    
-    // if (Object.keys(gameObject).length === 0 && gameObject.constructor === Object) {
-    //     gameObject = undefined;
-    // }
+    gameObject = loadJSON("/getp" + playerNumber);
 }
 
 function setCss() {
