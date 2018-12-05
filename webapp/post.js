@@ -1,18 +1,18 @@
 // Sending and receiving data in JSON format using POST method
-//
 
-function sendpost(url, msg) {
-    var xhr = new XMLHttpRequest();
+function sendpost(url, msg, callback) {
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // var json = JSON.parse(xhr.responseText);
-            // console.log(json.email + ", " + json.password);
             console.log("Done")
+            if (callback) {
+                callback();
+            }
         }
     };
-    var data = JSON.stringify(msg);
+    const data = JSON.stringify(msg);
     xhr.send(data);
 }
 
