@@ -1,39 +1,39 @@
 require_relative("../logic/game.rb")
 require 'json'
-game = nil
+$game = nil
 
 class App < Sinatra::Base
 
 
-    set :public_folder, '../client'
+    set :public_folder, 'client'
 
     before() do
-        if game == nil
-            game = Game.new(2)
+        if $game == nil
+            $game = Game.new(2)
         end
     end
 
     get("/") do
         # game = Game.new(2)
         # return "<h1>Creating new game!</h1><p><a href='/p1'>Player 1</a><br><a href='/p2'>Player 2</a></p>"
-        return File.read('../client/index.html')
+        return File.read('client/index.html')
     end
 
 
     get("/p1") do
         # return "<h1>You are now player 1</h1><p><a href='/getp1'>Get data</a></p><script>#{File.read('post.js')}</script>"
-        return File.read('../client/game.html')
+        return File.read('client/game.html')
     end
 
 
     get("/p2") do
         # return "<h1>You are now player 2</h1><p><a href='/getp2'>Get data</a></p><script>#{File.read('post.js')}</script>"
-        return File.read('../client/game.html')
+        return File.read('client/game.html')
     end
 
 
     get("/getp1") do
-        j = game.to_hash(0).to_json
+        j = $game.to_hash(0).to_json
         p j
         return j
     end
