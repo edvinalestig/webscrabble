@@ -22,11 +22,19 @@ function getJson() {
 }
 
 function setCss() {
-    console.log(gameObject);
     if (gameObject) {
         const currentTurn = gameObject.currentTurn;
         const player1 = document.getElementById("player1Score");
         const player2 = document.getElementById("player2Score");
+
+        let me;
+        for (let i = 0; i < gameObject.players.length; i++) {
+            if (gameObject.players[i].isYou) {
+                me = i;
+                break;
+            }
+        }
+
         if (currentTurn == 0) {
             // Player 1's turn
             player1.classList.add("activePlayer");
@@ -35,6 +43,25 @@ function setCss() {
             // Player 2's turn
             player1.classList.remove("activePlayer");
             player2.classList.add("activePlayer");
+        }
+
+        const playButtonDiv = document.getElementById("playButton");
+        const playButtonText = document.getElementById("playButtonText");
+        console.log(playButtonText);
+        if (currentTurn == me) {
+            playButtonDiv.classList.remove("oppoTurn");
+            playButtonDiv.classList.add("myTurn");
+            playButtonText.classList.remove("oppoTurn");
+            playButtonText.classList.add("myTurn");
+            
+            playButtonDiv.onclick = () => playButton();
+        } else {
+            playButtonDiv.classList.add("oppoTurn");
+            playButtonDiv.classList.remove("myTurn");
+            playButtonText.classList.add("oppoTurn");
+            playButtonText.classList.remove("myTurn");
+            
+            playButtonDiv.onclick = () => console.log("Deactivated");
         }
     }
 }
@@ -49,3 +76,4 @@ function setScores() {
         p2Element.innerHTML = p2Points + "p";
     }
 }
+

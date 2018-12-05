@@ -70,16 +70,16 @@ p {
 #playButton {
     width: 25.3vw;
     height: 6vw;
-    background-color: #6F9654;
+    /* background-color: #6F9654; */
     margin-top: 6vh;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
 }
 
-#playButton:hover {
+/* #playButton:hover {
     cursor: pointer;
-}
+} */
 
 #endButton {
     width: 25.3vw;
@@ -103,6 +103,13 @@ p {
     padding-top: 2vw;
 }
 
+#playButtonText {
+    font-family: 'inconsolata', monospace;
+    font-weight: normal;
+    text-align: center;
+    padding-top: 2vw;
+}
+
 .vertiLine {
     background-color: #ffffff;
     width: 1px;
@@ -112,4 +119,17 @@ p {
     top: 0px;
     margin-bottom: 0vh;
     padding: 0vh;
+}
+
+.oppoTurn {
+    /* background-color: rgba(111, 150, 84, 20); */
+    background-color: rgb(56, 75, 42);
+    color: rgb(78, 78, 78);
+    cursor: default;
+}
+
+.myTurn {
+    background-color: #6F9654;
+    color: white;
+    cursor: pointer;
 }
