@@ -50,7 +50,6 @@ p {
     border-radius: 7px;
     margin-top: 3vh;
     margin-left: 5vw;
-    box-shadow:inset 0px 0px 0px 5px #6F9654; /* Move to active class later for the js toggle*/
 }
 
 #player2Score {
@@ -64,6 +63,10 @@ p {
     margin-left: 5vw;
 }
 
+.activePlayer {
+    box-shadow:inset 0px 0px 0px 5px #6F9654;
+}
+
 #playButton {
     width: 25.3vw;
     height: 6vw;
@@ -74,6 +77,10 @@ p {
     border-radius: 5px;
 }
 
+#playButton:hover {
+    cursor: pointer;
+}
+
 #endButton {
     width: 25.3vw;
     height: 6vw;
@@ -82,6 +89,10 @@ p {
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
+}
+
+#endButton:hover {
+    cursor: pointer;
 }
 
 .buttonText {
