@@ -1,0 +1,111 @@
+main {
+    height: 80vh;
+}
+
+footer {
+    height: 10vh;
+}
+
+body {
+    background-color: #515151;
+}
+
+h1 {
+    padding-top: 200px;
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 100px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h4 {
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 0px;
+}
+
+.boxes * {
+    width: 8vw;
+    height: 8vw;
+    background-color: #ffffff;
+    display: inline-block;
+    margin: 40px;
+    border-radius: 5px;
+}
+
+
+.boxes {
+    display: flex;
+   justify-content: center;
+}
+
+footer>p {
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.loadingWrapper * {
+    display: inline-block;
+}
+
+.loadingWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingDots {
+    box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    left: -9999px;
+    position: relative;
+    border-radius: 5px;
+    width: 4px;
+    height: 4px;
+    transform: translateX(2em) translateY(-11px);
+    animation: loadingDots 1.5s infinite ease-in-out;
+}
+
+.green {
+    background-color: #6F9654;
+}
+
+.red {
+    background-color: #A35051;
+}
+
+.yellow {
+    background-color: #BDA451;
+}
+
+@keyframes loadingDots {
+    0% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+    16.667% {
+        box-shadow: 9984px -10px 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+    33.333% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+    50% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px -10px 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+    66.667% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+    83.333% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px -10px 0 0 #ffffff;
+    }
+    100% {
+        box-shadow: 9984px 0 0 0 #ffffff, 9999px 0 0 0 #ffffff, 10014px 0 0 0 #ffffff;
+    }
+}

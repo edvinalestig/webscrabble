@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>webscrabble</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="icon" href="img/webscrabbleIcon.png">
+    <script src="js/sketch.js"></script>
+    <script src="lib/p5.js"></script>
+</head>
+</head>
+<body>
+    <main>
+        <div class="statusWindow">
+            <h1>webscrabble</h1>
+            <div class="horizLine"></div>
+            <div id="playerTurn">
+                <h3>player 1</h3>
+            </div>
+            <div class="horizLine"></div>
+            <p>score</p>
+            <div id="player1Score">
+                <p>player 1</p>
+                <h3 id="player1ScoreP">0p</h3>
+            </div>
+            <div id="player2Score">
+                <p>player 2</p>
+                <h3 id="player2ScoreP">0p</h3>
+            </div>
+            <div id="playButton" class="myTurn" onclick="playButton()">
+                <h3 id="playButtonText">end turn</h3>
+            </div>
+            <div id="endButton" onclick="endButton()">
+                <h3 class="buttonText">give up</h3>
+            </div>
+            <div class="vertiLine"></div>
+        </div>
+    </main>
+</body>
+</html>
