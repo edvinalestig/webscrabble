@@ -1,17 +1,20 @@
 class LetterTray {
 
-    constructur(letter) {
+    constructor(letter) {
         this.width  = 100;
         this.height = 100;
         this.letter = letter;
-        this.colour = (49, 49, 49);
+        this.colour = (7, 49, 49);
     }
 
     show() {
-        var i;
-        for (i = LetterTray.height; i < LetterTray.height * 7; i++LetterTray.height) {
-            fill(LetterTray.colour);
-            rect(200, i, LetterTray.width, LetterTray.height, 10);
+
+        for (let i = this.height; i <= this.height * 7; i+= this.height) {
+            fill(this.colour);
+            strokeWeight(0);
+            rect(200, i, this.width, this.height, 10);
         }
     }
 }
+
+var letterTray = new LetterTray("a")

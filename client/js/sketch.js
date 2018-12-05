@@ -6,5 +6,5 @@ function setup() {
 }
 
 function draw() {
-    
+    letterTray.show();
 }
