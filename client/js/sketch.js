@@ -38,3 +38,14 @@ function setCss() {
         }
     }
 }
+
+function setScores() {
+    if (gameObject) {
+        const p1Element = document.getElementById("player1ScoreP");
+        const p2Element = document.getElementById("player2ScoreP");
+        const p1Points = gameObject.players[0].points;
+        const p2Points = gameObject.players[1].points;
+        p1Element.innerHTML = p1Points + "p";
+        p2Element.innerHTML = p2Points + "p";
+    }
+}

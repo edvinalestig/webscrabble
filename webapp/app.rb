@@ -5,8 +5,14 @@ game = nil
 
 set :public_folder, '../client'
 
+before() do
+    if game == nil
+        game = Game.new(2)
+    end
+end
+
 get("/") do
-    game = Game.new(2)
+    # game = Game.new(2)
     return "<h1>Creating new game!</h1><p><a href='/p1'>Player 1</a><br><a href='/p2'>Player 2</a></p>"
 end
 
