@@ -6,6 +6,8 @@ require_relative("words.rb")
 require("json")
 
 class Game
+    attr_reader :players, :current_turn
+
     def initialize(number_of_players)
 
         if number_of_players > 4
@@ -42,21 +44,89 @@ class Game
 
     def response(obj)
         p obj
+        # Check if the player passed or forfeited
 
         add_new_letters(obj[:tiles])
     end
 
 
     def valid_placement?(tiles)
+        extends = false
+        rows = []
+        cols = []
+
         tiles.each do |tile|
             r = tile[:row]
             c = tile[:col]
+            rows << r
+            cols << c
 
             if @board.tiles[r][c].letter != nil
+                return false
+                puts "Occupied!"
+            end
+
+            # Check if there is at least one placed tile next to a new one
+            if @board.tiles[r-1][c].letter != nil || @board.tiles[r+1][c].letter != nil
+                extends = true
+            elsif @board.tiles[r][c-1].letter != nil || @board.tiles[r][c+1].letter != nil
+                extends = true
+            end
+
+        end
+        
+        if !extends
+            # If there are no letters placed then it will fail
+            # It's valid if the word is placed on the centre tile
+            centre = false
+            tiles.each do |tile|
+                r = tile[:row]
+                c = tile[:col]
+                if @board.tiles[r][c].attribute == "centre"
+                    centre = true
+                    break
+                end
+            end
+            
+            if !centre
+                puts "Not in the centre or does not extend current board!"
                 return false
             end
         end
 
+        same_rows = rows.uniq.length == 1
+        same_cols = cols.uniq.length == 1
+
+        if !same_rows && !same_cols
+            puts "Not all placed on the same row or column!"
+            return false
+        end
+
+        if same_rows
+            cols = cols.sort
+            p cols
+            i = 1
+            while i < cols.length
+                if cols[i] != cols[i-1] + 1
+                    puts "Letters not placed together!"
+                    return false
+                end
+                i += 1
+            end
+        else
+            rows = rows.sort
+            p rows
+            i = 1
+            while i < rows.length
+                if rows[i] != rows[i-1] + 1
+                    puts "Letters not placed together!"
+                    return false
+                end
+                i += 1
+            end
+        end
+
+        puts "Whohoo!"
         return true
     end
 
@@ -67,7 +137,7 @@ class Game
 
         if !valid_placement?(letters)
             # Not a valid turn, return to client
-            puts "INVALID! TILES ALREADY ASSIGNED"
+            puts "INVALID PLACEMENT"
             return false
         end
 
@@ -354,7 +424,7 @@ class Game
             roundNumber: @round,
             lettersLeft: @letter_bag.length
         }
-        
+
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
         if all
             dict[:board][:tiles] = @board.to_hash
