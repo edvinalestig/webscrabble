@@ -2,6 +2,7 @@ require_relative("board.rb")
 require_relative("letters.rb")
 require_relative("player.rb")
 require_relative("words.rb")
+require_relative("error.rb")
 
 require("json")
 
@@ -45,15 +46,29 @@ class Game
     def response(obj)
         p obj
         # Check if the player passed or forfeited
+        if obj[:passed]
+            end_turn()
+            return true
+        end
 
-        add_new_letters(obj[:tiles])
+        if obj[:forfeit]
+            # The other player has won or the player will be excluded if there are more players.
+            h = {"ended" => true, "winner" => (@current_turn+1) % 2}
+            return h
+        end
+
+        success = add_new_letters(obj[:tiles])
+        # Returns either true or an error hash
+        # Send it to the client via the websocket
+        return success
     end
 
 
-    def valid_placement?(tiles)
+    def check_placement(tiles)
         extends = false
         rows = []
         cols = []
+        occupied = []
 
         tiles.each do |tile|
             r = tile[:row]
@@ -62,8 +77,8 @@ class Game
             cols << c
 
             if @board.tiles[r][c].letter != nil
-                return false
                 puts "Occupied!"
+                occupied << {"row" => r, "column" => c}
             end
 
             # Check if there is at least one placed tile next to a new one
@@ -73,6 +88,11 @@ class Game
                 extends = true
             end
 
+        end
+
+        if occupied.length > 0
+            puts "Occupied!"
+            return Error.create("tileOccupied", occupied)
         end
         
         if !extends
@@ -90,7 +110,7 @@ class Game
             
             if !centre
                 puts "Not in the centre or does not extend current board!"
-                return false
+                return Error.create("invalidPlacement", true)
             end
         end
 
@@ -99,7 +119,7 @@ class Game
 
         if !same_rows && !same_cols
             puts "Not all placed on the same row or column!"
-            return false
+            return Error.create("invalidPlacement", true)
         end
 
         if same_rows
@@ -109,7 +129,7 @@ class Game
             while i < cols.length
                 if cols[i] != cols[i-1] + 1
                     puts "Letters not placed together!"
-                    return false
+                    return Error.create("invalidPlacement", true)
                 end
                 i += 1
             end
@@ -120,7 +140,7 @@ class Game
             while i < rows.length
                 if rows[i] != rows[i-1] + 1
                     puts "Letters not placed together!"
-                    return false
+                    return Error.create("invalidPlacement", true)
                 end
                 i += 1
             end
@@ -135,10 +155,14 @@ class Game
     def add_new_letters(letters)
         p letters
 
-        if !valid_placement?(letters)
-            # Not a valid turn, return to client
-            puts "INVALID PLACEMENT"
-            return false
+        # Check if an error has been returned.
+        # Does not do it currently but should be implemented
+        pl = check_placement(letters)
+        if pl.is_a? Hash
+            puts "An error occured"
+            p pl
+            # Send the error to the client
+            return pl
         end
 
         # Store indices for later removal
@@ -146,6 +170,7 @@ class Game
         p @players[@current_turn].rack
 
         # Go through the letters to confirm they are on the player's rack
+        missing = []
         letters.each do |tile|
             found = false
             blank = false
@@ -166,10 +191,12 @@ class Game
 
             if !found 
                 puts "Letter #{tile[:letter]} not on player's rack."
-
-                # Change later to tell the client
-                return false
+                missing << tile[:letter]
             end
+        end
+
+        if missing.length > 0
+            return Error.create("lettersNotOnRack", missing)
         end
 
         invalid_words = []
@@ -180,7 +207,7 @@ class Game
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            return false
+            return Error.create("noWordsFound", true)
         end
 
         #Check if they are valid
@@ -193,7 +220,7 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
-            return false
+            return Error.create("invalidWords", invalid_words)
         else
             # Update the tiles and calculate the points
             lut = []
@@ -227,7 +254,7 @@ class Game
                 @players[@current_turn].rack.slice!(i)
             end
 
-            end_turn()
+            end_turn() # Move this out of the method
             return true
         end
     end

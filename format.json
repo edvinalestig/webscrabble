@@ -48,13 +48,16 @@
             "FRWQ",
             "HYRRBN"
         ],
-        "lettersNotOnRack": false,
+        "lettersNotOnRack": ["A", "H"],
         "invalidPlacement": false,
         "tileOccupied": [
             {
                 "row": 5,
                 "column": 14
             }
-        ]
-    }
+        ],
+        "noWordsFound": true
+    },
+    "ended": false,
+    "winner": null
 }
