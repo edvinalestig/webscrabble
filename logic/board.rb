@@ -31,20 +31,17 @@ class Board
 
 
     def to_hash
-        dict = {
-            tiles: []
-        }
+        tile_array = []
 
         @tiles.each do |row|
             arr = []
             row.each do |tile|
                 arr << tile.to_hash
             end
-            dict[:tiles] << arr
+            tile_array << arr
         end 
 
-        return dict
-
+        return tile_array
     end
 
 

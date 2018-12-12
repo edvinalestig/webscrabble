@@ -319,7 +319,7 @@ class Game
     end
 
 
-    def to_hash(player_number)
+    def to_hash(player_number, all=false)
         # Add all the relevant data to a dictionary following the set json format
         # player_number makes the dict player-specific
 
@@ -345,7 +345,7 @@ class Game
         end
 
         dict = {
-            board: @board.to_hash,
+            board: {},
             players: players,
             you: {
                 rack: rack
@@ -354,7 +354,11 @@ class Game
             roundNumber: @round,
             lettersLeft: @letter_bag.length
         }
+        
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
+        if all
+            dict[:board][:tiles] = @board.to_hash
+        end
 
         return dict
     end
