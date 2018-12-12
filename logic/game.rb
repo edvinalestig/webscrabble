@@ -457,7 +457,7 @@ class Game
             dict[:board][:tiles] = @board.to_hash
         end
 
-        return dict
+        return {game: dict}
     end
 
 end
