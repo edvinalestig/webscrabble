@@ -95,7 +95,11 @@ class Letters
     # Get the points for a letter
     # Should this be moved elsewhere?
     def get_points(letter)
-        return @points[letter.upcase.to_sym]
+        if letter.is_a? Hash
+            return 0
+        else
+            return @points[letter.upcase.to_sym]
+        end
     end
    
 

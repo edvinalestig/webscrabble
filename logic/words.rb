@@ -1,7 +1,7 @@
 class Words
     def initialize()
         # Reads the saved word list
-        wordfile = File.readlines("../logic/wordlist.txt")
+        wordfile = File.readlines("logic/wordlist.txt")
 
         # Goes through all the words and removes \n-characters and other whitespace
         @words = []
