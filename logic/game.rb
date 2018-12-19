@@ -212,8 +212,17 @@ class Game
 
         #Check if they are valid
         new_words.each do |word|
-            if !@words.word?(word)
-                invalid_words << word
+            word_str = ""
+            word.each do |char|
+                if char.is_a? String
+                    word_str.concat char
+                else
+                    word_str.concat char[:value]
+                end
+            end
+
+            if !@words.word?(word_str)
+                invalid_words << word_str
             end
         end
 
@@ -239,6 +248,7 @@ class Game
             points = 0
             new_words.each do |word|
                 points += calculate_points(word)
+                p "Points: #{points}"
             end
 
             # Add the points to the player
@@ -261,8 +271,6 @@ class Game
 
 
     def find_words(tiles)
-        # Cheaty way to deep copy
-        # tiles = JSON.parse(tiles.to_json, symbolize_names: true)
         tiles_dup = tiles.map{ |letter| letter.dup }
 
         p "Finding words"
@@ -285,12 +293,12 @@ class Game
             r = tile[:row]
             c = tile[:col]
 
-            if tile[:letter].is_a? Hash
-                board_copy[r][c].letter = tile[:letter][:value]
-                tiles_dup[i][:letter] = tile[:letter][:value]
-            else
-                board_copy[r][c].letter = tile[:letter]
-            end
+            # if tile[:letter].is_a? Hash
+            #     board_copy[r][c].letter = tile[:letter][:value]
+            #     tiles_dup[i][:letter] = tile[:letter][:value]
+            # else
+            board_copy[r][c].letter = tile[:letter]
+            # end
         end
         
 
@@ -344,7 +352,7 @@ class Game
 
         # p word
         if word.length > 1
-            return word.join()
+            return word
         else
             return nil
         end
@@ -372,7 +380,7 @@ class Game
 
         # p word
         if word.length > 1
-            return word.join()
+            return word
         else
             return nil
         end
@@ -383,7 +391,7 @@ class Game
         # Does not work with blanks
         
         points = 0
-        word.each_char do |letter|
+        word.each do |letter|
             points += @letter_bag.get_points(letter)
         end
 
