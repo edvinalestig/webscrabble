@@ -1,10 +1,28 @@
 body {
     background-color: #515151;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+}
+
+.playfield {
+    display: inline-block;
+    width: 63%;
+    height: 100%;
+    margin: 0;
+    vertical-align: top;
 }
 
 .statusWindow {
     width: 35vw;
     height: 100vh;
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
 }
 
 h1 {
@@ -113,7 +131,7 @@ p {
 .vertiLine {
     background-color: #ffffff;
     width: 1px;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     margin-left: 35vw;
     top: 0px;

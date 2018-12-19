@@ -10,6 +10,10 @@ function preload() {
 function setup() {
     setCss();
     setScores();
+    var canvasDiv = document.getElementById("playfield");
+    var canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
+    canvas.parent("playfield");
+    background(31, 31, 31);
 }
 
 function playButton() {
@@ -83,3 +87,6 @@ function setScores() {
     }
 }
 
+function draw() {
+    letterTray.show();
+}
