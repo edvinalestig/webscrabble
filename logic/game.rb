@@ -2,10 +2,13 @@ require_relative("board.rb")
 require_relative("letters.rb")
 require_relative("player.rb")
 require_relative("words.rb")
+require_relative("error.rb")
 
 require("json")
 
 class Game
+    attr_reader :players, :current_turn
+
     def initialize(number_of_players)
 
         if number_of_players > 4
@@ -42,21 +45,108 @@ class Game
 
     def response(obj)
         p obj
+        # Check if the player passed or forfeited
+        if obj[:passed]
+            end_turn()
+            return true
+        end
 
-        add_new_letters(obj[:tiles])
+        if obj[:forfeit]
+            # The other player has won or the player will be excluded if there are more players.
+            h = {"ended" => true, "winner" => (@current_turn+1) % 2}
+            return h
+        end
+
+        success = add_new_letters(obj[:tiles])
+        # Returns either true or an error hash
+        # Send it to the client via the websocket
+        return success
     end
 
 
-    def valid_placement?(tiles)
+    def check_placement(tiles)
+        extends = false
+        rows = []
+        cols = []
+        occupied = []
+
         tiles.each do |tile|
             r = tile[:row]
             c = tile[:col]
+            rows << r
+            cols << c
 
             if @board.tiles[r][c].letter != nil
-                return false
+                puts "Occupied!"
+                occupied << {"row" => r, "column" => c}
+            end
+
+            # Check if there is at least one placed tile next to a new one
+            if @board.tiles[r-1][c].letter != nil || @board.tiles[r+1][c].letter != nil
+                extends = true
+            elsif @board.tiles[r][c-1].letter != nil || @board.tiles[r][c+1].letter != nil
+                extends = true
+            end
+
+        end
+
+        if occupied.length > 0
+            puts "Occupied!"
+            return Error.create("tileOccupied", occupied)
+        end
+        
+        if !extends
+            # If there are no letters placed then it will fail
+            # It's valid if the word is placed on the centre tile
+            centre = false
+            tiles.each do |tile|
+                r = tile[:row]
+                c = tile[:col]
+                if @board.tiles[r][c].attribute == "centre"
+                    centre = true
+                    break
+                end
+            end
+            
+            if !centre
+                puts "Not in the centre or does not extend current board!"
+                return Error.create("invalidPlacement", true)
             end
         end
 
+        same_rows = rows.uniq.length == 1
+        same_cols = cols.uniq.length == 1
+
+        if !same_rows && !same_cols
+            puts "Not all placed on the same row or column!"
+            return Error.create("invalidPlacement", true)
+        end
+
+        if same_rows
+            cols = cols.sort
+            p cols
+            i = 1
+            while i < cols.length
+                if cols[i] != cols[i-1] + 1
+                    puts "Letters not placed together!"
+                    return Error.create("invalidPlacement", true)
+                end
+                i += 1
+            end
+        else
+            rows = rows.sort
+            p rows
+            i = 1
+            while i < rows.length
+                if rows[i] != rows[i-1] + 1
+                    puts "Letters not placed together!"
+                    return Error.create("invalidPlacement", true)
+                end
+                i += 1
+            end
+        end
+
+        puts "Whohoo!"
         return true
     end
 
@@ -65,10 +155,14 @@ class Game
     def add_new_letters(letters)
         p letters
 
-        if !valid_placement?(letters)
-            # Not a valid turn, return to client
-            puts "INVALID! TILES ALREADY ASSIGNED"
-            return false
+        # Check if an error has been returned.
+        # Does not do it currently but should be implemented
+        pl = check_placement(letters)
+        if pl.is_a? Hash
+            puts "An error occured"
+            p pl
+            # Send the error to the client
+            return pl
         end
 
         # Store indices for later removal
@@ -76,6 +170,7 @@ class Game
         p @players[@current_turn].rack
 
         # Go through the letters to confirm they are on the player's rack
+        missing = []
         letters.each do |tile|
             found = false
             blank = false
@@ -96,10 +191,12 @@ class Game
 
             if !found 
                 puts "Letter #{tile[:letter]} not on player's rack."
-
-                # Change later to tell the client
-                return false
+                missing << tile[:letter]
             end
+        end
+
+        if missing.length > 0
+            return Error.create("lettersNotOnRack", missing)
         end
 
         invalid_words = []
@@ -110,20 +207,29 @@ class Game
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            return false
+            return Error.create("noWordsFound", true)
         end
 
         #Check if they are valid
         new_words.each do |word|
-            if !@words.word?(word)
-                invalid_words << word
+            word_str = ""
+            word.each do |char|
+                if char.is_a? String
+                    word_str.concat char
+                else
+                    word_str.concat char[:value]
+                end
+            end
+
+            if !@words.word?(word_str)
+                invalid_words << word_str
             end
         end
 
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
-            return false
+            return Error.create("invalidWords", invalid_words)
         else
             # Update the tiles and calculate the points
             lut = []
@@ -142,6 +248,7 @@ class Game
             points = 0
             new_words.each do |word|
                 points += calculate_points(word)
+                p "Points: #{points}"
             end
 
             # Add the points to the player
@@ -157,15 +264,13 @@ class Game
                 @players[@current_turn].rack.slice!(i)
             end
 
-            end_turn()
+            end_turn() # Move this out of the method
             return true
         end
     end
 
 
     def find_words(tiles)
-        # Cheaty way to deep copy
-        # tiles = JSON.parse(tiles.to_json, symbolize_names: true)
         tiles_dup = tiles.map{ |letter| letter.dup }
 
         p "Finding words"
@@ -188,12 +293,12 @@ class Game
             r = tile[:row]
             c = tile[:col]
 
-            if tile[:letter].is_a? Hash
-                board_copy[r][c].letter = tile[:letter][:value]
-                tiles_dup[i][:letter] = tile[:letter][:value]
-            else
-                board_copy[r][c].letter = tile[:letter]
-            end
+            # if tile[:letter].is_a? Hash
+            #     board_copy[r][c].letter = tile[:letter][:value]
+            #     tiles_dup[i][:letter] = tile[:letter][:value]
+            # else
+            board_copy[r][c].letter = tile[:letter]
+            # end
         end
         
 
@@ -247,7 +352,7 @@ class Game
 
         # p word
         if word.length > 1
-            return word.join()
+            return word
         else
             return nil
         end
@@ -275,7 +380,7 @@ class Game
 
         # p word
         if word.length > 1
-            return word.join()
+            return word
         else
             return nil
         end
@@ -286,7 +391,7 @@ class Game
         # Does not work with blanks
         
         points = 0
-        word.each_char do |letter|
+        word.each do |letter|
             points += @letter_bag.get_points(letter)
         end
 
@@ -319,7 +424,7 @@ class Game
     end
 
 
-    def to_hash(player_number)
+    def to_hash(player_number, all=false)
         # Add all the relevant data to a dictionary following the set json format
         # player_number makes the dict player-specific
 
@@ -345,7 +450,7 @@ class Game
         end
 
         dict = {
-            board: @board.to_hash,
+            board: {},
             players: players,
             you: {
                 rack: rack
@@ -354,9 +459,13 @@ class Game
             roundNumber: @round,
             lettersLeft: @letter_bag.length
         }
-        dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
 
-        return dict
+        dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
+        if all
+            dict[:board][:tiles] = @board.to_hash
+        end
+
+        return {game: dict}
     end
 
 end

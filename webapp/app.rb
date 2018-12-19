@@ -33,14 +33,22 @@ class App < Sinatra::Base
 
 
     get("/getp1") do
-        j = $game.to_hash(0).to_json
-        p j
-        return j
+        return $game.to_hash(0).to_json
+    end
+
+
+    get("/getp1/all") do
+        return $game.to_hash(0, true).to_json
     end
 
 
     get("/getp2") do
         return $game.to_hash(1).to_json
+    end
+
+
+    get("/getp2/all") do
+        return $game.to_hash(1, true).to_json
     end
 
 
