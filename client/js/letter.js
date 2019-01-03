@@ -4,13 +4,16 @@ class LetterRack {
         this.width   = 70;
         this.height  = 70;
         this.letters = [];
-        this.colour  = (33, 33, 33);
+        this.colour  = (51, 51, 51);
         this.xPos    = 70;
         this.yPos    = 32;
     }
 
     show() {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 7; i++) { // Edvin's version
+        // var spacing = playfield.height * 0.033
+        // for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) { -- Ida's version
+
             fill(this.colour);
             strokeWeight(0);
             let yPos = this.yPos + i * (this.height + 28.5);
@@ -37,8 +40,7 @@ class LetterRack {
     }
     
     manageLetters() {
-        // var gameObject = loadJSON('../logic/test.json');
-        this.letters  = gameObject.game.you.rack;
+        this.letters = gameObject.game.you.rack;
         console.log(this.letters);
     }
 

@@ -1,5 +1,7 @@
-let gameObject;
+let gameObject = initState;
 let letterRack = new LetterRack();
+let playfield = new Playfield();
+
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
 const playerNumber = String(document.location)[String(document.location).length-1];
@@ -11,13 +13,19 @@ function preload() {
 function setup() {
     setCss();
     setScores();
+
     const canvasDiv = document.getElementById("playfield");
-    // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
-    canvas = createCanvas(canvasDiv.offsetWidth, windowHeight);
+    let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas.parent("playfield");
-    background('454545');
+    background(45);
     letterRack.manageLetters();
-    drawBoard();
+    drawBoard(); // Edvin's version
+
+    letterRack.width  = width / 11;
+    playfield.width   = width * 0.7528;
+    playfield.height  = height * 0.9256;
+    letterRack.height = playfield.height * 0.1148; // Ida's version
+
 }
 
 function playButton() {
@@ -93,4 +101,5 @@ function setScores() {
 
 function draw() {
     letterRack.show();
+    playfield.show();
 }

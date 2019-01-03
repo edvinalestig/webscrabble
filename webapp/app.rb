@@ -51,6 +51,11 @@ class App < Sinatra::Base
         return $game.to_hash(1, true).to_json
     end
 
+    
+    get("/logic/test.json") do
+        headers "Content-Type" => "text/html; charset=utf8"
+        return File.read('logic/test.json')
+    end
 
     get("/newgame") do
         $game = Game.new(2)
