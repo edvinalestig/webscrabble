@@ -52,6 +52,12 @@ class App < Sinatra::Base
     end
 
 
+    get("/newgame") do
+        $game = Game.new(2)
+        redirect("/p1")
+    end
+
+
     post("/p1") do
         p params
         $game.response(params)
