@@ -4,7 +4,7 @@ class LetterRack {
         this.width   = 100;
         this.height  = 100;
         this.letters = [];
-        this.colour  = (33, 33, 33);
+        this.colour  = (51, 51, 51);
         this.xPos    = 70;
         this.yPos    = 40;
     }
