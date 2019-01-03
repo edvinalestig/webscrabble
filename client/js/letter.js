@@ -11,7 +11,9 @@ class LetterRack {
 
     show() {
 
-        for (let i = this.yPos; i <= this.height * 9; i+= this.height + 28.5) {
+    var spacing = playfield.height * 0.033
+
+        for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) {
             fill(this.colour);
             strokeWeight(0);
             rect(this.xPos, i, this.width, this.height, 10);
