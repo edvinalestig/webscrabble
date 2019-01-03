@@ -1,4 +1,6 @@
 let gameObject;
+let canvas;
+let letterRack;
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
 const playerNumber = String(document.location)[String(document.location).length-1];
@@ -10,12 +12,16 @@ function preload() {
 function setup() {
     setCss();
     setScores();
-    var canvasDiv = document.getElementById("playfield");
-    var canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
+    const canvasDiv = document.getElementById("playfield");
+    // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
+    canvas = createCanvas(canvasDiv.offsetWidth, windowHeight);
+    // canvas.style("visibility", "visible");
     canvas.parent("playfield");
     background(51, 51, 51);
-    var letterRack = new LetterRack("a")
-    letterRack.manageLetters()
+    // background(255);
+    letterRack = new LetterRack("a");
+    letterRack.manageLetters();
+    drawBoard();
 }
 
 function playButton() {
@@ -30,7 +36,7 @@ function endButton() {
 }
 
 function getJson() {
-    gameObject = loadJSON("/getp" + playerNumber);
+    gameObject = loadJSON("/getp" + playerNumber + "/all");
 }
 
 function setCss() {
@@ -88,6 +94,7 @@ function setScores() {
         p2Element.innerHTML = p2Points + "p";
     }
 }
+
 function draw() {
     letterRack.show();
 }
