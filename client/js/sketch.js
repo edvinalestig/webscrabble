@@ -19,12 +19,11 @@ function setup() {
     canvas.parent("playfield");
     background(45);
     letterRack.manageLetters();
-    drawBoard(); // Edvin's version
 
     letterRack.width  = width / 11;
     playfield.width   = width * 0.7528;
     playfield.height  = height * 0.9256;
-    letterRack.height = playfield.height * 0.1148; // Ida's version
+    letterRack.height = playfield.height * 0.1148;
 
 }
 

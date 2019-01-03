@@ -11,7 +11,8 @@ class LetterRack {
 
     show() {
         for (let i = 0; i < 7; i++) { // Edvin's version
-        // var spacing = playfield.height * 0.033
+
+        // const spacing = playfield.height * 0.033
         // for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) { -- Ida's version
 
             fill(this.colour);
@@ -36,7 +37,6 @@ class LetterRack {
             // Writing the points in the corner
             text(p, this.xPos + 60 - w/2, yPos + 19);
         }
-        noLoop();
     }
     
     manageLetters() {
