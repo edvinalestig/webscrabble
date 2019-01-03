@@ -25,8 +25,7 @@ class LetterRack {
     }
     
     manageLetters() {
-        var gameObject = loadJSON('../logic/test.json');
-        this.letters  = gameObject.players.you.rack;
+        this.letters = gameObject.game.you.rack;
         console.log(this.letters);
     }
 }
