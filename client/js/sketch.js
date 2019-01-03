@@ -1,6 +1,5 @@
 let gameObject;
-let canvas;
-let letterRack;
+let letterRack = new LetterRack();
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
 const playerNumber = String(document.location)[String(document.location).length-1];
@@ -15,11 +14,8 @@ function setup() {
     const canvasDiv = document.getElementById("playfield");
     // canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas = createCanvas(canvasDiv.offsetWidth, windowHeight);
-    // canvas.style("visibility", "visible");
     canvas.parent("playfield");
-    background(51, 51, 51);
-    // background(255);
-    letterRack = new LetterRack("a");
+    background('454545');
     letterRack.manageLetters();
     drawBoard();
 }
