@@ -10,20 +10,25 @@ class LetterRack {
     }
 
     show() {
-
-        console.log("show");
         for (let i = 0; i < 7; i++) {
             fill(this.colour);
             strokeWeight(0);
             let yPos = this.yPos + i * (this.height + 28.5);
             rect(this.xPos, yPos, this.width, this.height, 10);
 
+            let lt = this.letters[i];
+
             fill(255);
             textSize(48);
-            text(this.letters[i], this.xPos + 18, yPos + 50);
+            let w = textWidth(lt);
+            // Writing the letter centred in the tile
+            text(lt, this.xPos + 32 - w/2, yPos + 50);
+
             textSize(12);
-            p = getPoints(this.letters[i]);
-            text(p, this.xPos + 54, yPos + 19);
+            p = getPoints(lt);
+            w = textWidth(String(p));
+            // Writing the points in the corner
+            text(p, this.xPos + 60 - w/2, yPos + 19);
         }
         noLoop();
     }
