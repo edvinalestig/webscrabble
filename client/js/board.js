@@ -33,12 +33,16 @@ function star(x, y, radius1, radius2, npoints) {
     stroke(150, 0, 0);
     beginShape();
     for (let a = PI / -2; a < TWO_PI; a += angle) {
-      let sx = x + cos(a) * radius2;
-      let sy = y + sin(a) * radius2;
-      vertex(sx, sy);
-      sx = x + cos(a+halfAngle) * radius1;
-      sy = y + sin(a+halfAngle) * radius1;
-      vertex(sx, sy);
+        let sx = x + cos(a) * radius2;
+        let sy = y + sin(a) * radius2;
+        vertex(sx, sy);
+        sx = x + cos(a+halfAngle) * radius1;
+        sy = y + sin(a+halfAngle) * radius1;
+        vertex(sx, sy);
     }
     endShape(CLOSE);
-  }
+}
+
+function drawTile() {
+    
+}

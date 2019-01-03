@@ -17,6 +17,9 @@ class LetterRack {
             rect(this.xPos, yPos, this.width, this.height, 10);
 
             let lt = this.letters[i];
+            if (lt.letter == "blank") {
+                continue;
+            }
 
             fill(255);
             textSize(48);
