@@ -1,33 +1,48 @@
 class LetterRack {
 
-    constructor(letters) {
-        this.width   = 100;
-        this.height  = 100;
+    constructor() {
+        this.width   = 70;
+        this.height  = 70;
         this.letters = [];
         this.colour  = (51, 51, 51);
         this.xPos    = 70;
-        this.yPos    = 40;
+        this.yPos    = 32;
     }
 
     show() {
+        for (let i = 0; i < 7; i++) { // Edvin's version
 
-    var spacing = playfield.height * 0.033
+        // const spacing = playfield.height * 0.033
+        // for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) { -- Ida's version
 
-        for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) {
             fill(this.colour);
             strokeWeight(0);
-            rect(this.xPos, i, this.width, this.height, 10);
-            //letter();
+            let yPos = this.yPos + i * (this.height + 28.5);
+            rect(this.xPos, yPos, this.width, this.height, 10);
+
+            let lt = this.letters[i];
+            if (lt.letter == "blank") {
+                continue;
+            }
+
+            fill(255);
+            textSize(48);
+            let w = textWidth(lt);
+            // Writing the letter centred in the tile
+            text(lt, this.xPos + 32 - w/2, yPos + 50);
+
+            textSize(12);
+            p = getPoints(lt);
+            w = textWidth(String(p));
+            // Writing the points in the corner
+            text(p, this.xPos + 60 - w/2, yPos + 19);
         }
-    }
-    
-    letter() {
-        fill(255);
-        text(letter, this.xPos, this.yPos);
     }
     
     manageLetters() {
         this.letters = gameObject.game.you.rack;
         console.log(this.letters);
     }
+
+
 }
