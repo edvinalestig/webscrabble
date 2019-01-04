@@ -62,7 +62,21 @@ class App < Sinatra::Base
         redirect("/p1")
     end
 
+    get("/winner") do
+      return $game.winner
+    end
 
+    get("/end_page") do
+        p "########## WINNER ###########"
+        p $game.winner
+        return File.read('client/end_page.html')
+    end
+
+    post("/winner/:id") do
+        $game.winner = params["id"]
+        redirect("/end_page")
+    end
+    
     post("/p1") do
         p params
         $game.response(params)

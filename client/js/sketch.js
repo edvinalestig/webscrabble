@@ -36,9 +36,11 @@ function endButton() {
     console.log("END!");
     setCss();
     setScores();
+    giveUp();
 }
 
 function getJson() {
+    console.log(playerNumber);
     gameObject = loadJSON("/getp" + playerNumber + "/all");
 }
 
@@ -96,6 +98,20 @@ function setScores() {
         p1Element.innerHTML = p1Points + "p";
         p2Element.innerHTML = p2Points + "p";
     }
+}
+
+function giveUp() {
+    let route = "/winner/";
+    if (playerNumber == "1") {
+        route += "2";
+    } else if (playerNumber == "2") {
+        route += "1";
+    }
+
+    const formElement = document.getElementById("giveUpForm");
+    formElement.action = route;
+    formElement.submit();
+
 }
 
 function draw() {

@@ -8,6 +8,7 @@ require("json")
 
 class Game
     attr_reader :players, :current_turn
+    attr_accessor :winner
 
     def initialize(number_of_players)
 
@@ -39,6 +40,7 @@ class Game
         @current_turn = 0
         @round = 1
         @latest_updated_tiles = []
+        @winner = nil
 
     end
 
