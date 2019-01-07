@@ -1,6 +1,10 @@
+# Class for creating error messages
 class Error
+
+    # Creates an error message
+    # Returns Hash with error type and description
     def self.create(type, data)
-        # Does some error checking and returns a hash for the error
+        # Error checking
         error_list = ["invalidWords", "lettersNotOnRack", "invalidPlacement", "tileOccupied", "noWordsFound"]
         if error_list.include? type
             if type == "invalidWords" || type == "tileOccupied"
