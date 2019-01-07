@@ -1,3 +1,4 @@
+# Class for the players
 class Player
 
     attr_accessor :points, :my_turn
@@ -9,7 +10,10 @@ class Player
         @my_turn = false
     end
 
-  
+    # Add letters to the rack
+    # Arguments:
+    # letters - Array or String or Blank object, can be multiple ones.
+    # Returns nil
     def add_to_rack(*letters)
         # Ability to put in both arrays and single characters
         # Number of inputs is not defined, the user can choose

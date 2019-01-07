@@ -1,3 +1,4 @@
+// Class handling the letter rack
 class LetterRack {
 
     constructor() {
@@ -9,6 +10,7 @@ class LetterRack {
         this.yPos    = 32;
     }
 
+    // Draw it!
     show() {
         for (let i = 0; i < 7; i++) { // Edvin's version
 
@@ -25,12 +27,14 @@ class LetterRack {
                 continue;
             }
 
+            // Add the letter
             fill(255);
             textSize(48);
             let w = textWidth(lt);
             // Writing the letter centred in the tile
             text(lt, this.xPos + 32 - w/2, yPos + 50);
 
+            // Add the points
             textSize(12);
             p = getPoints(lt);
             w = textWidth(String(p));
@@ -39,10 +43,9 @@ class LetterRack {
         }
     }
     
+    // Update this.letters with the current rack in the game object
     manageLetters() {
         this.letters = gameObject.game.you.rack;
         console.log(this.letters);
     }
-
-
 }

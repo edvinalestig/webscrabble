@@ -1,5 +1,4 @@
 # Class handling the letters in the game
-
 class Letters
     def initialize()
         # Fill the letter bag with all the 100 letters
@@ -37,13 +36,12 @@ class Letters
         }
     end
 
-
+    # Add the 100 letters to the bag
     def add_letters_to_bag()
-        # Loops 12 times and adds the correct number of all letters to the bag
 
         bag = ["Z", "X", "J", "K", "Q"] # Letters which only appear once
         
-        2.times do 
+        2.times do       # Letters which appear twice
             bag << "V"
             bag << "W"
             bag << "B"
@@ -85,6 +83,9 @@ class Letters
 
 
     # Return <number> letters from the letter bag and remove them from the bag
+    # Arguments:
+    # number - Integer of how many letters
+    # Returns Array of strings or Blank objects
     def draw(number)
         @letter_bag = @letter_bag.shuffle
         letters = @letter_bag.pop(number)
@@ -94,6 +95,9 @@ class Letters
     
     # Get the points for a letter
     # Should this be moved elsewhere?
+    # Arguments:
+    # letter - The letter which points are requested for
+    # Returns Integer of the points
     def get_points(letter)
         if letter.is_a? Hash
             return 0
@@ -104,13 +108,14 @@ class Letters
    
 
     # Get the remaining number of letters in the bag
+    # Returns Integer
     def length()
         return @letter_bag.length
     end
 
 end
 
-
+# Class for the blank letters
 class Blank 
 
     attr_accessor :letter
