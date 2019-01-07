@@ -200,7 +200,7 @@ class Game
             end
 
             @players[@current_turn].rack.each_with_index do |letter, i|
-                if (blank && letter.is_a? Blank) or (!blank && tile[:letter] == letter)
+                if (blank && letter.is_a?(Blank)) || (!blank && tile[:letter] == letter)
                     if !indices.include? i
                         # Save the index
                         found = true
@@ -496,7 +496,7 @@ class Game
 
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
         if all
-            dict[:board][:tiles] = @board.to_hash
+            dict[:board][:tiles] = @board.to_array
         end
 
         return {game: dict}

@@ -35,9 +35,9 @@ class Board
         @tiles[row][col].letter = letter
     end
 
-    # Method for converting the board to a Hash.
+    # Method for converting the board to an Array.
     # Returns a 2D Array of the tiles on the board.
-    def to_hash # ------------------------------------------------ NOT HASH
+    def to_array
         tile_array = []
 
         @tiles.each do |row|
