@@ -3,9 +3,11 @@ const darkColour = (54, 54, 54);
 const lightColour = (71, 71, 71);
 
 // Create the required objects for the game
-let gameObject = initState;
+let gameObject;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
+let selectedLetter;
+let placedTiles = [];
 
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
@@ -27,17 +29,39 @@ function setup() {
     letterRack.manageLetters();
 
     letterRack.width  = width / 11;
-    playfield.width   = width * 0.7528;
-    playfield.height  = height * 0.9256;
-    letterRack.height = playfield.height * 0.1148;
+    w = width * 0.7528;
+    h = height * 0.9256;
+    letterRack.height = height * 0.9256 * 0.1148;
+
+    if (w > h) {
+        playfield.length = h;
+    } else {
+        playfield.length = w;
+    }
 
 }
 
 // Function called when the player presses the play button.
-// Functionality is temporary
 function playButton() {
     console.log("PLAY!");
-    getJson();
+    // If no letters have been placed, pass
+    if (placedTiles.length == 0) {
+        sendToServer({"passed": true});
+    } else {
+        console.log(placedTiles);
+        let tiles = [];
+        for (let t of placedTiles) {
+            tiles.push({
+                "row": t.row,
+                "column": t.col,
+                "letter": gameObject.game.you.rack[t.rack]
+            });
+        }
+        console.log(tiles);
+        sendToServer({"tiles": tiles});
+    }
+
+    // getJson();
 }
 
 // Function called when the player presses the end button.
@@ -118,8 +142,12 @@ function setScores() {
     }
 }
 
-
+// Two ways of doing the same thing? Somehow needs to be converted into 1.
+// I know I added the second way... but the format needs it!
 function giveUp() {
+    const obj = {"forfeit": true};
+    postJson(obj);
+
     let route = "/winner/";
     if (playerNumber == "1") {
         route += "2";
@@ -142,8 +170,30 @@ function winner() {
 }
 
 // Built-in function in p5.js which runs in a loop continuously
-
 function draw() {
     letterRack.show();
     playfield.show();
+    noLoop();
+}
+
+// Built-in function in p5.js which runs when the mouse is clicked
+function mouseClicked() {
+    const x = mouseX;
+    const y = mouseY;
+
+    // Check the board
+    if (x >= playfield.xPos && x <= playfield.xPos + playfield.length) {
+        if (y >= playfield.yPos && y <= playfield.yPos + playfield.length) {
+            // Click is on the board
+            checkBoard(x, y);
+        }
+    }
+
+    // Check the rack
+    if (x >= letterRack.xPos && x <= letterRack.xPos + letterRack.width) {
+        if (y >= letterRack.yPos && y <= letterRack.yPos + letterRack.height * 7 + 28.5 * 6) {
+            // Click is on the rack
+            checkRack(y);
+        }
+    }
 }

@@ -15,5 +15,6 @@
         }
     ],
     "passed": false,
-    "forfeit": false
+    "forfeit": false,
+    "player": 0
 }
