@@ -34,23 +34,24 @@ class Playfield {
         for (let row of gameObject.game.board.tiles) {
             for (let tile of row) {
                 if (tile.letter != null) {
-                    this.drawLetter(tile.letter, 1, tile.row, tile.column);
+                    this.drawLetter(tile.letter, tile.row, tile.column);
                 }
             }
         }
     }
 
     // Method for drawing a letter on the board
-    drawLetter(letter, points, row, col) {
+    drawLetter(letter, row, col) {
         fill(49);
         stroke(255);
 
         // Create the background
-        const xCorner = this.xPos + row * this.tileLength;
-        const yCorner = this.yPos + col * this.tileLength;
+        const xCorner = this.xPos + col * this.tileLength;
+        const yCorner = this.yPos + row * this.tileLength;
         rect(xCorner, yCorner, this.tileLength, this.tileLength);
 
         // Get points and get the letter from the blank
+        let points;
         if (letter.value != undefined) {
             letter = letter.value;
             points = "";
@@ -66,6 +67,17 @@ class Playfield {
 
         textSize(14);
         text(String(points), xCorner + this.tileLength * 0.8, yCorner + this.tileLength * 0.3);
+    }
+
+    // Method for removing a letter from the board
+    removeLetter(row, col) {
+        const xCorner = this.xPos + col * this.tileLength;
+        const yCorner = this.yPos + row * this.tileLength;
+        rect(xCorner, yCorner, this.tileLength, this.tileLength);
+        
+        fill(45);
+        stroke(255);
+        rect(xCorner, yCorner, this.tileLength, this.tileLength);
     }
 }
 

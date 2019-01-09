@@ -2,6 +2,7 @@
 let gameObject = initState;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
+let selectedLetter;
 
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
@@ -145,9 +146,24 @@ function winner() {
 }
 
 // Built-in function in p5.js which runs in a loop continuously
-
 function draw() {
     letterRack.show();
     playfield.show();
     noLoop();
+}
+
+// Built-in function in p5.js which runs when the mouse is clicked
+function mouseClicked() {
+    const x = mouseX;
+    const y = mouseY;
+
+    // Check the board
+    if (x >= playfield.xPos && x <= playfield.xPos + playfield.length) {
+        if (y >= playfield.yPos && y <= playfield.yPos + playfield.length) {
+            // Click is on the board
+            const row = floor((y - playfield.yPos) / playfield.tileLength);
+            const col = floor((x - playfield.xPos) / playfield.tileLength);
+            console.log("Row: ", row, " Col: ", col);
+        }
+    }
 }
