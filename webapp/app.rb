@@ -67,6 +67,21 @@ class App < Sinatra::Base
         redirect("/p1")
     end
 
+    get("/winner") do
+      return $game.winner
+    end
+
+    get("/end_page") do
+        p "########## WINNER ###########"
+        p $game.winner
+        return File.read('client/end_page.html')
+    end
+
+    post("/winner/:id") do
+        $game.winner = params["id"]
+        redirect("/end_page")
+    end
+
     # Player 1 has ended their turn and should be checked against the game logic
     post("/p1") do
         p params

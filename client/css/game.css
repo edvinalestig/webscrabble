@@ -151,3 +151,7 @@ p {
     color: white;
     cursor: pointer;
 }
+
+#giveUpForm {
+    display: none;
+}

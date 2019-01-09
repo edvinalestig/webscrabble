@@ -12,6 +12,7 @@ require("json")
 # number_of_players - 2, 3 or 4.
 class Game
     attr_reader :players, :current_turn
+    attr_accessor :winner
 
     # Creates the game and sets up the start conditions. The board, the players and the letter bag are created.
     def initialize(number_of_players)
@@ -44,6 +45,7 @@ class Game
         @current_turn = 0
         @round = 1
         @latest_updated_tiles = []
+        @winner = nil
 
     end
 

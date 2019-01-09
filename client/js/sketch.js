@@ -43,10 +43,13 @@ function endButton() {
     console.log("END!");
     setCss();
     setScores();
+    giveUp();
+    winner();
 }
 
 // Get the current game info as a json from the web server
 function getJson() {
+    console.log(playerNumber);
     gameObject = loadJSON("/getp" + playerNumber + "/all");
 }
 
@@ -112,7 +115,31 @@ function setScores() {
     }
 }
 
+
+function giveUp() {
+    let route = "/winner/";
+    if (playerNumber == "1") {
+        route += "2";
+    } else if (playerNumber == "2") {
+        route += "1";
+    }
+
+    const formElement = document.getElementById("giveUpForm");
+    formElement.action = route;
+    formElement.submit();
+
+}
+
+function winner() {
+    if (playerNumber == "1") {
+        document.getElementById("winner").innerHTML="Player 2 won!"
+    } else if (playerNmber == "2") {
+        document.getElementById("winner").innerHTML="Player 1 won!"
+    }
+}
+
 // Built-in function in p5.js which runs in a loop continuously
+
 function draw() {
     letterRack.show();
     playfield.show();
