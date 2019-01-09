@@ -26,15 +26,10 @@ class Playfield {
         }
 
         // Create a rectangle on the centre tile
-        const x = this.xPos + tileLength * 7;
-        const y = this.yPos + tileLength * 7;
+        const x = this.xPos + this.tileLength * 7;
+        const y = this.yPos + this.tileLength * 7;
         fill(lightColour);
-        rect(x, y, tileLength, tileLength);
-
-        // Create a star on the centre tile
-        const x = this.xPos + this.tileLength * 7.5;
-        const y = this.yPos + this.tileLength * 7.5;
-        star(x, y, 8, 15, 5);
+        rect(x, y, this.tileLength, this.tileLength);
 
         // Go through all the tiles and draw them if they have something placed on them
         for (let row of gameObject.game.board.tiles) {

@@ -161,6 +161,7 @@ function giveUp() {
 
 }
 
+// Changing the h1 depending on who won
 function winner() {
     if (playerNumber == "1") {
         document.getElementById("winner").innerHTML="Player 2 won!"
@@ -169,11 +170,21 @@ function winner() {
     }
 }
 
+// Changing the playername depending on route
+function you() {
+    if (playerNumber == "1") {
+        document.getElementById("player?").innerHTML="player 1"
+    } else if (playerNumber == "2") {
+        document.getElementById("player?").innerHTML="player 2"
+    }  
+}
+
 // Built-in function in p5.js which runs in a loop continuously
 function draw() {
     letterRack.show();
     playfield.show();
     noLoop();
+    you();
 }
 
 // Built-in function in p5.js which runs when the mouse is clicked
