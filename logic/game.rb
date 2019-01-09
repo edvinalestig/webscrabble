@@ -85,9 +85,11 @@ class Game
 
         tiles.each do |tile|
             r = tile[:row]
-            c = tile[:col]
+            c = tile[:column]
             rows << r
             cols << c
+            p r
+            p c
 
             # Check if the tile already has a letter on it.
             if @board.tiles[r][c].letter != nil
@@ -116,7 +118,7 @@ class Game
             centre = false
             tiles.each do |tile|
                 r = tile[:row]
-                c = tile[:col]
+                c = tile[:column]
                 if @board.tiles[r][c].attribute == "centre"
                     centre = true
                     break
@@ -260,11 +262,11 @@ class Game
             lut = []
 
             letters.each do |letter|
-                @board.update_tile(letter[:row], letter[:col], letter[:letter])
+                @board.update_tile(letter[:row], letter[:column], letter[:letter])
 
                 lut << {
                     row: letter[:row],
-                    column: letter[:col]
+                    column: letter[:column]
                 }
             end
 
@@ -320,7 +322,7 @@ class Game
         board_copy = @board.deep_clone()
         tiles_dup.each do |tile|
             r = tile[:row]
-            c = tile[:col]
+            c = tile[:column]
             board_copy[r][c].letter = tile[:letter]
         end
 
@@ -359,7 +361,7 @@ class Game
     # Returns the word found or nil if no word was found.
     def check_row(tile, board_copy)
         row = tile[:row]
-        col = tile[:col]
+        col = tile[:column]
         word = [tile[:letter]]
         
         # Check to the left
@@ -391,7 +393,7 @@ class Game
     # Returns the word found or nil if no word was found.
     def check_column(tile, board_copy)
         row = tile[:row]
-        col = tile[:col]
+        col = tile[:column]
         word = [tile[:letter]]
         
         # Check above

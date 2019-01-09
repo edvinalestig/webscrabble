@@ -1,4 +1,4 @@
-function checkRack() {
+function checkRack(y) {
     console.log("rack!");
 
     let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
@@ -21,7 +21,7 @@ function checkRack() {
 }
 
 
-function checkBoard() {
+function checkBoard(x, y) {
     // Get which tile was clicked on
     const row = floor((y - playfield.yPos) / playfield.tileLength);
     const col = floor((x - playfield.xPos) / playfield.tileLength);

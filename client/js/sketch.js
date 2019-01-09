@@ -45,6 +45,16 @@ function playButton() {
         sendToServer({"passed": true});
     } else {
         console.log(placedTiles);
+        let tiles = [];
+        for (let t of placedTiles) {
+            tiles.push({
+                "row": t.row,
+                "column": t.col,
+                "letter": gameObject.game.you.rack[t.rack]
+            });
+        }
+        console.log(tiles);
+        sendToServer({"tiles": tiles});
     }
 
     // getJson();
@@ -171,7 +181,7 @@ function mouseClicked() {
     if (x >= playfield.xPos && x <= playfield.xPos + playfield.length) {
         if (y >= playfield.yPos && y <= playfield.yPos + playfield.length) {
             // Click is on the board
-            checkBoard();
+            checkBoard(x, y);
         }
     }
 
@@ -179,7 +189,7 @@ function mouseClicked() {
     if (x >= letterRack.xPos && x <= letterRack.xPos + letterRack.width) {
         if (y >= letterRack.yPos && y <= letterRack.yPos + letterRack.height * 7 + 28.5 * 6) {
             // Click is on the rack
-            checkRack();
+            checkRack(y);
         }
     }
 }
