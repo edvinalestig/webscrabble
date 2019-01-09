@@ -1,3 +1,4 @@
+// Playfield object (the board)
 class Playfield {
 
     constructor() {
@@ -8,6 +9,7 @@ class Playfield {
         this.yPos   = 41;
     }
 
+    // Method for drawing the board on the canvas
     show() {
         fill(this.colour);
         strokeWeight(1);
@@ -17,13 +19,13 @@ class Playfield {
         // Grid
         const tileLength = this.width/15.0;
         for (let i = 0; i <= 15; i++) {
-            // Horizontal
+            // Horizontal line
             line(this.xPos, this.yPos + i * tileLength, this.xPos + 15 * tileLength, this.yPos + i * tileLength);
-            // Vertical
+            // Vertical line
             line(this.xPos + i * tileLength, this.yPos, this.xPos + i * tileLength, this.yPos + 15 * tileLength);
         }
 
-        // Centre tile
+        // Create a star on the centre tile
         const x = this.xPos + tileLength * 7.5;
         const y = this.yPos + tileLength * 7.5;
         star(x, y, 8, 15, 5);

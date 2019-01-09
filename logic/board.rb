@@ -1,3 +1,4 @@
+# The board. The board for the game is an instance of te Board class.
 class Board
 
     attr_reader :tiles
@@ -20,6 +21,11 @@ class Board
     end
 
     # Add a letter to a tile
+    # Arguments:
+    # row - Integer, the row in which the tile should be placed in.
+    # col - Integer, the column in which the tiles should be placed in.
+    # letter - Hash or String, the letter which should be placed.
+    # Returns nil
     def update_tile(row, col, letter)
         if letter.is_a? Hash
             l = Blank.new
@@ -29,8 +35,9 @@ class Board
         @tiles[row][col].letter = letter
     end
 
-
-    def to_hash
+    # Method for converting the board to an Array.
+    # Returns a 2D Array of the tiles on the board.
+    def to_array
         tile_array = []
 
         @tiles.each do |row|
@@ -44,7 +51,8 @@ class Board
         return tile_array
     end
 
-
+    # Creates a deep copy of the board. 
+    # Returns a 2D Array of the tiles on the board.
     def deep_clone()
         tiles = []
 
@@ -63,12 +71,14 @@ class Board
     end
 end
 
-
+# An object for each tile.
+# The board is made up of Tile instances.
 class Tile
 
     attr_accessor :letter, :attribute
     attr_reader :row, :col
   
+    # Arguments: 
     # row & col decide position on the board
     # attribute tells if it's a special tile such as triple word och the centre tile
     # Available attributes are:
@@ -82,7 +92,8 @@ class Tile
         @letter = letter
     end
 
-
+    # Convert the tile into a Hash
+    # Returns Hash of the tile's information
     def to_hash
         l = @letter
         if l.is_a? Blank

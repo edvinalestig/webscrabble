@@ -1,3 +1,4 @@
+// Object containing the letters' points
 const points = {
     "A": 1,
     "B": 3,
@@ -28,6 +29,10 @@ const points = {
     "BLANK": 0
 }
 
+// Get the points for a letter
+// Arguments:
+// l - letter as a string
+// Returns integer
 function getPoints(l) {
     p = points[l];
     return p;

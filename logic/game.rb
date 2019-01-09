@@ -6,10 +6,15 @@ require_relative("error.rb")
 
 require("json")
 
+
+# The main game class. Every ongoing game will be its own instance of the class.
+# Arguments:
+# number_of_players - 2, 3 or 4.
 class Game
     attr_reader :players, :current_turn
     attr_accessor :winner
 
+    # Creates the game and sets up the start conditions. The board, the players and the letter bag are created.
     def initialize(number_of_players)
 
         if number_of_players > 4
@@ -44,7 +49,10 @@ class Game
 
     end
 
-
+    # The method to call when a player has ended their turn.
+    # Arguments:
+    # obj - the params variable from sinatra
+    # Returns boolean or Hash if the player forfeited.
     def response(obj)
         p obj
         # Check if the player passed or forfeited
@@ -65,7 +73,10 @@ class Game
         return success
     end
 
-
+    # Method to check if the placement is valid or not.
+    # Arguments:
+    # tiles - Array with the newly placed letters.
+    # Returns true or an error message in the form of a Hash.
     def check_placement(tiles)
         extends = false
         rows = []
@@ -78,12 +89,14 @@ class Game
             rows << r
             cols << c
 
+            # Check if the tile already has a letter on it.
             if @board.tiles[r][c].letter != nil
                 puts "Occupied!"
                 occupied << {"row" => r, "column" => c}
             end
 
-            # Check if there is at least one placed tile next to a new one
+            # Check if there is at least one placed tile next to a new one.
+            # The letters has to be connected to the old letters already on the board.
             if @board.tiles[r-1][c].letter != nil || @board.tiles[r+1][c].letter != nil
                 extends = true
             elsif @board.tiles[r][c-1].letter != nil || @board.tiles[r][c+1].letter != nil
@@ -116,6 +129,8 @@ class Game
             end
         end
 
+        # Check if the placed tiles are placed in the same column or row.
+        # One of them has to be true for it to be a valid turn.
         same_rows = rows.uniq.length == 1
         same_cols = cols.uniq.length == 1
 
@@ -124,6 +139,8 @@ class Game
             return Error.create("invalidPlacement", true)
         end
 
+        # Check if the letters are placed together in a continous line.
+        # Sort the rows/columns and check if they have a gap between them.
         if same_rows
             cols = cols.sort
             p cols
@@ -152,8 +169,12 @@ class Game
         return true
     end
 
-    # Input should be an array of letters with their positions
-    # letters = [{letter: f, row: 7, col: 4}]
+
+    # Method for adding the new letters on the board.
+    # Error checks are performed before committing.
+    # Arguments: 
+    # letters - Array of the placed tiles.
+    # Returns true or an error message in the form of a Hash.
     def add_new_letters(letters)
         p letters
 
@@ -181,7 +202,7 @@ class Game
             end
 
             @players[@current_turn].rack.each_with_index do |letter, i|
-                if (blank and letter.is_a? Blank) or (!blank and tile[:letter] == letter)
+                if (blank && letter.is_a?(Blank)) || (!blank && tile[:letter] == letter)
                     if !indices.include? i
                         # Save the index
                         found = true
@@ -205,6 +226,7 @@ class Game
         
         # Find all new words
         new_words = find_words(letters)
+        # Returns the words as an array of letters, not a string. This is to preserve blanks.
         p new_words
 
         if new_words.length == 0
@@ -212,7 +234,7 @@ class Game
             return Error.create("noWordsFound", true)
         end
 
-        #Check if they are valid
+        # Turn the word arrays into strings for validity checks.
         new_words.each do |word|
             word_str = ""
             word.each do |char|
@@ -223,6 +245,7 @@ class Game
                 end
             end
 
+            # Check if it's valid
             if !@words.word?(word_str)
                 invalid_words << word_str
             end
@@ -271,8 +294,12 @@ class Game
         end
     end
 
-
+    # Method for finding new words created by the placed letters.
+    # Arguments:
+    # tiles - Array of the placed tiles.
+    # Returns Array of found words. The words are an array of tiles.
     def find_words(tiles)
+        # Make a deep copy to avoid changing stuff which shouldn't be changed.
         tiles_dup = tiles.map{ |letter| letter.dup }
 
         p "Finding words"
@@ -291,18 +318,11 @@ class Game
 
         # Add the new letters to the board to check new words
         board_copy = @board.deep_clone()
-        tiles_dup.each_with_index do |tile, i|
+        tiles_dup.each do |tile|
             r = tile[:row]
             c = tile[:col]
-
-            # if tile[:letter].is_a? Hash
-            #     board_copy[r][c].letter = tile[:letter][:value]
-            #     tiles_dup[i][:letter] = tile[:letter][:value]
-            # else
             board_copy[r][c].letter = tile[:letter]
-            # end
         end
-        
 
         check_vertical = true
         check_horizontal = true
@@ -332,7 +352,11 @@ class Game
         return found_words
     end
 
-
+    # Method for finding words placed in a row.
+    # Arguments:
+    # tile - Hash of the tile to check the row of.
+    # board_copy - The copy of the board with the new letters placed on it.
+    # Returns the word found or nil if no word was found.
     def check_row(tile, board_copy)
         row = tile[:row]
         col = tile[:col]
@@ -360,7 +384,11 @@ class Game
         end
     end
 
-
+    # Method for finding words placed in a column.
+    # Arguments:
+    # tile - Hash of the tile to check the column of.
+    # board_copy - The copy of the board with the new letters placed on it.
+    # Returns the word found or nil if no word was found.
     def check_column(tile, board_copy)
         row = tile[:row]
         col = tile[:col]
@@ -388,10 +416,11 @@ class Game
         end
     end
 
-
-    def calculate_points(word)
-        # Does not work with blanks
-        
+    # Method for calculating the points which should be given for the word.
+    # Arguments: 
+    # word - The word in the form of an Array of tiles.
+    # Returns Integer
+    def calculate_points(word)        
         points = 0
         word.each do |letter|
             points += @letter_bag.get_points(letter)
@@ -400,7 +429,8 @@ class Game
         return points
     end
 
-
+    # Method called the the turn has ended and it's the next player's turn.
+    # Returns nil
     def end_turn()
         @players[@current_turn].my_turn = false
 
@@ -425,10 +455,14 @@ class Game
         # Send new info to the clients
     end
 
-
+    # Method for creating a Hash of the game
+    # All the information about the game is added to a Hash in the 
+    # set format for the json for sending to the client.
+    # Arguments:
+    # player_number - Integer, the player number of the one requesting it. Only that player's rack will be added to the Hash.
+    # all - Boolean, if all the information is requested, otherwise the board will be left out to save memory.
+    # Returns Hash of the game information.
     def to_hash(player_number, all=false)
-        # Add all the relevant data to a dictionary following the set json format
-        # player_number makes the dict player-specific
 
         # Add the player data to an array of dicts
         players = []
@@ -464,7 +498,7 @@ class Game
 
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
         if all
-            dict[:board][:tiles] = @board.to_hash
+            dict[:board][:tiles] = @board.to_array
         end
 
         return {game: dict}

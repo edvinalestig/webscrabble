@@ -1,3 +1,4 @@
+// Create the required objects for the game
 let gameObject = initState;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
@@ -6,10 +7,12 @@ let playfield = new Playfield();
 // Temporary, will be removed when websockets are implemented
 const playerNumber = String(document.location)[String(document.location).length-1];
 
+// Built-in function in p5.js which runs before everything else.
 function preload() {
     getJson();
 }
 
+// Built-in function in p5.js which runs just after preload.
 function setup() {
     setCss();
     setScores();
@@ -27,11 +30,15 @@ function setup() {
 
 }
 
+// Function called when the player presses the play button.
+// Functionality is temporary
 function playButton() {
     console.log("PLAY!");
     getJson();
 }
 
+// Function called when the player presses the end button.
+// Functionality is temporary
 function endButton() {
     console.log("END!");
     setCss();
@@ -40,17 +47,21 @@ function endButton() {
     winner();
 }
 
+// Get the current game info as a json from the web server
 function getJson() {
     console.log(playerNumber);
     gameObject = loadJSON("/getp" + playerNumber + "/all");
 }
 
+// Set the css
+// The interface should be different when it's the opponents turn
 function setCss() {
-    if (gameObject) {
+    if (gameObject) { // Only run if game information is available
         const currentTurn = gameObject.game.currentTurn;
         const player1 = document.getElementById("player1Score");
         const player2 = document.getElementById("player2Score");
 
+        // Determine which player you are.
         let me;
         for (let i = 0; i < gameObject.game.players.length; i++) {
             if (gameObject.game.players[i].isYou) {
@@ -59,6 +70,7 @@ function setCss() {
             }
         }
 
+        // Add and remove classes for changing the appearance of the elements.
         if (currentTurn == 0) {
             // Player 1's turn
             player1.classList.add("activePlayer");
@@ -90,6 +102,8 @@ function setCss() {
     }
 }
 
+// Set the scores.
+// Updates the text in the score paragraph elements.
 function setScores() {
     if (gameObject) {
         const p1Element = document.getElementById("player1ScoreP");
@@ -100,6 +114,7 @@ function setScores() {
         p2Element.innerHTML = p2Points + "p";
     }
 }
+
 
 function giveUp() {
     let route = "/winner/";
@@ -123,6 +138,7 @@ function winner() {
     }
 }
 
+// Built-in function in p5.js which runs in a loop continuously
 
 function draw() {
     letterRack.show();
