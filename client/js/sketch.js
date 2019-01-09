@@ -9,7 +9,7 @@ const playerNumber = String(document.location)[String(document.location).length-
 
 // Built-in function in p5.js which runs before everything else.
 function preload() {
-    getJson();
+    // getJson();
 }
 
 // Built-in function in p5.js which runs just after preload.
@@ -149,4 +149,5 @@ function winner() {
 function draw() {
     letterRack.show();
     playfield.show();
+    noLoop();
 }

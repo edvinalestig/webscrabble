@@ -3,6 +3,7 @@ class Playfield {
 
     constructor() {
         this.length = 871;
+        this.tileLength = this.length / 15.0
         this.colour = (51, 51, 51);
         this.xPos   = 250;
         this.yPos   = 41;
@@ -16,18 +17,55 @@ class Playfield {
         rect(this.xPos, this.yPos, this.length, this.length, 0);
 
         // Grid
-        const tileLength = this.length/15.0;
+        this.tileLength = this.length / 15.0
         for (let i = 0; i <= 15; i++) {
             // Horizontal line
-            line(this.xPos, this.yPos + i * tileLength, this.xPos + 15 * tileLength, this.yPos + i * tileLength);
+            line(this.xPos, this.yPos + i * this.tileLength, this.xPos + 15 * this.tileLength, this.yPos + i * this.tileLength);
             // Vertical line
-            line(this.xPos + i * tileLength, this.yPos, this.xPos + i * tileLength, this.yPos + 15 * tileLength);
+            line(this.xPos + i * this.tileLength, this.yPos, this.xPos + i * this.tileLength, this.yPos + 15 * this.tileLength);
         }
 
         // Create a star on the centre tile
-        const x = this.xPos + tileLength * 7.5;
-        const y = this.yPos + tileLength * 7.5;
+        const x = this.xPos + this.tileLength * 7.5;
+        const y = this.yPos + this.tileLength * 7.5;
         star(x, y, 8, 15, 5);
+
+        // Go through all the tiles and draw them if they have something placed on them
+        for (let row of gameObject.game.board.tiles) {
+            for (let tile of row) {
+                if (tile.letter != null) {
+                    this.drawLetter(tile.letter, 1, tile.row, tile.column);
+                }
+            }
+        }
+    }
+
+    // Method for drawing a letter on the board
+    drawLetter(letter, points, row, col) {
+        fill(49);
+        stroke(255);
+
+        // Create the background
+        const xCorner = this.xPos + row * this.tileLength;
+        const yCorner = this.yPos + col * this.tileLength;
+        rect(xCorner, yCorner, this.tileLength, this.tileLength);
+
+        // Get points and get the letter from the blank
+        if (letter.value != undefined) {
+            letter = letter.value;
+            points = "";
+        } else {
+            points = getPoints(letter);
+        }
+
+        // Print the letter and the points
+        fill(255);
+        textSize(42);
+        textAlign(CENTER);
+        text(letter, xCorner + this.tileLength/2, yCorner + this.tileLength/2 + this.tileLength * 0.2);
+
+        textSize(14);
+        text(String(points), xCorner + this.tileLength * 0.8, yCorner + this.tileLength * 0.3);
     }
 }
 
