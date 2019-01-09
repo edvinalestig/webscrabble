@@ -1,3 +1,7 @@
+// Grey colours
+const darkColour = (54, 54, 54);
+const lightColour = (71, 71, 71);
+
 // Create the required objects for the game
 let gameObject;
 let letterRack = new LetterRack();

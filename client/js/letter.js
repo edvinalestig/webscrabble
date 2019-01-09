@@ -5,9 +5,9 @@ class LetterRack {
         this.width   = 70;
         this.height  = 70;
         this.letters = [];
-        this.colour  = (51, 51, 51);
+        this.colour  = darkColour;
         this.xPos    = 70;
-        this.yPos    = 32;
+        this.yPos    = 41;
         this.hidden  = [];
     }
 
@@ -35,14 +35,14 @@ class LetterRack {
             textSize(48);
             let w = textWidth(lt);
             // Writing the letter centred in the tile
-            text(lt, this.xPos + 32 - w/2, yPos + 50);
+            text(lt, this.xPos + w, yPos + this.height / 1.5 );
 
             // Add the points
             textSize(12);
             p = getPoints(lt);
             w = textWidth(String(p));
             // Writing the points in the corner
-            text(p, this.xPos + 60 - w/2, yPos + 19);
+            text(p, this.xPos + w * 10, yPos + this.height / 4 );
         }
     }
 

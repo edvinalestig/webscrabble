@@ -2,9 +2,9 @@
 class Playfield {
 
     constructor() {
+        this.colour = darkColour;
         this.length = 871;
         this.tileLength = this.length / 15.0
-        this.colour = (51, 51, 51);
         this.xPos   = 250;
         this.yPos   = 41;
     }
@@ -24,6 +24,12 @@ class Playfield {
             // Vertical line
             line(this.xPos + i * this.tileLength, this.yPos, this.xPos + i * this.tileLength, this.yPos + 15 * this.tileLength);
         }
+
+        // Create a rectangle on the centre tile
+        const x = this.xPos + tileLength * 7;
+        const y = this.yPos + tileLength * 7;
+        fill(lightColour);
+        rect(x, y, tileLength, tileLength);
 
         // Create a star on the centre tile
         const x = this.xPos + this.tileLength * 7.5;
@@ -78,25 +84,6 @@ class Playfield {
         fill(45);
         stroke(255);
         rect(xCorner, yCorner, this.tileLength, this.tileLength);
-    }
-}
 
-// Copied from the p5 website with minor changes
-// https://p5js.org/examples/form-star.html
-function star(x, y, radius1, radius2, npoints) {
-    const angle = TWO_PI / npoints;
-    const halfAngle = angle/2.0;
-
-    fill(150, 0, 0);
-    stroke(150, 0, 0);
-    beginShape();
-    for (let a = PI / -2; a < TWO_PI; a += angle) {
-        let sx = x + cos(a) * radius2;
-        let sy = y + sin(a) * radius2;
-        vertex(sx, sy);
-        sx = x + cos(a+halfAngle) * radius1;
-        sy = y + sin(a+halfAngle) * radius1;
-        vertex(sx, sy);
     }
-    endShape(CLOSE);
 }
