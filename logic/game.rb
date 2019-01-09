@@ -51,8 +51,8 @@ class Game
 
     # The method to call when a player has ended their turn.
     # Arguments:
-    # obj - the params variable from sinatra
-    # Returns boolean or Hash if the player forfeited.
+    # obj - A hash in the clienttoserver.json format
+    # Returns boolean or Hash if the player forfeited or someone has won.
     def response(obj)
         p obj
         # Check if the player passed or forfeited
@@ -63,15 +63,51 @@ class Game
 
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players.
-            h = {"ended" => true, "winner" => (@current_turn+1) % 2}
+            @winner = (@current_turn+1) % 2
+            h = {"ended" => true, "winner" => @winner}
+            
             return h
         end
 
         success = add_new_letters(obj[:tiles])
         # Returns either true or an error hash
         # Send it to the client via the websocket
+
+        # Check if the game has ended and if so who the winner is
+        # No draws allowed!
+        if check_end()
+            player = nil
+            points = 0
+            @players.each_with_index do |players, i|
+                if players.points > points
+                    player = i
+                end
+            end
+            @winner = player
+            return {"ended" => true, "winner" => @winner}
+        end
+
         return success
     end
+
+    # Checks if the game has ended
+    # Goes through the racks and the bag to see if they are all 
+    # empty in which case the game has ended
+    # Returns nil
+    def check_end()
+        if @letter_bag.length > 0
+            return false
+        end
+
+        @players.each do |player|
+            if player.rack.length > 0
+                return false
+            end
+        end
+
+        return true
+    end
+
 
     # Method to check if the placement is valid or not.
     # Arguments:
@@ -143,27 +179,50 @@ class Game
 
         # Check if the letters are placed together in a continous line.
         # Sort the rows/columns and check if they have a gap between them.
+        gaps = []
         if same_rows
             cols = cols.sort
             p cols
             i = 1
             while i < cols.length
-                if cols[i] != cols[i-1] + 1
-                    puts "Letters not placed together!"
-                    return Error.create("invalidPlacement", true)
+                # Check if there is a gap
+                if cols[i] - cols[i-1] != 1
+                    # Add all the cols in the gap to an array
+                    gaps.concat [*(cols[i-1] + 1)..(cols[i] - 1)]
                 end
                 i += 1
+            end
+
+            if gaps.length > 0
+                # There are gaps in the word
+                gaps.each do |col|
+                    # Check if the gaps already have letters
+                    if @board.tiles[rows[0]][col].letter == nil
+                        puts "Letters not placed together!"
+                        return Error.create("invalidPlacement", true)
+                    end
+                end
             end
         else
             rows = rows.sort
             p rows
             i = 1
             while i < rows.length
-                if rows[i] != rows[i-1] + 1
-                    puts "Letters not placed together!"
-                    return Error.create("invalidPlacement", true)
+                if rows[i] - rows[i-1] != 1
+                    gaps.concat [*(rows[i-1] + 1)..(rows[i] - 1)]
                 end
                 i += 1
+            end
+
+            if gaps.length > 0
+                # There are gaps
+                gaps.each do |row|
+                    # Check if the gaps already have letters
+                    if @board.tiles[row][cols[0]].letter == nil
+                        puts "Letters not placed together!"
+                        return Error.create("invalidPlacement", true)
+                    end
+                end
             end
         end
 
