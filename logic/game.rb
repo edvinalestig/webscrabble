@@ -179,27 +179,50 @@ class Game
 
         # Check if the letters are placed together in a continous line.
         # Sort the rows/columns and check if they have a gap between them.
+        gaps = []
         if same_rows
             cols = cols.sort
             p cols
             i = 1
             while i < cols.length
-                if cols[i] != cols[i-1] + 1
-                    puts "Letters not placed together!"
-                    return Error.create("invalidPlacement", true)
+                # Check if there is a gap
+                if cols[i] - cols[i-1] != 1
+                    # Add all the cols in the gap to an array
+                    gaps.concat [*(cols[i-1] + 1)..(cols[i] - 1)]
                 end
                 i += 1
+            end
+
+            if gaps.length > 0
+                # There are gaps in the word
+                gaps.each do |col|
+                    # Check if the gaps already have letters
+                    if @board.tiles[rows[0]][col].letter == nil
+                        puts "Letters not placed together!"
+                        return Error.create("invalidPlacement", true)
+                    end
+                end
             end
         else
             rows = rows.sort
             p rows
             i = 1
             while i < rows.length
-                if rows[i] != rows[i-1] + 1
-                    puts "Letters not placed together!"
-                    return Error.create("invalidPlacement", true)
+                if rows[i] - rows[i-1] != 1
+                    gaps.concat [*(rows[i-1] + 1)..(rows[i] - 1)]
                 end
                 i += 1
+            end
+
+            if gaps.length > 0
+                # There are gaps
+                gaps.each do |row|
+                    # Check if the gaps already have letters
+                    if @board.tiles[row][cols[0]].letter == nil
+                        puts "Letters not placed together!"
+                        return Error.create("invalidPlacement", true)
+                    end
+                end
             end
         end
 
