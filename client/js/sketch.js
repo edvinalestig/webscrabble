@@ -3,6 +3,7 @@ let gameObject = initState;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
 let selectedLetter;
+let placedTiles = [];
 
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
@@ -161,9 +162,56 @@ function mouseClicked() {
     if (x >= playfield.xPos && x <= playfield.xPos + playfield.length) {
         if (y >= playfield.yPos && y <= playfield.yPos + playfield.length) {
             // Click is on the board
+            // Get which tile was clicked on
             const row = floor((y - playfield.yPos) / playfield.tileLength);
             const col = floor((x - playfield.xPos) / playfield.tileLength);
             console.log("Row: ", row, " Col: ", col);
+
+            // Check if the tile has a letter already
+            if (gameObject.game.board.tiles[row][col].letter != null) {
+                return;
+            }
+
+            // Check if there is a letter selected to be placed
+            if (selectedLetter != undefined) {
+                // Check if the letter has already been placed
+                for (let tile of placedTiles) {
+                    if (tile.rack == selectedLetter) {
+                        return;
+                    }
+                }
+
+                // Draw the letter
+                const letter = gameObject.game.you.rack[selectedLetter];
+                const o = {
+                    "rack": selectedLetter,
+                    "row": row,
+                    "col": col
+                };
+                placedTiles.push(o);
+                playfield.drawLetter(letter, row, col);
+                selectedLetter = undefined;
+            } else {
+                // Remove the placed tile
+                playfield.removeLetter(row, col);
+                placedTiles.splice(placedTiles.indexOf({
+                    "rack": selectedLetter,
+                    "row": row,
+                    "col": col
+                }));
+            }
+        }
+    }
+
+    // Check the rack
+    if (x >= letterRack.xPos && x <= letterRack.xPos + letterRack.width) {
+        if (y >= letterRack.yPos && y <= letterRack.yPos + letterRack.height * 7 + 28.5 * 6) {
+            // Click is on the rack
+            console.log("rack!");
+
+            let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
+            console.log(pos);
+            selectedLetter = pos;
         }
     }
 }
