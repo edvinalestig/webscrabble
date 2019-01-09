@@ -25,29 +25,10 @@ class Playfield {
             line(this.xPos + i * tileLength, this.yPos, this.xPos + i * tileLength, this.yPos + 15 * tileLength);
         }
 
-        // Create a star on the centre tile
-        const x = this.xPos + tileLength * 7.5;
-        const y = this.yPos + tileLength * 7.5;
-        star(x, y, 8, 15, 5);
+        // Create a rectangle on the centre tile
+        const x = this.xPos + tileLength * 7;
+        const y = this.yPos + tileLength * 7;
+        fill(lightColour);
+        rect(x, y, tileLength, tileLength);
     }
-}
-
-// Copied from the p5 website with minor changes
-// https://p5js.org/examples/form-star.html
-function star(x, y, radius1, radius2, npoints) {
-    const angle = TWO_PI / npoints;
-    const halfAngle = angle/2.0;
-
-    fill(150, 0, 0);
-    stroke(150, 0, 0);
-    beginShape();
-    for (let a = PI / -2; a < TWO_PI; a += angle) {
-        let sx = x + cos(a) * radius2;
-        let sy = y + sin(a) * radius2;
-        vertex(sx, sy);
-        sx = x + cos(a+halfAngle) * radius1;
-        sy = y + sin(a+halfAngle) * radius1;
-        vertex(sx, sy);
-    }
-    endShape(CLOSE);
 }
