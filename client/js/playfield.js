@@ -4,7 +4,7 @@ class Playfield {
     constructor() {
         this.width  = 871; // It's a square so only length would suffice?
         this.height = 871;
-        this.colour = (51, 51, 51);
+        this.colour = darkColour;
         this.xPos   = 250;
         this.yPos   = 41;
     }

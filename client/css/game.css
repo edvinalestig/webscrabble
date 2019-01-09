@@ -1,5 +1,5 @@
 body {
-    background-color: #454545;
+    background-color: #474747;
     margin: 0;
     padding: 0;
 }
@@ -64,7 +64,7 @@ p {
     width: 10vw;
     height: 7vw;
     display: inline-block;
-    background-color: #313131;
+    background-color: #363636;
     border-radius: 7px;
     margin-top: 3vh;
     margin-left: 5vw;
@@ -74,7 +74,7 @@ p {
     width: 10vw;
     height: 7vw;
     display: inline-block;
-    background-color: #313131;
+    background-color: #363636;
     border-radius: 7px;
     position: relative;
     margin-top: 3vh;
@@ -88,16 +88,11 @@ p {
 #playButton {
     width: 25.3vw;
     height: 6vw;
-    /* background-color: #6F9654; */
     margin-top: 6vh;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
 }
-
-/* #playButton:hover {
-    cursor: pointer;
-} */
 
 #endButton {
     width: 25.3vw;
@@ -140,7 +135,6 @@ p {
 }
 
 .oppoTurn {
-    /* background-color: rgba(111, 150, 84, 20); */
     background-color: rgb(56, 75, 42);
     color: rgb(78, 78, 78);
     cursor: default;

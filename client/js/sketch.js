@@ -1,6 +1,6 @@
 // Grey colours
-const darkColour = (60, 60, 60);
-const lightColour = (82, 82, 82);
+const darkColour = (54, 54, 54);
+const lightColour = (71, 71, 71);
 
 // Create the required objects for the game
 let gameObject = initState;
@@ -24,7 +24,6 @@ function setup() {
     const canvasDiv = document.getElementById("playfield");
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas.parent("playfield");
-    //background(45);
     letterRack.manageLetters();
 
     letterRack.width  = width / 11;
