@@ -57,17 +57,21 @@ function checkBoard(x, y) {
         letterRack.hidden.push(selectedLetter);
         selectedLetter = undefined;
     } else {
-        // Remove the placed tile
-        playfield.removeLetter(row, col);
-        let index;
+        // Check if there is a tile there
+        let index = undefined;
         for (i = 0; i < placedTiles.length; i++) {
             if (placedTiles[i].row == row && placedTiles[i].col == col) {
                 index = i;
+                console.log(i);
             }
         }
-        const spliced = placedTiles.splice(index, 1);
-        console.log(spliced[0]);
-        letterRack.hidden.splice(letterRack.hidden.indexOf(spliced[0].rack), 1);
-        letterRack.show();
+        if (index != undefined) {
+            // Remove the tile
+            playfield.removeLetter(row, col);
+            const spliced = placedTiles.splice(index, 1);
+            console.log(spliced[0]);
+            letterRack.hidden.splice(letterRack.hidden.indexOf(spliced[0].rack), 1);
+            letterRack.show();
+        }
     }
 }
