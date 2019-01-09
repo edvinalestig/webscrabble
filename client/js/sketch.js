@@ -1,5 +1,5 @@
 // Create the required objects for the game
-let gameObject = initState;
+let gameObject;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
 let selectedLetter;
@@ -38,10 +38,26 @@ function setup() {
 }
 
 // Function called when the player presses the play button.
-// Functionality is temporary
 function playButton() {
     console.log("PLAY!");
-    getJson();
+    // If no letters have been placed, pass
+    if (placedTiles.length == 0) {
+        sendToServer({"passed": true});
+    } else {
+        console.log(placedTiles);
+        let tiles = [];
+        for (let t of placedTiles) {
+            tiles.push({
+                "row": t.row,
+                "column": t.col,
+                "letter": gameObject.game.you.rack[t.rack]
+            });
+        }
+        console.log(tiles);
+        sendToServer({"tiles": tiles});
+    }
+
+    // getJson();
 }
 
 // Function called when the player presses the end button.
@@ -122,8 +138,12 @@ function setScores() {
     }
 }
 
-
+// Two ways of doing the same thing? Somehow needs to be converted into 1.
+// I know I added the second way... but the format needs it!
 function giveUp() {
+    const obj = {"forfeit": true};
+    postJson(obj);
+
     let route = "/winner/";
     if (playerNumber == "1") {
         route += "2";
@@ -161,54 +181,7 @@ function mouseClicked() {
     if (x >= playfield.xPos && x <= playfield.xPos + playfield.length) {
         if (y >= playfield.yPos && y <= playfield.yPos + playfield.length) {
             // Click is on the board
-            // Get which tile was clicked on
-            const row = floor((y - playfield.yPos) / playfield.tileLength);
-            const col = floor((x - playfield.xPos) / playfield.tileLength);
-            console.log("Row: ", row, " Col: ", col);
-
-            // Check if the tile has a letter already
-            if (gameObject.game.board.tiles[row][col].letter != null) {
-                return;
-            }
-
-            // Check if there is a letter selected to be placed
-            if (selectedLetter != undefined) {
-                // Check if the letter has already been placed
-                for (let tile of placedTiles) {
-                    if (tile.rack == selectedLetter) {
-                        return;
-                    }
-                    if (tile.row == row && tile.col == col) {
-                        return;
-                    }
-                }
-
-                // Draw the letter
-                const letter = gameObject.game.you.rack[selectedLetter];
-                const o = {
-                    "rack": selectedLetter,
-                    "row": row,
-                    "col": col
-                };
-                placedTiles.push(o);
-                playfield.drawLetter(letter, row, col);
-                letterRack.hide(selectedLetter);
-                letterRack.hidden.push(selectedLetter);
-                selectedLetter = undefined;
-            } else {
-                // Remove the placed tile
-                playfield.removeLetter(row, col);
-                let index;
-                for (i = 0; i < placedTiles.length; i++) {
-                    if (placedTiles[i].row == row && placedTiles[i].col == col) {
-                        index = i;
-                    }
-                }
-                const spliced = placedTiles.splice(index, 1);
-                console.log(spliced[0]);
-                letterRack.hidden.splice(letterRack.hidden.indexOf(spliced[0].rack), 1);
-                letterRack.show();
-            }
+            checkBoard(x, y);
         }
     }
 
@@ -216,25 +189,7 @@ function mouseClicked() {
     if (x >= letterRack.xPos && x <= letterRack.xPos + letterRack.width) {
         if (y >= letterRack.yPos && y <= letterRack.yPos + letterRack.height * 7 + 28.5 * 6) {
             // Click is on the rack
-            console.log("rack!");
-
-            let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
-            console.log(pos);
-            if (selectedLetter == pos) {
-                letterRack.deselect(pos);
-                selectedLetter = undefined;
-            } else {
-                for (let tile of placedTiles) {
-                    if (tile.rack == pos) {
-                        return;
-                    }
-                }
-                if (selectedLetter != undefined) {
-                    letterRack.deselect(selectedLetter);
-                }
-                letterRack.select(pos);
-                selectedLetter = pos;                
-            }
+            checkRack(y);
         }
     }
 }
