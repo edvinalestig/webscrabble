@@ -2,8 +2,7 @@
 class Playfield {
 
     constructor() {
-        this.width  = 871; // It's a square so only length would suffice?
-        this.height = 871;
+        this.length = 871;
         this.colour = (51, 51, 51);
         this.xPos   = 250;
         this.yPos   = 41;
@@ -14,10 +13,10 @@ class Playfield {
         fill(this.colour);
         strokeWeight(1);
         stroke(255, 255, 255);
-        rect(this.xPos, this.yPos, this.width, this.height, 0);
+        rect(this.xPos, this.yPos, this.length, this.length, 0);
 
         // Grid
-        const tileLength = this.width/15.0;
+        const tileLength = this.length/15.0;
         for (let i = 0; i <= 15; i++) {
             // Horizontal line
             line(this.xPos, this.yPos + i * tileLength, this.xPos + 15 * tileLength, this.yPos + i * tileLength);

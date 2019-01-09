@@ -24,9 +24,15 @@ function setup() {
     letterRack.manageLetters();
 
     letterRack.width  = width / 11;
-    playfield.width   = width * 0.7528;
-    playfield.height  = height * 0.9256;
-    letterRack.height = playfield.height * 0.1148;
+    w = width * 0.7528;
+    h = height * 0.9256;
+    letterRack.height = height * 0.9256 * 0.1148;
+
+    if (w > h) {
+        playfield.length = h;
+    } else {
+        playfield.length = w;
+    }
 
 }
 
