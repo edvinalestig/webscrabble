@@ -37,6 +37,7 @@ function endButton() {
     setCss();
     setScores();
     giveUp();
+    winner();
 }
 
 function getJson() {
@@ -113,6 +114,15 @@ function giveUp() {
     formElement.submit();
 
 }
+
+function winner() {
+    if (playerNumber == "1") {
+        document.getElementById("winner").innerHTML="Player 2 won!"
+    } else if (playerNmber == "2") {
+        document.getElementById("winner").innerHTML="Player 1 won!"
+    }
+}
+
 
 function draw() {
     letterRack.show();
