@@ -11,7 +11,7 @@ const playerNumber = String(document.location)[String(document.location).length-
 
 // Built-in function in p5.js which runs before everything else.
 function preload() {
-    // getJson();
+    getJson();
 }
 
 // Built-in function in p5.js which runs just after preload.
@@ -22,7 +22,6 @@ function setup() {
     const canvasDiv = document.getElementById("playfield");
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas.parent("playfield");
-    background(45);
     letterRack.manageLetters();
 
     letterRack.width  = width / 11;
@@ -179,6 +178,9 @@ function mouseClicked() {
                     if (tile.rack == selectedLetter) {
                         return;
                     }
+                    if (tile.row == row && tile.col == col) {
+                        return;
+                    }
                 }
 
                 // Draw the letter
@@ -190,15 +192,22 @@ function mouseClicked() {
                 };
                 placedTiles.push(o);
                 playfield.drawLetter(letter, row, col);
+                letterRack.hide(selectedLetter);
+                letterRack.hidden.push(selectedLetter);
                 selectedLetter = undefined;
             } else {
                 // Remove the placed tile
                 playfield.removeLetter(row, col);
-                placedTiles.splice(placedTiles.indexOf({
-                    "rack": selectedLetter,
-                    "row": row,
-                    "col": col
-                }));
+                let index;
+                for (i = 0; i < placedTiles.length; i++) {
+                    if (placedTiles[i].row == row && placedTiles[i].col == col) {
+                        index = i;
+                    }
+                }
+                const spliced = placedTiles.splice(index, 1);
+                console.log(spliced[0]);
+                letterRack.hidden.splice(letterRack.hidden.indexOf(spliced[0].rack), 1);
+                letterRack.show();
             }
         }
     }
@@ -211,7 +220,21 @@ function mouseClicked() {
 
             let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
             console.log(pos);
-            selectedLetter = pos;
+            if (selectedLetter == pos) {
+                letterRack.deselect(pos);
+                selectedLetter = undefined;
+            } else {
+                for (let tile of placedTiles) {
+                    if (tile.rack == pos) {
+                        return;
+                    }
+                }
+                if (selectedLetter != undefined) {
+                    letterRack.deselect(selectedLetter);
+                }
+                letterRack.select(pos);
+                selectedLetter = pos;                
+            }
         }
     }
 }
