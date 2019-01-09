@@ -8,12 +8,15 @@ class LetterRack {
         this.colour  = (51, 51, 51);
         this.xPos    = 70;
         this.yPos    = 32;
+        this.hidden  = [];
     }
 
     // Draw it!
     show() {
         for (let i = 0; i < 7; i++) { // Edvin's version
-
+            if (this.hidden.includes(i)) {
+                continue;
+            }
         // const spacing = playfield.height * 0.033
         // for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) { -- Ida's version
 
@@ -41,6 +44,32 @@ class LetterRack {
             // Writing the points in the corner
             text(p, this.xPos + 60 - w/2, yPos + 19);
         }
+    }
+
+    // Highlighting the selected tile
+    select(index) {
+        const colour = (128, 55, 0);
+        const xCorner = this.xPos - 5; 
+        const yCorner = this.yPos + index * (this.height + 28.5) - 5;
+        stroke(colour);
+        fill(colour);
+        rect(xCorner, yCorner, this.width + 10, this.height + 10, 11);
+        this.show();
+    }
+
+    // Remove the highlighting
+    deselect(index) {
+        this.hide(index);
+        this.show();
+    }
+
+    // Hide a letter when placed
+    hide(index) {
+        const xCorner = this.xPos - 6; 
+        const yCorner = this.yPos + index * (this.height + 28.5) - 6;
+        stroke("#454545");
+        fill("#454545");
+        rect(xCorner, yCorner, this.width + 12, this.height + 12);
     }
     
     // Update this.letters with the current rack in the game object
