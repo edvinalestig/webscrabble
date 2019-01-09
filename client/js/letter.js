@@ -35,7 +35,7 @@ class LetterRack {
             textSize(48);
             let w = textWidth(lt);
             // Writing the letter centred in the tile
-            text(lt, this.xPos + w, yPos + this.height / 1.5 );
+            text(lt, this.xPos + (this.width / 3), yPos + this.height / 1.5 );
 
             // Add the points
             textSize(12);
