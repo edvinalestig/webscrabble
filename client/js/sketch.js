@@ -1,5 +1,5 @@
 // Create the required objects for the game
-let gameObject = initState;
+let gameObject;
 let letterRack = new LetterRack();
 let playfield = new Playfield();
 let selectedLetter;
@@ -38,10 +38,16 @@ function setup() {
 }
 
 // Function called when the player presses the play button.
-// Functionality is temporary
 function playButton() {
     console.log("PLAY!");
-    getJson();
+    // If no letters have been placed, pass
+    if (placedTiles.length == 0) {
+        sendToServer({"passed": true});
+    } else {
+        console.log(placedTiles);
+    }
+
+    // getJson();
 }
 
 // Function called when the player presses the end button.
@@ -122,8 +128,12 @@ function setScores() {
     }
 }
 
-
+// Two ways of doing the same thing? Somehow needs to be converted into 1.
+// I know I added the second way... but the format needs it!
 function giveUp() {
+    const obj = {"forfeit": true};
+    postJson(obj);
+
     let route = "/winner/";
     if (playerNumber == "1") {
         route += "2";
