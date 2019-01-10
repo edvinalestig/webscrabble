@@ -135,12 +135,19 @@ class Game
 
             # Check if there is at least one placed tile next to a new one.
             # The letters has to be connected to the old letters already on the board.
-            if @board.tiles[r-1][c].letter != nil || @board.tiles[r+1][c].letter != nil
+            if @board.tiles[r-1][c].letter != nil
                 extends = true
-            elsif @board.tiles[r][c-1].letter != nil || @board.tiles[r][c+1].letter != nil
+            elsif @board.tiles[r][c-1].letter != nil
                 extends = true
             end
-
+            begin
+                if @board.tiles[r+1][c].letter != nil
+                    extends = true
+                elsif @board.tiles[r][c+1].letter != nil
+                    extends = true
+                end
+            rescue NoMethodError
+            end
         end
 
         if occupied.length > 0
@@ -261,8 +268,6 @@ class Game
             if tile[:letter].is_a? Hash
                 blank = tile[:letter][:letter] == "blank"
             end
-            p "Blank: " + blank.to_s
-            p @players[@current_turn].rack
 
             @players[@current_turn].rack.each_with_index do |letter, i|
                 if (blank && letter.is_a?(Hash)) || (!blank && tile[:letter] == letter)
@@ -270,7 +275,6 @@ class Game
                         # Save the index
                         found = true
                         indices << i
-                        p i
                         break
                     end
                 elsif !blank && tile[:letter] == letter
@@ -437,9 +441,12 @@ class Game
 
         # Check to the right
         k = 1
-        while board_copy[row][col + k].letter != nil
-            word.push(board_copy[row][col + k].letter)
-            k += 1
+        begin
+            while board_copy[row][col + k].letter != nil
+                word.push(board_copy[row][col + k].letter)
+                k += 1
+            end
+        rescue NoMethodError
         end
 
         # p word
@@ -469,9 +476,12 @@ class Game
 
         # Check below
         k = 1
-        while board_copy[row + k][col].letter != nil
-            word.push(board_copy[row + k][col].letter)
-            k += 1
+        begin
+            while board_copy[row + k][col].letter != nil
+                    word.push(board_copy[row + k][col].letter)
+                k += 1
+            end
+        rescue NoMethodError
         end
 
         # p word
