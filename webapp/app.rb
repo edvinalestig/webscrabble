@@ -68,7 +68,8 @@ class App < Sinatra::Base
     end
 
     get("/winner") do
-      return $game.winner
+        p $game.winner
+        return ($game.winner + 1).to_s
     end
 
     get("/end_page") do
@@ -77,10 +78,10 @@ class App < Sinatra::Base
         return File.read('client/end_page.html')
     end
 
-    post("/winner/:id") do
-        $game.winner = params["id"]
-        redirect("/end_page")
-    end
+    # post("/winner/:id") do
+    #     $game.winner = params["id"]
+    #     redirect("/end_page")
+    # end
 
     # Player 1 has ended their turn and should be checked against the game logic
     post("/p1") do
@@ -101,7 +102,7 @@ class App < Sinatra::Base
         request.body.rewind
         p JSON.parse(request.body.read, symbolize_names: true)
         request.body.rewind
-        $game.response(JSON.parse(request.body.read, symbolize_names: true))
+        p $game.response(JSON.parse(request.body.read, symbolize_names: true))
         redirect("/p1")
     end
 

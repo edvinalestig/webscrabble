@@ -63,8 +63,9 @@ class Game
 
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players.
-            @winner = (@current_turn+1) % 2
+            @winner = (obj[:player]+1) % 2
             h = {"ended" => true, "winner" => @winner}
+            p "FORFEIT"
             
             return h
         end
@@ -84,6 +85,7 @@ class Game
                 end
             end
             @winner = player
+            p "WINNER"
             return {"ended" => true, "winner" => @winner}
         end
 
@@ -135,12 +137,23 @@ class Game
 
             # Check if there is at least one placed tile next to a new one.
             # The letters has to be connected to the old letters already on the board.
-            if @board.tiles[r-1][c].letter != nil || @board.tiles[r+1][c].letter != nil
+            if @board.tiles[r-1][c].letter != nil
                 extends = true
-            elsif @board.tiles[r][c-1].letter != nil || @board.tiles[r][c+1].letter != nil
+            elsif @board.tiles[r][c-1].letter != nil
                 extends = true
             end
-
+            begin
+                if @board.tiles[r+1][c].letter != nil
+                    extends = true
+                end
+            rescue NoMethodError
+            end
+            begin
+                if @board.tiles[r][c+1].letter != nil
+                    extends = true
+                end
+            rescue NoMethodError
+            end
         end
 
         if occupied.length > 0
@@ -263,13 +276,15 @@ class Game
             end
 
             @players[@current_turn].rack.each_with_index do |letter, i|
-                if (blank && letter.is_a?(Blank)) || (!blank && tile[:letter] == letter)
+                if (blank && letter.is_a?(Hash)) || (!blank && tile[:letter] == letter)
                     if !indices.include? i
                         # Save the index
                         found = true
                         indices << i
                         break
                     end
+                elsif !blank && tile[:letter] == letter
+
                 end
             end            
 
@@ -301,8 +316,10 @@ class Game
             word.each do |char|
                 if char.is_a? String
                     word_str.concat char
-                else
+                elsif char.is_a? Hash
                     word_str.concat char[:value]
+                else
+                    word_str.concat char.letter
                 end
             end
 
@@ -426,15 +443,21 @@ class Game
         # Check to the left
         k = 1
         while board_copy[row][col - k].letter != nil
+            if col - k < 0
+                break
+            end
             word.unshift(board_copy[row][col - k].letter)
             k += 1
         end
 
         # Check to the right
         k = 1
-        while board_copy[row][col + k].letter != nil
-            word.push(board_copy[row][col + k].letter)
-            k += 1
+        begin
+            while board_copy[row][col + k].letter != nil
+                word.push(board_copy[row][col + k].letter)
+                k += 1
+            end
+        rescue NoMethodError
         end
 
         # p word
@@ -458,15 +481,21 @@ class Game
         # Check above
         k = 1
         while board_copy[row - k][col].letter != nil
+            if row - k < 0
+                break
+            end
             word.unshift(board_copy[row - k][col].letter)
             k += 1
         end
 
         # Check below
         k = 1
-        while board_copy[row + k][col].letter != nil
-            word.push(board_copy[row + k][col].letter)
-            k += 1
+        begin
+            while board_copy[row + k][col].letter != nil
+                    word.push(board_copy[row + k][col].letter)
+                k += 1
+            end
+        rescue NoMethodError
         end
 
         # p word

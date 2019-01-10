@@ -46,16 +46,18 @@ function checkBoard(x, y) {
 
         // Draw the letter
         const letter = gameObject.game.you.rack[selectedLetter];
-        const o = {
+        placedTiles.push({
             "rack": selectedLetter,
             "row": row,
             "col": col
-        };
-        placedTiles.push(o);
-        playfield.drawLetter(letter, row, col);
-        letterRack.hide(selectedLetter);
-        letterRack.hidden.push(selectedLetter);
-        selectedLetter = undefined;
+        });
+
+        if (letter.letter == "blank") {
+            // Wait for user input
+            waitingForChar = {"row": row, "col": col};
+        } else {
+            createNewLetter(letter, row, col);
+        }
     } else {
         // Check if there is a tile there
         let index = undefined;
@@ -74,4 +76,26 @@ function checkBoard(x, y) {
             letterRack.show();
         }
     }
+}
+
+const alphabet = "abcdefghijklmnopqrstuvwxyz";
+function keyPressed() {
+    // Used for getting characters for blank tiles
+    if (waitingForChar) {
+        if (alphabet.includes(key)) {
+            gameObject.game.you.rack[selectedLetter].value = key.toUpperCase();
+            createNewLetter({
+                "letter": "blanks",
+                "value": key.toUpperCase()
+            }, waitingForChar.row, waitingForChar.col);
+            waitingForChar = undefined;
+        }
+    }
+}
+
+function createNewLetter(letter, row, col) {
+    playfield.drawLetter(letter, row, col);
+    letterRack.hide(selectedLetter);
+    letterRack.hidden.push(selectedLetter);
+    selectedLetter = undefined;
 }

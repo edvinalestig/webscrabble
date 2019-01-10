@@ -99,7 +99,7 @@ class Letters
     # letter - The letter which points are requested for
     # Returns Integer of the points
     def get_points(letter)
-        if letter.is_a? Hash
+        if letter.is_a?(Hash) || letter.is_a?(Blank)
             return 0
         else
             return @points[letter.upcase.to_sym]

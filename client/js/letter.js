@@ -13,7 +13,7 @@ class LetterRack {
 
     // Draw it!
     show() {
-        for (let i = 0; i < 7; i++) { // Edvin's version
+        for (let i = 0; i < gameObject.game.you.rack.length; i++) { // Edvin's version
             if (this.hidden.includes(i)) {
                 continue;
             }
