@@ -40,6 +40,10 @@ function setup() {
         playfield.length = w;
     }
 
+    // Draw the things
+    letterRack.show();
+    playfield.show();
+    you();
 }
 
 // Function called when the player presses the play button.
@@ -61,18 +65,16 @@ function playButton() {
         console.log(tiles);
         sendToServer({"tiles": tiles});
     }
-
-    // getJson();
 }
 
 // Function called when the player presses the end button.
 // Functionality is temporary
 function endButton() {
     console.log("END!");
-    setCss();
-    setScores();
+    // setCss();
+    // setScores();
     giveUp();
-    winner();
+    // winner();
 }
 
 // Get the current game info as a json from the web server
@@ -143,33 +145,31 @@ function setScores() {
     }
 }
 
-// Two ways of doing the same thing? Somehow needs to be converted into 1.
-// I know I added the second way... but the format needs it!
+// Function to call when your opponent is too good
 function giveUp() {
     const obj = {"forfeit": true};
-    postJson(obj);
+    sendToServer(obj, () => {document.location = "/end_page";});
 
-    let route = "/winner/";
-    if (playerNumber == "1") {
-        route += "2";
-    } else if (playerNumber == "2") {
-        route += "1";
-    }
+    // let route = "/winner/";
+    // if (playerNumber == "1") {
+    //     route += "2";
+    // } else if (playerNumber == "2") {
+    //     route += "1";
+    // }
 
-    const formElement = document.getElementById("giveUpForm");
-    formElement.action = route;
-    formElement.submit();
-
+    // const formElement = document.getElementById("giveUpForm");
+    // formElement.action = route;
+    // formElement.submit();
 }
 
 // Changing the h1 depending on who won
-function winner() {
-    if (playerNumber == "1") {
-        document.getElementById("winner").innerHTML="Player 2 won!"
-    } else if (playerNmber == "2") {
-        document.getElementById("winner").innerHTML="Player 1 won!"
-    }
-}
+// function winner() {
+//     if (playerNumber == "1") {
+//         document.getElementById("winner").innerHTML="Player 2 won!"
+//     } else if (playerNmber == "2") {
+//         document.getElementById("winner").innerHTML="Player 1 won!"
+//     }
+// }
 
 // Changing the playername depending on route
 function you() {
@@ -178,14 +178,6 @@ function you() {
     } else if (playerNumber == "2") {
         document.getElementById("player?").innerHTML="player 2"
     }  
-}
-
-// Built-in function in p5.js which runs in a loop continuously
-function draw() {
-    letterRack.show();
-    playfield.show();
-    noLoop();
-    you();
 }
 
 // Built-in function in p5.js which runs when the mouse is clicked
