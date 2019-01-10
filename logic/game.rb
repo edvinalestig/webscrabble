@@ -261,15 +261,20 @@ class Game
             if tile[:letter].is_a? Hash
                 blank = tile[:letter][:letter] == "blank"
             end
+            p "Blank: " + blank.to_s
+            p @players[@current_turn].rack
 
             @players[@current_turn].rack.each_with_index do |letter, i|
-                if (blank && letter.is_a?(Blank)) || (!blank && tile[:letter] == letter)
+                if (blank && letter.is_a?(Hash)) || (!blank && tile[:letter] == letter)
                     if !indices.include? i
                         # Save the index
                         found = true
                         indices << i
+                        p i
                         break
                     end
+                elsif !blank && tile[:letter] == letter
+
                 end
             end            
 
