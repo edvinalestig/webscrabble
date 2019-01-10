@@ -101,7 +101,7 @@ class App < Sinatra::Base
         request.body.rewind
         p JSON.parse(request.body.read, symbolize_names: true)
         request.body.rewind
-        $game.response(JSON.parse(request.body.read, symbolize_names: true))
+        p $game.response(JSON.parse(request.body.read, symbolize_names: true))
         redirect("/p1")
     end
 

@@ -65,6 +65,7 @@ class Game
             # The other player has won or the player will be excluded if there are more players.
             @winner = (@current_turn+1) % 2
             h = {"ended" => true, "winner" => @winner}
+            p "FORFEIT"
             
             return h
         end
@@ -84,6 +85,7 @@ class Game
                 end
             end
             @winner = player
+            p "WINNER"
             return {"ended" => true, "winner" => @winner}
         end
 
@@ -143,7 +145,11 @@ class Game
             begin
                 if @board.tiles[r+1][c].letter != nil
                     extends = true
-                elsif @board.tiles[r][c+1].letter != nil
+                end
+            rescue NoMethodError
+            end
+            begin
+                if @board.tiles[r][c+1].letter != nil
                     extends = true
                 end
             rescue NoMethodError
@@ -310,8 +316,10 @@ class Game
             word.each do |char|
                 if char.is_a? String
                     word_str.concat char
-                else
+                elsif char.is_a? Hash
                     word_str.concat char[:value]
+                else
+                    word_str.concat char.letter
                 end
             end
 
@@ -435,6 +443,9 @@ class Game
         # Check to the left
         k = 1
         while board_copy[row][col - k].letter != nil
+            if col - k < 0
+                break
+            end
             word.unshift(board_copy[row][col - k].letter)
             k += 1
         end
@@ -470,6 +481,9 @@ class Game
         # Check above
         k = 1
         while board_copy[row - k][col].letter != nil
+            if row - k < 0
+                break
+            end
             word.unshift(board_copy[row - k][col].letter)
             k += 1
         end
