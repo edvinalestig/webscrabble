@@ -8,6 +8,7 @@ let letterRack = new LetterRack();
 let playfield = new Playfield();
 let selectedLetter;
 let placedTiles = [];
+let waitingForChar;
 
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
@@ -189,6 +190,9 @@ function draw() {
 
 // Built-in function in p5.js which runs when the mouse is clicked
 function mouseClicked() {
+    if (waitingForChar) {
+        return;
+    }
     const x = mouseX;
     const y = mouseY;
 
