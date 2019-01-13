@@ -81,10 +81,6 @@ p {
     margin-left: 5vw;
 }
 
-.activePlayer {
-    box-shadow:inset 0px 0px 0px 5px #6F9654;
-}
-
 #playButton {
     width: 25.3vw;
     height: 6vw;
@@ -135,8 +131,8 @@ p {
 }
 
 .oppoTurn {
-    background-color: rgb(56, 75, 42);
-    color: rgb(78, 78, 78);
+    background-color: #53604a;
+    color: #898989;
     cursor: default;
 }
 
