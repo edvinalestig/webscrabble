@@ -51,7 +51,7 @@ function playButton() {
     console.log("PLAY!");
     // If no letters have been placed, pass
     if (placedTiles.length == 0) {
-        sendToServer({"passed": true});
+        sendToServer({"passed": true}, () => document.location.reload());
     } else {
         console.log(placedTiles);
         let tiles = [];
@@ -63,7 +63,7 @@ function playButton() {
             });
         }
         console.log(tiles);
-        sendToServer({"tiles": tiles});
+        sendToServer({"tiles": tiles}, () => document.location.reload());
     }
 }
 
