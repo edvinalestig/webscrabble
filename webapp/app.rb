@@ -114,6 +114,12 @@ class App < Sinatra::Base
 
                     if message[:action] == 'connect'
                         p "Connection established"
+                        # Send the game status to the client
+                        ws.send({                                       # Can it be just ws.send?
+                            action: 'response',
+                            data: $game.to_hash(message[:player], true) # Sending everything
+                        }.to_json)
+
                     elsif message[:action] == 'data'
                         # Give the data to the game logic
                         game_check = $game.response(message[:data])
@@ -122,7 +128,7 @@ class App < Sinatra::Base
                         # Otherwise send the error message given
                         if game_check == true
                             # The update should be sent to everyone...
-                            data = $game.to_hash(message[:data][:player], true) # Send everything for now, change to false when implemented
+                            data = $game.to_hash(message[:player], true) # Send everything for now, change to false when implemented
                         else
                             data = game_check
                         end
@@ -131,7 +137,7 @@ class App < Sinatra::Base
                             action: "response",
                             data: data
                         }
-                        settings.sockets[message[:id]].send(response.to_json)
+                        settings.sockets[message[:id]].send(response.to_json) # can't this be changed to just ws.send?
                     end
                 end
             end
