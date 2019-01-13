@@ -1,13 +1,15 @@
 require_relative("../logic/game.rb")
 require 'json'
 $game = nil
+$socket_counter = 0 # Not a good way of doing it, can create an enormous array
 
 # The web application
 # The core of the game
 class App < Sinatra::Base
 
-
-    set :public_folder, 'client'
+    set :public_folder, './client'
+    set :server, 'thin'
+    set :sockets, []
 
     # Create a new game if no game is in progress
     before() do
@@ -78,10 +80,63 @@ class App < Sinatra::Base
         return File.read('client/end_page.html')
     end
 
-    # post("/winner/:id") do
-    #     $game.winner = params["id"]
-    #     redirect("/end_page")
-    # end
+    # -- Websocket stuff --
+    get("/ws") do
+        if !request.websocket?
+            redirect '/'
+        else
+            request.websocket do |ws|
+                # Opening the socket
+                ws.onopen do |msg|
+                    # Return a hash with an id and the action performed
+                    hash = {
+                        action: 'connect',
+                        id: $socket_counter
+                    }
+                    ws.send(hash.to_json)
+                    # Keep track of the socket
+                    settings.sockets[$socket_counter] = ws
+                    # This can create an enormous array.
+                    # Should be done differently.
+                    # This does prevent multiple connections having the same id though.
+                    $socket_counter += 1
+                end
+
+                # Closing the socket
+                ws.onclose do |msg|
+                    # settings.sockets.delete(ws)
+                    settings.sockets[settings.sockets.index(ws)] = nil
+                end
+
+                # Message received
+                we.onmessage do |msg|
+                    message = JSON.parse(msg, symbolize_names: true)
+
+                    if message[:action] == 'connect'
+                        p "Connection established"
+                    elsif message[:action] == 'data'
+                        # Give the data to the game logic
+                        game_check = $game.response(message[:data])
+                        # If true is returned then the turn was successful
+                        # Then send the new game state
+                        # Otherwise send the error message given
+                        if game_check == true
+                            # The update should be sent to everyone...
+                            data = $game.to_hash(message[:data][:player], true) # Send everything for now, change to false when implemented
+                        else
+                            data = game_check
+                        end
+
+                        response = {
+                            action: "response",
+                            data: data
+                        }
+                        settings.sockets[message[:id]].send(response.to_json)
+                    end
+                end
+            end
+        end
+    end
 
     # Player 1 has ended their turn and should be checked against the game logic
     post("/p1") do
