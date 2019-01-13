@@ -1,7 +1,6 @@
 require_relative("../logic/game.rb")
 require 'json'
 $game = nil
-$socket_counter = 0 # Not a good way of doing it, can create an enormous array
 
 # The web application
 # The core of the game
@@ -89,55 +88,52 @@ class App < Sinatra::Base
                 # Opening the socket
                 ws.onopen do |msg|
                     # Return a hash with an id and the action performed
-                    hash = {
-                        action: 'connect',
-                        id: $socket_counter
-                    }
-                    ws.send(hash.to_json)
+                    # hash = {
+                    #     action: 'connect'
+                    # }
+                    # ws.send(hash.to_json)
                     # Keep track of the socket
-                    settings.sockets[$socket_counter] = ws
+                    # settings.sockets[$socket_counter] = ws
                     # This can create an enormous array.
                     # Should be done differently.
                     # This does prevent multiple connections having the same id though.
-                    $socket_counter += 1
+                    # $socket_counter += 1
+                    settings.sockets << ws
                 end
 
                 # Closing the socket
                 ws.onclose do |msg|
-                    # settings.sockets.delete(ws)
-                    settings.sockets[settings.sockets.index(ws)] = nil
+                    settings.sockets.delete(ws)
+                    # settings.sockets[settings.sockets.index(ws)] = nil
                 end
 
                 # Message received
                 we.onmessage do |msg|
+                    player = settings.sockets.index(ws) # Player number
                     message = JSON.parse(msg, symbolize_names: true)
 
                     if message[:action] == 'connect'
                         p "Connection established"
                         # Send the game status to the client
-                        ws.send({                                       # Can it be just ws.send?
-                            action: 'response',
-                            data: $game.to_hash(message[:player], true) # Sending everything
+                        ws.send({
+                            action: 'data',
+                            data: $game.to_hash(player, true) # Sending everything
                         }.to_json)
 
                     elsif message[:action] == 'data'
                         # Give the data to the game logic
-                        game_check = $game.response(message[:data])
+                        game_check = $game.response(message[:data], player)
                         # If true is returned then the turn was successful
-                        # Then send the new game state
+                        # Then send the new game state to all players
                         # Otherwise send the error message given
                         if game_check == true
-                            # The update should be sent to everyone...
-                            data = $game.to_hash(message[:player], true) # Send everything for now, change to false when implemented
+                            update_all()
                         else
-                            data = game_check
+                            ws.send({
+                                action: "data",
+                                data: game_check
+                            }.to_json)
                         end
-
-                        response = {
-                            action: "response",
-                            data: data
-                        }
-                        settings.sockets[message[:id]].send(response.to_json) # can't this be changed to just ws.send?
                     end
                 end
             end
@@ -170,5 +166,16 @@ class App < Sinatra::Base
     # Send a js file which automatically sends a post request for adding the tiles found in testjson.json
     get("/testpost") do
         return "<script>#{File.read('webapp/post.js')}; sendpost('/testpost', #{File.read('webapp/testjson.json')});</script>"
+    end
+
+
+    # Update all the players currently connected including spectators
+    def update_all()
+        settings.sockets.each_with_index do |ws, player|
+            ws.send({
+                action: "data",
+                data: $game.to_hash(player, true) # Change to not send everything once implemented
+            }.to_json)
+        end
     end
 end

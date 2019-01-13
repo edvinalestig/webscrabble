@@ -1,6 +1,5 @@
 {
     "action": "connect",
-    "id": 5,
     "data": {
         "game": {
             "board": {
@@ -59,7 +58,8 @@
                     "column": 14
                 }
             ],
-            "noWordsFound": true
+            "noWordsFound": true,
+            "notYourTurn": true
         },
         "ended": false,
         "winner": null

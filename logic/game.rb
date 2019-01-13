@@ -53,7 +53,28 @@ class Game
     # Arguments:
     # obj - A hash in the clienttoserver.json format
     # Returns boolean or Hash if the player forfeited or someone has won.
-    def response(obj)
+    def response(obj, player=nil)
+        if player == nil
+            player = obj[:player]
+        end
+
+        if obj[:forfeit]
+            # The other player has won or the player will be excluded if there are more players
+            @winner = (player+1) % 2
+            h = {"ended" => true, "winner" => @winner}
+            p "FORFEIT"
+            
+            return h
+        end
+
+        if player != @current_turn
+            return {
+                error: {
+                    notYourTurn: true
+                }
+            }
+        end
+
         p obj
         # Check if the player passed or forfeited
         if obj[:passed]
@@ -61,14 +82,7 @@ class Game
             return true
         end
 
-        if obj[:forfeit]
-            # The other player has won or the player will be excluded if there are more players.
-            @winner = (obj[:player]+1) % 2
-            h = {"ended" => true, "winner" => @winner}
-            p "FORFEIT"
-            
-            return h
-        end
+        
 
         success = add_new_letters(obj[:tiles])
         # Returns either true or an error hash
@@ -565,14 +579,19 @@ class Game
             players << dict
         end
         
-        rack = @players[player_number].rack
-        rack.each_with_index do |letter, index|
-            if letter.is_a? Blank
-                rack[index] = {
-                    letter: "blank",
-                    value: letter.letter
-                }
+        if player_number < @players.length
+            rack = @players[player_number].rack
+            rack.each_with_index do |letter, index|
+                if letter.is_a? Blank
+                    rack[index] = {
+                        letter: "blank",
+                        value: letter.letter
+                    }
+                end
             end
+        else
+            # Spectator, not in the game
+            rack = []
         end
 
         dict = {
