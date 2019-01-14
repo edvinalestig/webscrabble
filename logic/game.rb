@@ -62,6 +62,13 @@ class Game
 
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
+            if player > 1
+                return {
+                    error: {
+                        notYourTurn: "You are a spectator!"
+                    }
+                }
+            end
             @winner = (player+1) % 2
             @ended = true
             h = {"ended" => true, "winner" => @winner}

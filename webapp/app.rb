@@ -31,7 +31,7 @@ class App < Sinatra::Base
     get("/newgame") do
         $game = Game.new(2)
         update_all()
-        redirect("/p1")
+        redirect("/play")
     end
 
     get("/winner") do
@@ -60,12 +60,6 @@ class App < Sinatra::Base
                         playerNumber: settings.sockets.index(ws)
                     }
                     ws.send(hash.to_json)
-                    # Keep track of the socket
-                    # settings.sockets[$socket_counter] = ws
-                    # This can create an enormous array.
-                    # Should be done differently.
-                    # This does prevent multiple connections having the same id though.
-                    # $socket_counter += 1
                 end
 
                 # Closing the socket
@@ -73,7 +67,6 @@ class App < Sinatra::Base
                     p "Connection terminated"
                     settings.sockets.delete(ws)
                     update_all()
-                    # settings.sockets[settings.sockets.index(ws)] = nil
                 end
 
                 # Message received

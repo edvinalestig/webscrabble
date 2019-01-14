@@ -1,6 +1,8 @@
 let socket = new WebSocket("ws://" + document.location.host + "/ws");
 console.log(socket);
 
+// Fired when a new socket i opened
+// Send a confirmation message
 socket.onopen = event => {
     console.log("Connection opened", event);
     socket.send(JSON.stringify({
@@ -8,21 +10,24 @@ socket.onopen = event => {
     }));
 }
 
+// Fired when a message is sent through the socket
 socket.onmessage = event => {
+    // Parse the data sent
     const message = JSON.parse(event.data);
     console.log("Message received:", message);
 
     if (message.action == 'data') {
         if (message.data.error) {
+            // There is an error, display it with an alert
             const type = Object.keys(message.data.error)[0];
             const msg = message.data.error[type];
             alert(type + ": " + msg);
         } else if (message.data.ended) {
-            document.location = "http://" + document.location.host + "/end_page";
+            // The game has ended, redirect to /end_page
+            document.location = "/end_page";
         } else {
             gameObject = message.data;
             playerNumber = message.playerNumber;
-            console.log("Updating", playerNumber);
             update();
         }
     } else if (message.action == 'connect') {
@@ -35,7 +40,6 @@ function sendWebsocket(object) {
         "action": "data",
         "data": object
     }
-    // object.action = "data"
     console.log("Sending", sendobj);
     socket.send(JSON.stringify(sendobj));
 }

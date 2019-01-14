@@ -20,6 +20,7 @@ function setup() {
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas.parent("playfield");
 
+    // Set the dimensions
     letterRack.width  = width / 11;
     w = width * 0.7528;
     h = height * 0.9256;
@@ -32,7 +33,7 @@ function setup() {
     }
 }
 
-// Built-in function in p5.js which runs continuously in loop
+// Built-in function in p5.js which runs continuously in loop until noLoop() is called
 function draw() {
     // Wait for the data to arrive before drawing it
     if (gameObject) {
@@ -77,7 +78,6 @@ function playButton() {
 }
 
 // Function called when the player presses the end button.
-// Functionality is temporary
 function endButton() {
     console.log("END!");
     giveUp();
@@ -149,7 +149,6 @@ function setScores() {
 function giveUp() {
     const obj = {"forfeit": true};
     sendWebsocket(obj);
-    // sendToServer(obj, () => {document.location = "/end_page";});
 }
 
 // Changing the playername depending on route
