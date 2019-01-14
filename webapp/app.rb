@@ -87,11 +87,11 @@ class App < Sinatra::Base
             request.websocket do |ws|
                 # Opening the socket
                 ws.onopen do |msg|
-                    # Return a hash with an id and the action performed
-                    # hash = {
-                    #     action: 'connect'
-                    # }
-                    # ws.send(hash.to_json)
+                    # Return a connection hash telling the client it has successfully connected
+                    hash = {
+                        action: 'connect'
+                    }
+                    ws.send(hash.to_json)
                     # Keep track of the socket
                     # settings.sockets[$socket_counter] = ws
                     # This can create an enormous array.
@@ -108,7 +108,7 @@ class App < Sinatra::Base
                 end
 
                 # Message received
-                we.onmessage do |msg|
+                ws.onmessage do |msg|
                     player = settings.sockets.index(ws) # Player number
                     message = JSON.parse(msg, symbolize_names: true)
 
