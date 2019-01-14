@@ -1,20 +1,23 @@
 {
-    "tiles": [
-        {
-            "letter": "F",
-            "row": 6,
-            "column": 13
-        },
-        {
-            "letter": {
-                "letter": "blank",
-                "value": "G"
+    "action": "connect",
+    "player": 1,
+    "data": {
+        "tiles": [
+            {
+                "letter": "F",
+                "row": 6,
+                "column": 13
             },
-            "row": 1,
-            "column": 11
-        }
-    ],
-    "passed": false,
-    "forfeit": false,
-    "player": 0
+            {
+                "letter": {
+                    "letter": "blank",
+                    "value": "G"
+                },
+                "row": 1,
+                "column": 11
+            }
+        ],
+        "passed": false,
+        "forfeit": false
+    }
 }

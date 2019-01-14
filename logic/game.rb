@@ -46,28 +46,49 @@ class Game
         @round = 1
         @latest_updated_tiles = []
         @winner = nil
-
+        @ended = false
     end
 
     # The method to call when a player has ended their turn.
     # Arguments:
     # obj - A hash in the clienttoserver.json format
     # Returns boolean or Hash if the player forfeited or someone has won.
-    def response(obj)
+    def response(obj, player=nil)
         p obj
-        # Check if the player passed or forfeited
-        if obj[:passed]
-            end_turn()
-            return true
+
+        if player == nil
+            player = obj[:player]
         end
 
         if obj[:forfeit]
-            # The other player has won or the player will be excluded if there are more players.
-            @winner = (obj[:player]+1) % 2
+            # The other player has won or the player will be excluded if there are more players
+            if player > 1
+                return {
+                    error: {
+                        notYourTurn: "You are a spectator!"
+                    }
+                }
+            end
+            @winner = (player+1) % 2
+            @ended = true
             h = {"ended" => true, "winner" => @winner}
             p "FORFEIT"
             
             return h
+        end
+
+        if player != @current_turn
+            return {
+                error: {
+                    notYourTurn: true
+                }
+            }
+        end
+
+        # Check if the player passed or forfeited
+        if obj[:passed]
+            end_turn()
+            return true
         end
 
         success = add_new_letters(obj[:tiles])
@@ -565,14 +586,19 @@ class Game
             players << dict
         end
         
-        rack = @players[player_number].rack
-        rack.each_with_index do |letter, index|
-            if letter.is_a? Blank
-                rack[index] = {
-                    letter: "blank",
-                    value: letter.letter
-                }
+        if player_number < @players.length
+            rack = @players[player_number].rack
+            rack.each_with_index do |letter, index|
+                if letter.is_a? Blank
+                    rack[index] = {
+                        letter: "blank",
+                        value: letter.letter
+                    }
+                end
             end
+        else
+            # Spectator, not in the game
+            rack = []
         end
 
         dict = {
@@ -591,7 +617,10 @@ class Game
             dict[:board][:tiles] = @board.to_array
         end
 
-        return {game: dict}
+        return {
+            game: dict,
+            ended: @ended
+        }
     end
 
 end

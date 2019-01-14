@@ -1,63 +1,69 @@
 {
-    "game": {
-        "board": {
-            "tiles": [
-                {
-                    "attribute": null,
-                    "column": 6,
-                    "row": 4,
-                    "letter": "F"
-                },
-                {
-                    "attribute": null,
-                    "column": 6,
-                    "row": 4,
-                    "letter": {
-                        "letter": "blank",
-                        "value": "F"
+    "action": "connect",
+    "playerNumber": 5,
+    "data": {
+        "game": {
+            "board": {
+                "tiles": [
+                    {
+                        "attribute": null,
+                        "column": 6,
+                        "row": 4,
+                        "letter": "F"
+                    },
+                    {
+                        "attribute": null,
+                        "column": 6,
+                        "row": 4,
+                        "letter": {
+                            "letter": "blank",
+                            "value": "F"
+                        }
                     }
+                ],
+                "latestUpdatedTiles": [
+                    {
+                        "row": 4,
+                        "column": 9
+                    }
+                ]
+            },
+            "players": [
+                {
+                    "name": "Player 1",
+                    "points": 64,
+                    "isYou": false
                 }
             ],
-            "latestUpdatedTiles": [
+            "you": {
+                "rack": [
+                    "H",
+                    "J"
+                ]
+            },
+            "currentTurn": 0,
+            "roundNumber": 6,
+            "lettersLeft": 74,
+            "ended": false
+        },
+        "roomName": "Room 1",
+        "error": {
+            "invalidWords": [
+                "FRWQ",
+                "HYRRBN"
+            ],
+            "lettersNotOnRack": ["A", "H"],
+            "invalidPlacement": false,
+            "tileOccupied": [
                 {
-                    "row": 4,
-                    "column": 9
+                    "row": 5,
+                    "column": 14
                 }
-            ]
+            ],
+            "noWordsFound": true,
+            "notYourTurn": true
         },
-        "players": [
-            {
-                "name": "Player 1",
-                "points": 64,
-                "isYou": false
-            }
-        ],
-        "you": {
-            "rack": [
-                "H",
-                "J"
-            ]
-        },
-        "currentTurn": 0,
-        "roundNumber": 6,
-        "lettersLeft": 74
-    },
-    "roomName": "Room 1",
-    "error": {
-        "invalidWords": [
-            "FRWQ",
-            "HYRRBN"
-        ],
-        "lettersNotOnRack": ["A", "H"],
-        "invalidPlacement": false,
-        "tileOccupied": [
-            {
-                "row": 5,
-                "column": 14
-            }
-        ],
-        "noWordsFound": true
-    },
-    "ended": false,
-    "winner": null
+        "winner": null,
+        "ended": false
+    }
 }

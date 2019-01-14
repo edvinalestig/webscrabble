@@ -6,8 +6,9 @@ $game = nil
 # The core of the game
 class App < Sinatra::Base
 
-
-    set :public_folder, 'client'
+    set :public_folder, './client'
+    set :server, 'thin'
+    set :sockets, []
 
     # Create a new game if no game is in progress
     before() do
@@ -21,50 +22,16 @@ class App < Sinatra::Base
         return File.read('client/index.html')
     end
 
-    # Get the board for player 1
-    get("/p1") do
+    # The route for the game
+    get('/play') do
         return File.read('client/game.html')
-    end
-
-    # Get the board for player 2
-    get("/p2") do
-        return File.read('client/game.html')
-    end
-
-    # Get the game information for player 1
-    # Does not include the board
-    get("/getp1") do
-        return $game.to_hash(0).to_json
-    end
-
-    # Get the game information for player 1
-    # Includes the board
-    get("/getp1/all") do
-        return $game.to_hash(0, true).to_json
-    end
-
-    # Get the game information for player 2
-    # Does not include the board
-    get("/getp2") do
-        return $game.to_hash(1).to_json
-    end
-
-    # Get the game information for player 2
-    # Includes the board
-    get("/getp2/all") do
-        return $game.to_hash(1, true).to_json
-    end
-
-    # Get a test json file
-    get("/logic/test.json") do
-        headers "Content-Type" => "text/html; charset=utf8"
-        return File.read('logic/test.json')
     end
 
     # Create a new game for 2 players
     get("/newgame") do
         $game = Game.new(2)
-        redirect("/p1")
+        update_all()
+        redirect("/play")
     end
 
     get("/winner") do
@@ -78,36 +45,76 @@ class App < Sinatra::Base
         return File.read('client/end_page.html')
     end
 
-    # post("/winner/:id") do
-    #     $game.winner = params["id"]
-    #     redirect("/end_page")
-    # end
+    # -- Websocket stuff --
+    get("/ws") do
+        if !request.websocket?
+            redirect '/'
+        else
+            request.websocket do |ws|
+                # Opening the socket
+                ws.onopen do |msg|
+                    settings.sockets << ws
+                    # Return a connection hash telling the client it has successfully connected
+                    hash = {
+                        action: 'connect',
+                        playerNumber: settings.sockets.index(ws)
+                    }
+                    ws.send(hash.to_json)
+                end
 
-    # Player 1 has ended their turn and should be checked against the game logic
-    post("/p1") do
-        p params
-        $game.response(params)
-        redirect("/p1")
+                # Closing the socket
+                ws.onclose do |msg|
+                    p "Connection terminated"
+                    settings.sockets.delete(ws)
+                    update_all()
+                end
+
+                # Message received
+                ws.onmessage do |msg|
+                    player = settings.sockets.index(ws) # Player number
+                    message = JSON.parse(msg, symbolize_names: true)
+                    p "Message received from #{player}:"
+                    p message
+
+                    if message[:action] == 'connect'
+                        p "Connection established"
+                        # Send the game status to the client
+                        ws.send({
+                            action: 'data',
+                            playerNumber: player,
+                            data: $game.to_hash(player, true) # Sending everything
+                        }.to_json)
+
+                    elsif message[:action] == 'data'
+                        # Give the data to the game logic
+                        game_check = $game.response(message[:data], player)
+                        # If true is returned then the turn was successful
+                        # Then send the new game state to all players
+                        # Otherwise send the error message given
+                        if game_check == true
+                            update_all()
+                        else
+                            ws.send({
+                                action: "data",
+                                playerNumber: player,
+                                data: game_check
+                            }.to_json)
+                        end
+                    end
+                end
+            end
+        end
     end
 
-    # Player 2 has ended their turn and should be checked against the game logic
-    post("/p2") do
-        p params
-        $game.response(params)
-        redirect("/p2")
-    end
-
-    # Routes for testing laying letters
-    post("/testpost") do
-        request.body.rewind
-        p JSON.parse(request.body.read, symbolize_names: true)
-        request.body.rewind
-        p $game.response(JSON.parse(request.body.read, symbolize_names: true))
-        redirect("/p1")
-    end
-
-    # Send a js file which automatically sends a post request for adding the tiles found in testjson.json
-    get("/testpost") do
-        return "<script>#{File.read('webapp/post.js')}; sendpost('/testpost', #{File.read('webapp/testjson.json')});</script>"
+    # Update all the players currently connected including spectators
+    def update_all()
+        p "Updating all players"
+        settings.sockets.each_with_index do |ws, player|
+            ws.send({
+                action: "data",
+                playerNumber: player,
+                data: $game.to_hash(player, true) # Change to not send everything once implemented
+            }.to_json)
+        end
     end
 end
