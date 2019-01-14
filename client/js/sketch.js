@@ -21,13 +21,10 @@ function preload() {
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
-    setCss();
-    setScores();
-
+    // Set up the canvas
     const canvasDiv = document.getElementById("playfield");
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
     canvas.parent("playfield");
-    letterRack.manageLetters();
 
     letterRack.width  = width / 11;
     w = width * 0.7528;
@@ -39,11 +36,19 @@ function setup() {
     } else {
         playfield.length = w;
     }
+    
+    you();
+    update();
+}
 
+// Update the board, scores etc with new information
+function update() {
+    letterRack.manageLetters();
+    setCss();
+    setScores();
     // Draw the things
     letterRack.show();
     playfield.show();
-    you();
 }
 
 // Function called when the player presses the play button.
