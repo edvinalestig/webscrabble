@@ -17,7 +17,7 @@ socket.onmessage = event => {
             const type = Object.keys(message.data.error)[0];
             const msg = message.data.error[type];
             alert(type + ": " + msg);
-        } else if (message.data.game.ended) {
+        } else if (message.data.ended) {
             document.location = "http://" + document.location.host + "/end_page";
         } else {
             gameObject = message.data;

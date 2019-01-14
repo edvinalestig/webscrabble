@@ -22,6 +22,11 @@ class App < Sinatra::Base
         return File.read('client/index.html')
     end
 
+    # The route for the game
+    get('/play') do
+        return File.read('client/game.html')
+    end
+
     # Get the board for player 1
     get("/p1") do
         return File.read('client/game.html')
@@ -65,6 +70,7 @@ class App < Sinatra::Base
     # Create a new game for 2 players
     get("/newgame") do
         $game = Game.new(2)
+        update_all()
         redirect("/p1")
     end
 

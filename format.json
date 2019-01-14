@@ -63,6 +63,7 @@
             "noWordsFound": true,
             "notYourTurn": true
         },
-        "winner": null
+        "winner": null,
+        "ended": false
     }
 }

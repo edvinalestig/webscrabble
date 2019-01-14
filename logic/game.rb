@@ -602,8 +602,7 @@ class Game
             },
             currentTurn: @current_turn,
             roundNumber: @round,
-            lettersLeft: @letter_bag.length,
-            ended: @ended
+            lettersLeft: @letter_bag.length
         }
 
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles
@@ -611,7 +610,10 @@ class Game
             dict[:board][:tiles] = @board.to_array
         end
 
-        return {game: dict}
+        return {
+            game: dict,
+            ended: @ended
+        }
     end
 
 end
