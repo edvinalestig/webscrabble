@@ -46,7 +46,7 @@ class Game
         @round = 1
         @latest_updated_tiles = []
         @winner = nil
-
+        @ended = false
     end
 
     # The method to call when a player has ended their turn.
@@ -54,6 +54,8 @@ class Game
     # obj - A hash in the clienttoserver.json format
     # Returns boolean or Hash if the player forfeited or someone has won.
     def response(obj, player=nil)
+        p obj
+
         if player == nil
             player = obj[:player]
         end
@@ -61,6 +63,7 @@ class Game
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
             @winner = (player+1) % 2
+            @ended = true
             h = {"ended" => true, "winner" => @winner}
             p "FORFEIT"
             
@@ -75,14 +78,11 @@ class Game
             }
         end
 
-        p obj
         # Check if the player passed or forfeited
         if obj[:passed]
             end_turn()
             return true
         end
-
-        
 
         success = add_new_letters(obj[:tiles])
         # Returns either true or an error hash
@@ -602,7 +602,8 @@ class Game
             },
             currentTurn: @current_turn,
             roundNumber: @round,
-            lettersLeft: @letter_bag.length
+            lettersLeft: @letter_bag.length,
+            ended: @ended
         }
 
         dict[:board][:latestUpdatedTiles] = @latest_updated_tiles

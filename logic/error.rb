@@ -16,6 +16,10 @@ class Error
             return nil
         end
         
-        return {type => data} 
+        return {
+            error: {
+                type => data
+            }
+        }
     end
 end

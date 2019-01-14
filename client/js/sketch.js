@@ -1,3 +1,5 @@
+// Websocket stuff is in communication.js
+
 // Grey colours
 const darkColour = (54, 54, 54);
 const lightColour = (71, 71, 71);
@@ -9,15 +11,16 @@ let playfield = new Playfield();
 let selectedLetter;
 let placedTiles = [];
 let waitingForChar;
+let playerNumber;
 
 // Getting the last character in the url which is the player number
 // Temporary, will be removed when websockets are implemented
-const playerNumber = String(document.location)[String(document.location).length-1];
+// const playerNumber = String(document.location)[String(document.location).length-1];
 
 // Built-in function in p5.js which runs before everything else.
-function preload() {
-    getJson();
-}
+// function preload() {
+//     getJson();
+// }
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
@@ -36,14 +39,22 @@ function setup() {
     } else {
         playfield.length = w;
     }
-    
-    you();
-    update();
+}
+
+function draw() {
+    // Wait for the data to arrive before drawing it
+    if (gameObject) {
+        update();
+        noLoop();
+    }
 }
 
 // Update the board, scores etc with new information
 function update() {
+    you();
     letterRack.manageLetters();
+    letterRack.hidden = [];
+    placedTiles = [];
     setCss();
     setScores();
     // Draw the things
@@ -56,7 +67,8 @@ function playButton() {
     console.log("PLAY!");
     // If no letters have been placed, pass
     if (placedTiles.length == 0) {
-        sendToServer({"passed": true}, () => document.location.reload());
+        sendWebsocket({"passed": true});
+        // sendToServer({"passed": true}, () => document.location.reload());
     } else {
         console.log(placedTiles);
         let tiles = [];
@@ -67,8 +79,8 @@ function playButton() {
                 "letter": gameObject.game.you.rack[t.rack]
             });
         }
-        console.log(tiles);
-        sendToServer({"tiles": tiles}, () => document.location.reload());
+        // sendToServer({"tiles": tiles}, () => document.location.reload());
+        sendWebsocket({"tiles": tiles});
     }
 }
 
@@ -76,10 +88,7 @@ function playButton() {
 // Functionality is temporary
 function endButton() {
     console.log("END!");
-    // setCss();
-    // setScores();
     giveUp();
-    // winner();
 }
 
 // Get the current game info as a json from the web server
@@ -153,36 +162,19 @@ function setScores() {
 // Function to call when your opponent is too good
 function giveUp() {
     const obj = {"forfeit": true};
-    sendToServer(obj, () => {document.location = "/end_page";});
-
-    // let route = "/winner/";
-    // if (playerNumber == "1") {
-    //     route += "2";
-    // } else if (playerNumber == "2") {
-    //     route += "1";
-    // }
-
-    // const formElement = document.getElementById("giveUpForm");
-    // formElement.action = route;
-    // formElement.submit();
+    sendWebsocket(obj);
+    // sendToServer(obj, () => {document.location = "/end_page";});
 }
-
-// Changing the h1 depending on who won
-// function winner() {
-//     if (playerNumber == "1") {
-//         document.getElementById("winner").innerHTML="Player 2 won!"
-//     } else if (playerNmber == "2") {
-//         document.getElementById("winner").innerHTML="Player 1 won!"
-//     }
-// }
 
 // Changing the playername depending on route
 function you() {
-    if (playerNumber == "1") {
+    if (playerNumber == "0") {
         document.getElementById("player?").innerHTML="player 1"
-    } else if (playerNumber == "2") {
+    } else if (playerNumber == "1") {
         document.getElementById("player?").innerHTML="player 2"
-    }  
+    } else {
+        document.getElementById("player?").innerHTML="spectator"
+    }
 }
 
 // Built-in function in p5.js which runs when the mouse is clicked

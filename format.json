@@ -1,5 +1,6 @@
 {
     "action": "connect",
+    "playerNumber": 5,
     "data": {
         "game": {
             "board": {
@@ -42,7 +43,8 @@
             },
             "currentTurn": 0,
             "roundNumber": 6,
-            "lettersLeft": 74
+            "lettersLeft": 74,
+            "ended": false
         },
         "roomName": "Room 1",
         "error": {
@@ -61,7 +63,6 @@
             "noWordsFound": true,
             "notYourTurn": true
         },
-        "ended": false,
         "winner": null
     }
 }
