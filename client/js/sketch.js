@@ -13,15 +13,6 @@ let placedTiles = [];
 let waitingForChar;
 let playerNumber;
 
-// Getting the last character in the url which is the player number
-// Temporary, will be removed when websockets are implemented
-// const playerNumber = String(document.location)[String(document.location).length-1];
-
-// Built-in function in p5.js which runs before everything else.
-// function preload() {
-//     getJson();
-// }
-
 // Built-in function in p5.js which runs just after preload.
 function setup() {
     // Set up the canvas
@@ -41,6 +32,7 @@ function setup() {
     }
 }
 
+// Built-in function in p5.js which runs continuously in loop
 function draw() {
     // Wait for the data to arrive before drawing it
     if (gameObject) {
@@ -89,12 +81,6 @@ function playButton() {
 function endButton() {
     console.log("END!");
     giveUp();
-}
-
-// Get the current game info as a json from the web server
-function getJson() {
-    console.log(playerNumber);
-    gameObject = loadJSON("/getp" + playerNumber + "/all");
 }
 
 // Set the css

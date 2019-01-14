@@ -27,46 +27,6 @@ class App < Sinatra::Base
         return File.read('client/game.html')
     end
 
-    # Get the board for player 1
-    get("/p1") do
-        return File.read('client/game.html')
-    end
-
-    # Get the board for player 2
-    get("/p2") do
-        return File.read('client/game.html')
-    end
-
-    # Get the game information for player 1
-    # Does not include the board
-    get("/getp1") do
-        return $game.to_hash(0).to_json
-    end
-
-    # Get the game information for player 1
-    # Includes the board
-    get("/getp1/all") do
-        return $game.to_hash(0, true).to_json
-    end
-
-    # Get the game information for player 2
-    # Does not include the board
-    get("/getp2") do
-        return $game.to_hash(1).to_json
-    end
-
-    # Get the game information for player 2
-    # Includes the board
-    get("/getp2/all") do
-        return $game.to_hash(1, true).to_json
-    end
-
-    # Get a test json file
-    get("/logic/test.json") do
-        headers "Content-Type" => "text/html; charset=utf8"
-        return File.read('logic/test.json')
-    end
-
     # Create a new game for 2 players
     get("/newgame") do
         $game = Game.new(2)
@@ -152,35 +112,6 @@ class App < Sinatra::Base
             end
         end
     end
-
-    # Player 1 has ended their turn and should be checked against the game logic
-    post("/p1") do
-        p params
-        $game.response(params)
-        redirect("/p1")
-    end
-
-    # Player 2 has ended their turn and should be checked against the game logic
-    post("/p2") do
-        p params
-        $game.response(params)
-        redirect("/p2")
-    end
-
-    # Routes for testing laying letters
-    post("/testpost") do
-        request.body.rewind
-        p JSON.parse(request.body.read, symbolize_names: true)
-        request.body.rewind
-        p $game.response(JSON.parse(request.body.read, symbolize_names: true))
-        redirect("/p1")
-    end
-
-    # Send a js file which automatically sends a post request for adding the tiles found in testjson.json
-    get("/testpost") do
-        return "<script>#{File.read('webapp/post.js')}; sendpost('/testpost', #{File.read('webapp/testjson.json')});</script>"
-    end
-
 
     # Update all the players currently connected including spectators
     def update_all()
