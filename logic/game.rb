@@ -106,6 +106,7 @@ class Game
                 end
             end
             @winner = player
+            @ended = true
             p "WINNER"
             return {"ended" => true, "winner" => @winner}
         end

@@ -67,8 +67,8 @@ class LetterRack {
     hide(index) {
         const xCorner = this.xPos - 6; 
         const yCorner = this.yPos + index * (this.height + 28.5) - 6;
-        stroke("#454545");
-        fill("#454545");
+        stroke(lightColour);
+        fill(lightColour);
         rect(xCorner, yCorner, this.width + 12, this.height + 12);
     }
     

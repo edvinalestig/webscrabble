@@ -1,6 +1,17 @@
 # Webscrabble
 A gymnasiearbete (thesis of upper secondary education) about recreating Scrabble with network support.
 
+## How to run it
+1. Click on the green 'Clone or download' button and choose download zip.
+2. Extract the folder
+3. Install ruby
+4. Go to the folder in the command prompt
+5. In the command prompt, run ```gem install bundle```
+6. Run ```bundle install```
+7. Run ```rake run```
+
+If the error ```Unable to load the EventMachine C extension; To use the pure-ruby reactor, require 'em/pure_ruby'```is encountered, run ```gem uninstall eventmachine``` followed by ```gem install eventmachine --platform ruby```.
+
 ## Where we are right now
 We are done! Well, it's working as intended at least. There are some rough edges but we are happy with it! Websockets are implemented, the frontend works nicely and the backend follows the rules as it's supposed to do.
 
