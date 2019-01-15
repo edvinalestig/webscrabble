@@ -13,12 +13,10 @@ class LetterRack {
 
     // Draw it!
     show() {
-        for (let i = 0; i < gameObject.game.you.rack.length; i++) { // Edvin's version
+        for (let i = 0; i < gameObject.game.you.rack.length; i++) {
             if (this.hidden.includes(i)) {
                 continue;
             }
-        // const spacing = playfield.height * 0.033
-        // for (let i = this.yPos; i <= this.height * 9; i+= this.height + spacing) { -- Ida's version
 
             fill(this.colour);
             strokeWeight(0);
@@ -42,7 +40,7 @@ class LetterRack {
             p = getPoints(lt);
             w = textWidth(String(p));
             // Writing the points in the corner
-            text(p, this.xPos + w * 10, yPos + this.height / 4 );
+            text(p, this.xPos + (this.width * 5/6), yPos + this.height / 4 );
         }
     }
 

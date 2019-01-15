@@ -55,6 +55,7 @@ function checkBoard(x, y) {
         if (letter.letter == "blank") {
             // Wait for user input
             waitingForChar = {"row": row, "col": col};
+            alert("Press the desired letter on the keyboard.");
         } else {
             createNewLetter(letter, row, col);
         }
