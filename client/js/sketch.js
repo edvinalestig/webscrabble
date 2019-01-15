@@ -116,14 +116,15 @@ function setCss() {
         
         if (currentTurn == me) {
             playButtonDiv.classList.remove("oppoTurn");
-            playButtonDiv.classList.add("myTurn");
+            playButtonDiv.classList.add("myTurn", "pass");
             playButtonText.classList.remove("oppoTurn");
             playButtonText.classList.add("myTurn");
+            playButtonText.innerHTML = "pass";
             
             playButtonDiv.onclick = () => playButton();
         } else {
             playButtonDiv.classList.add("oppoTurn");
-            playButtonDiv.classList.remove("myTurn");
+            playButtonDiv.classList.remove("myTurn", "pass", "placed");
             playButtonText.classList.add("oppoTurn");
             playButtonText.classList.remove("myTurn");
             

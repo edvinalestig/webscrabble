@@ -274,6 +274,18 @@ class Game
     def add_new_letters(letters)
         p letters
 
+        letters.each do |letter|
+            if letter[:letter].is_a? Hash
+                if letter[:letter][:value] == nil
+                    return {
+                        error: {
+                            invalidPlacement: "Letter not chosen for a blank tile"
+                        }
+                    }
+                end
+            end
+        end
+
         # Check if an error has been returned.
         # Does not do it currently but should be implemented
         pl = check_placement(letters)

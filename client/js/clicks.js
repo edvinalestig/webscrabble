@@ -55,6 +55,7 @@ function checkBoard(x, y) {
         if (letter.letter == "blank") {
             // Wait for user input
             waitingForChar = {"row": row, "col": col};
+            alert("Press the desired letter on the keyboard.");
         } else {
             createNewLetter(letter, row, col);
         }
@@ -75,6 +76,15 @@ function checkBoard(x, y) {
             letterRack.hidden.splice(letterRack.hidden.indexOf(spliced[0].rack), 1);
             letterRack.show();
         }
+    }
+    if (placedTiles.length == 0) {
+        document.getElementById("playButton").classList.remove("placed");
+        document.getElementById("playButton").classList.add("pass");
+        document.getElementById("playButtonText").innerHTML = "pass"
+    } else {
+        document.getElementById("playButton").classList.remove("pass");
+        document.getElementById("playButton").classList.add("placed");
+        document.getElementById("playButtonText").innerHTML = "end turn"
     }
 }
 
