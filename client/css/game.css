@@ -137,9 +137,16 @@ p {
 }
 
 .myTurn {
-    background-color: #6F9654;
     color: white;
     cursor: pointer;
+}
+
+.pass {
+    background-color: rgb(204, 185, 91);
+}
+
+.placed {
+    background-color: #6F9654;
 }
 
 #giveUpForm {

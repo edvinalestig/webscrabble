@@ -77,6 +77,15 @@ function checkBoard(x, y) {
             letterRack.show();
         }
     }
+    if (placedTiles.length == 0) {
+        document.getElementById("playButton").classList.remove("placed");
+        document.getElementById("playButton").classList.add("pass");
+        document.getElementById("playButtonText").innerHTML = "pass"
+    } else {
+        document.getElementById("playButton").classList.remove("pass");
+        document.getElementById("playButton").classList.add("placed");
+        document.getElementById("playButtonText").innerHTML = "end turn"
+    }
 }
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
