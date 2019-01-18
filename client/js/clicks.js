@@ -4,8 +4,12 @@ function checkRack(y) {
     if (playerNumber != gameObject.game.currentTurn) {
         return;
     }
+    const rackLength = gameObject.game.you.rack.length;
 
     let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
+    if (pos >= rackLength) {
+        return
+    }
     console.log(pos);
     if (selectedLetter == pos) {
         letterRack.deselect(pos);
