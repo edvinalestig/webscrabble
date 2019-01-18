@@ -1,6 +1,10 @@
 function checkRack(y) {
     console.log("rack!");
 
+    if (playerNumber != gameObject.game.currentTurn) {
+        return;
+    }
+
     let pos = floor((y - letterRack.yPos) / (letterRack.height + 28.5));
     console.log(pos);
     if (selectedLetter == pos) {
@@ -22,6 +26,10 @@ function checkRack(y) {
 
 
 function checkBoard(x, y) {
+    if (playerNumber != gameObject.game.currentTurn) {
+        return;
+    }
+
     // Get which tile was clicked on
     const row = floor((y - playfield.yPos) / playfield.tileLength);
     const col = floor((x - playfield.xPos) / playfield.tileLength);
