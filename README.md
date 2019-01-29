@@ -6,7 +6,7 @@ A gymnasiearbete (thesis of upper secondary education) about recreating Scrabble
 2. Extract the folder
 3. Install ruby
 4. Go to the folder in the command prompt
-5. In the command prompt, run ```gem install bundle```
+5. In the command prompt, run ```gem install bundler```
 6. Run ```bundle install```
 7. Run ```rake run```
 8. Open the browser and go to ```localhost:9292/play```
