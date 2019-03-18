@@ -20,6 +20,16 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    padding-top: 50px;
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 75px;
+    font-weight: normal;
+    /* margin-bottom: 30px; */
+    text-align: center;
+}
+
 h4 {
     color: #ffffff;
     font-family: 'inconsolata', monospace;

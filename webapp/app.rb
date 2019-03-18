@@ -36,7 +36,17 @@ class App < Sinatra::Base
 
     get("/winner") do
         p $game.winner
-        return ($game.winner + 1).to_s
+        winner = $game.winner
+        if winner
+            winner = ($game.winner + 1).to_s
+        else
+            winner = "_"
+        end
+        t = {
+            winner: winner,
+            scores: "#{$game.players[0].points} - #{$game.players[1].points}"
+        }
+        return t.to_json
     end
 
     get("/end_page") do
