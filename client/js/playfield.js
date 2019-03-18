@@ -25,11 +25,29 @@ class Playfield {
             line(this.xPos + i * this.tileLength, this.yPos, this.xPos + i * this.tileLength, this.yPos + 15 * this.tileLength);
         }
 
-        // Create a rectangle on the centre tile
-        const x = this.xPos + this.tileLength * 7;
-        const y = this.yPos + this.tileLength * 7;
-        fill(lightColour);
-        rect(x, y, this.tileLength, this.tileLength);
+
+        // Special tiles
+        for (let row = 0; row < 15; row++) {
+            for (let col = 0; col < 15; col++) {
+                const a = gameObject.game.board.tiles[row][col].attribute;
+                if (a) {
+                    const x = this.xPos + this.tileLength * col;
+                    const y = this.yPos + this.tileLength * row;
+                    if (a == "centre") {
+                        fill(lightColour);
+                    } else if (a == "TW") {
+                        fill(TWColour);
+                    } else if (a == "DW") {
+                        fill(DWColour);
+                    } else if (a == "TL") {
+                        fill(TLColour);
+                    } else if (a == "DL") {
+                        fill(DLColour);
+                    }
+                    rect(x, y, this.tileLength, this.tileLength);
+                }
+            }
+        }
 
         // Go through all the tiles and draw them if they have something placed on them
         for (let row of gameObject.game.board.tiles) {
@@ -77,10 +95,24 @@ class Playfield {
         
         stroke(255);
         strokeWeight(1);
-        if (row != 7 || col != 7) {
-            fill(this.colour);
+        const a = gameObject.game.board.tiles[row][col].attribute;
+        if (a) {
+            if (a == "centre") {
+                fill(lightColour);
+            } else if (a == "TW") {
+                fill(TWColour);
+            } else if (a == "DW") {
+                fill(DWColour);
+            } else if (a == "TL") {
+                fill(TLColour);
+            } else if (a == "DL") {
+                fill(DLColour);
+            }
+        // }
+        // if (row != 7 || col != 7) {
+        //     fill(this.colour);
         } else {
-            fill(lightColour);
+            fill(this.colour);
         }
 
         rect(xCorner, yCorner, this.tileLength, this.tileLength);

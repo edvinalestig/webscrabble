@@ -18,6 +18,81 @@ class Board
 
         # Define the centre tile
         @tiles[7][7].attribute = "centre"
+
+        # Triple word
+        @tiles[0][0].attribute = "TW"
+        @tiles[0][7].attribute = "TW"
+        @tiles[0][14].attribute = "TW"
+        @tiles[7][0].attribute = "TW"
+        @tiles[7][14].attribute = "TW"
+        @tiles[14][0].attribute = "TW"
+        @tiles[14][7].attribute = "TW"
+        @tiles[14][14].attribute = "TW"
+
+        # Double word
+        @tiles[1][1].attribute = "DW"
+        @tiles[2][2].attribute = "DW"
+        @tiles[3][3].attribute = "DW"
+        @tiles[4][4].attribute = "DW"
+
+        @tiles[1][13].attribute = "DW"
+        @tiles[2][12].attribute = "DW"
+        @tiles[3][11].attribute = "DW"
+        @tiles[4][10].attribute = "DW"
+
+        @tiles[10][10].attribute = "DW"
+        @tiles[11][11].attribute = "DW"
+        @tiles[12][12].attribute = "DW"
+        @tiles[13][13].attribute = "DW"
+
+        @tiles[13][1].attribute = "DW"
+        @tiles[12][2].attribute = "DW"
+        @tiles[11][3].attribute = "DW"
+        @tiles[10][4].attribute = "DW"
+
+        # Triple letter
+        @tiles[5][1].attribute = "TL"
+        @tiles[9][1].attribute = "TL"
+        @tiles[1][5].attribute = "TL"
+        @tiles[1][9].attribute = "TL"
+        @tiles[5][13].attribute = "TL"
+        @tiles[9][13].attribute = "TL"
+        @tiles[13][5].attribute = "TL"
+        @tiles[13][9].attribute = "TL"
+
+        @tiles[5][5].attribute = "TL"
+        @tiles[5][9].attribute = "TL"
+        @tiles[9][9].attribute = "TL"
+        @tiles[9][5].attribute = "TL"
+
+        # Double letter
+        @tiles[3][0].attribute = "DL"
+        @tiles[11][0].attribute = "DL"
+        @tiles[3][14].attribute = "DL"
+        @tiles[11][14].attribute = "DL"
+        @tiles[0][3].attribute = "DL"
+        @tiles[0][11].attribute = "DL"
+        @tiles[14][3].attribute = "DL"
+        @tiles[14][11].attribute = "DL"
+
+        @tiles[6][6].attribute = "DL"
+        @tiles[6][8].attribute = "DL"
+        @tiles[8][6].attribute = "DL"
+        @tiles[8][8].attribute = "DL"
+
+        @tiles[7][3].attribute = "DL"
+        @tiles[7][11].attribute = "DL"
+        @tiles[3][7].attribute = "DL"
+        @tiles[11][7].attribute = "DL"
+
+        @tiles[6][2].attribute = "DL"
+        @tiles[8][2].attribute = "DL"
+        @tiles[2][6].attribute = "DL"
+        @tiles[2][8].attribute = "DL"
+        @tiles[6][12].attribute = "DL"
+        @tiles[8][12].attribute = "DL"
+        @tiles[12][6].attribute = "DL"
+        @tiles[12][8].attribute = "DL"
     end
 
     # Add a letter to a tile

@@ -544,7 +544,8 @@ class Game
     # Arguments: 
     # word - The word in the form of an Array of tiles.
     # Returns Integer
-    def calculate_points(word)        
+    def calculate_points(word) 
+        p "POINT CALC #{word}"       
         points = 0
         word.each do |letter|
             points += @letter_bag.get_points(letter)

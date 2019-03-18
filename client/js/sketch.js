@@ -3,6 +3,10 @@
 // Grey colours
 const darkColour = (54, 54, 54);
 const lightColour = (71, 71, 71);
+let TWColour;
+let DWColour;
+let TLColour;
+let DLColour;
 
 // Create the required objects for the game
 let gameObject;
@@ -15,6 +19,12 @@ let playerNumber;
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
+    // Constants
+    TWColour = color(235, 51, 51);
+    DWColour = color(233, 134, 1);
+    TLColour = color(30, 101, 226);
+    DLColour = color(134, 168, 226);
+
     // Set up the canvas
     const canvasDiv = document.getElementById("playfield");
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
