@@ -369,8 +369,13 @@ class Game
             return Error.create("invalidWords", invalid_words)
         else
             # Update the tiles and calculate the points
-            lut = []
+            points = 0
+            new_words.each do |word|
+                points += calculate_points(word)
+                p "Points: #{points}"
+            end
 
+            lut = []
             letters.each do |letter|
                 @board.update_tile(letter[:row], letter[:column], letter[:letter])
 
@@ -379,14 +384,7 @@ class Game
                     column: letter[:column]
                 }
             end
-
             @latest_updated_tiles = lut
-
-            points = 0
-            new_words.each do |word|
-                points += calculate_points(word)
-                p "Points: #{points}"
-            end
 
             # Add the points to the player
             @players[@current_turn].points += points
@@ -604,7 +602,7 @@ class Game
         return points
     end
 
-    # Method called the the turn has ended and it's the next player's turn.
+    # Method called when the turn has ended and it's the next player's turn.
     # Returns nil
     def end_turn()
         @players[@current_turn].my_turn = false

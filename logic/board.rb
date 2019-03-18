@@ -108,6 +108,7 @@ class Board
             letter = l
         end
         @tiles[row][col].letter = letter
+        @tiles[row][col].attribute = nil
     end
 
     # Method for converting the board to an Array.
