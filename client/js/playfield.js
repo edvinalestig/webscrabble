@@ -31,20 +31,7 @@ class Playfield {
             for (let col = 0; col < 15; col++) {
                 const a = gameObject.game.board.tiles[row][col].attribute;
                 if (a) {
-                    const x = this.xPos + this.tileLength * col;
-                    const y = this.yPos + this.tileLength * row;
-                    if (a == "centre") {
-                        fill(lightColour);
-                    } else if (a == "TW") {
-                        fill(TWColour);
-                    } else if (a == "DW") {
-                        fill(DWColour);
-                    } else if (a == "TL") {
-                        fill(TLColour);
-                    } else if (a == "DL") {
-                        fill(DLColour);
-                    }
-                    rect(x, y, this.tileLength, this.tileLength);
+                    this.drawSpecial(a, row, col);
                 }
             }
         }
@@ -57,6 +44,34 @@ class Playfield {
                 }
             }
         }
+    }
+
+    // Draw special tiles such as Double word etc
+    drawSpecial(attribute, row, col) {
+        console.log(attribute);
+        const x = this.xPos + this.tileLength * col;
+        const y = this.yPos + this.tileLength * row;
+        // Set colour
+        if (attribute == "centre") {
+            fill(lightColour);
+        } else if (attribute == "TW") {
+            fill(TWColour);
+        } else if (attribute == "DW") {
+            fill(DWColour);
+        } else if (attribute == "TL") {
+            fill(TLColour);
+        } else if (attribute == "DL") {
+            fill(DLColour);
+        }
+        rect(x, y, this.tileLength, this.tileLength);
+        if (attribute == "centre") {return;}
+        // Print the tile label
+        fill(0);
+        stroke(0);
+        textSize(24);
+        textAlign(CENTER);
+        text(attribute, x + this.tileLength/2, y + this.tileLength/2 + this.tileLength * 0.2);
+        stroke(255);
     }
 
     // Method for drawing a letter on the board
@@ -97,24 +112,10 @@ class Playfield {
         strokeWeight(1);
         const a = gameObject.game.board.tiles[row][col].attribute;
         if (a) {
-            if (a == "centre") {
-                fill(lightColour);
-            } else if (a == "TW") {
-                fill(TWColour);
-            } else if (a == "DW") {
-                fill(DWColour);
-            } else if (a == "TL") {
-                fill(TLColour);
-            } else if (a == "DL") {
-                fill(DLColour);
-            }
-        // }
-        // if (row != 7 || col != 7) {
-        //     fill(this.colour);
+            this.drawSpecial(a, row, col);
         } else {
             fill(this.colour);
+            rect(xCorner, yCorner, this.tileLength, this.tileLength);
         }
-
-        rect(xCorner, yCorner, this.tileLength, this.tileLength);
     }
 }
