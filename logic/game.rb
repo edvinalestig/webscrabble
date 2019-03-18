@@ -63,11 +63,7 @@ class Game
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
             if player > 1
-                return {
-                    error: {
-                        notYourTurn: "You are a spectator!"
-                    }
-                }
+                return {error: {Forbidden: "You are a spectator!"}}
             end
             @winner = (player+1) % 2
             @ended = true
@@ -78,11 +74,7 @@ class Game
         end
 
         if player != @current_turn
-            return {
-                error: {
-                    notYourTurn: true
-                }
-            }
+            return {error: {Forbidden: "Not your turn!"}}
         end
 
         # Check if the player passed or forfeited
@@ -180,7 +172,8 @@ class Game
 
         if occupied.length > 0
             puts "Occupied!"
-            return Error.create("tileOccupied", occupied)
+            # return Error.create("tileOccupied", occupied)
+            return {error: {"Tile occupied" => occupied}}
         end
         
         if !extends
@@ -198,7 +191,8 @@ class Game
             
             if !centre
                 puts "Not in the centre or does not extend current board!"
-                return Error.create("invalidPlacement", true)
+                # return Error.create("invalidPlacement", true)
+                return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
             end
         end
 
@@ -209,7 +203,8 @@ class Game
 
         if !same_rows && !same_cols
             puts "Not all placed on the same row or column!"
-            return Error.create("invalidPlacement", true)
+            # return Error.create("invalidPlacement", true)
+            return {error: {"Invalid placement" => "Not all placed on the same row or column!"}}
         end
 
         # Check if the letters are placed together in a continous line.
@@ -234,7 +229,8 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[rows[0]][col].letter == nil
                         puts "Letters not placed together!"
-                        return Error.create("invalidPlacement", true)
+                        # return Error.create("invalidPlacement", true)
+                        return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
             end
@@ -255,7 +251,8 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[row][cols[0]].letter == nil
                         puts "Letters not placed together!"
-                        return Error.create("invalidPlacement", true)
+                        # return Error.create("invalidPlacement", true)
+                        return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
             end
@@ -277,11 +274,7 @@ class Game
         letters.each do |letter|
             if letter[:letter].is_a? Hash
                 if letter[:letter][:value] == nil
-                    return {
-                        error: {
-                            invalidPlacement: "Letter not chosen for a blank tile"
-                        }
-                    }
+                    return {error: {"Invalid placement" => "Letter not chosen for a blank tile"}}
                 end
             end
         end
@@ -293,7 +286,7 @@ class Game
             puts "An error occured"
             p pl
             # Send the error to the client
-            return pl
+            return {error: {"Error" => pl}}
         end
 
         # Store indices for later removal
@@ -329,7 +322,8 @@ class Game
         end
 
         if missing.length > 0
-            return Error.create("lettersNotOnRack", missing)
+            # return Error.create("lettersNotOnRack", missing)
+            return {error: {"Missing letters on rack" => missing}}
         end
 
         invalid_words = []
@@ -341,7 +335,8 @@ class Game
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            return Error.create("noWordsFound", true)
+            # return Error.create("noWordsFound", true)
+            return {error: {Error: "No words found (at least 2 letters)"}}
         end
 
         # Turn the word arrays into strings for validity checks.
@@ -366,7 +361,16 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
-            return Error.create("invalidWords", invalid_words)
+            # return Error.create("invalidWords", invalid_words)
+            str = ""
+            invalid_words.each do |word|
+                if str != ""
+                    str.concat ", "
+                end
+                str.concat word
+            end
+
+            return {error: {"Invalid words" => str}}
         else
             # Update the tiles and calculate the points
             points = 0
