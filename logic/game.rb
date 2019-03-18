@@ -337,7 +337,7 @@ class Game
         # Find all new words
         new_words = find_words(letters)
         # Returns the words as an array of letters, not a string. This is to preserve blanks.
-        p new_words
+        p "new_words: #{new_words}"
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
@@ -348,12 +348,12 @@ class Game
         new_words.each do |word|
             word_str = ""
             word.each do |char|
-                if char.is_a? String
-                    word_str.concat char
-                elsif char.is_a? Hash
-                    word_str.concat char[:value]
+                if char[:letter].is_a? String
+                    word_str.concat char[:letter]
+                elsif char[:letter].is_a? Hash
+                    word_str.concat char[:letter][:value]
                 else
-                    word_str.concat char.letter
+                    word_str.concat char[:letter].letter
                 end
             end
 
@@ -472,7 +472,11 @@ class Game
     def check_row(tile, board_copy)
         row = tile[:row]
         col = tile[:column]
-        word = [tile[:letter]]
+        word = [{
+            row: row,
+            col: col,
+            letter: tile[:letter]
+        }]
         
         # Check to the left
         k = 1
@@ -480,7 +484,12 @@ class Game
             if col - k < 0
                 break
             end
-            word.unshift(board_copy[row][col - k].letter)
+            t = {
+                row: row,
+                col: col - k,
+                letter: board_copy[row][col - k].letter
+            }
+            word.unshift(t)
             k += 1
         end
 
@@ -488,7 +497,12 @@ class Game
         k = 1
         begin
             while board_copy[row][col + k].letter != nil
-                word.push(board_copy[row][col + k].letter)
+                t = {
+                    row: row,
+                    col: col + k,
+                    letter: board_copy[row][col + k].letter
+                }
+                word.push(t)
                 k += 1
             end
         rescue NoMethodError
@@ -510,7 +524,11 @@ class Game
     def check_column(tile, board_copy)
         row = tile[:row]
         col = tile[:column]
-        word = [tile[:letter]]
+        word = [{
+            row: row,
+            col: col,
+            letter: tile[:letter]
+        }]
         
         # Check above
         k = 1
@@ -518,7 +536,13 @@ class Game
             if row - k < 0
                 break
             end
-            word.unshift(board_copy[row - k][col].letter)
+
+            t = {
+                row: row - k,
+                col: col,
+                letter: board_copy[row - k][col].letter
+            }
+            word.unshift(t)
             k += 1
         end
 
@@ -526,7 +550,12 @@ class Game
         k = 1
         begin
             while board_copy[row + k][col].letter != nil
-                    word.push(board_copy[row + k][col].letter)
+                    t = {
+                        row: row + k,
+                        col: col,
+                        letter: board_copy[row + k][col].letter
+                    }
+                    word.push(t)
                 k += 1
             end
         rescue NoMethodError
@@ -545,11 +574,32 @@ class Game
     # word - The word in the form of an Array of tiles.
     # Returns Integer
     def calculate_points(word) 
-        p "POINT CALC #{word}"       
+        p "POINT CALC #{word}"
         points = 0
+        times = 1 # Word multiplier
+
         word.each do |letter|
-            points += @letter_bag.get_points(letter)
+            lp = @letter_bag.get_points(letter[:letter])
+            ltimes = 1 # Letter multiplier
+
+            # Check attributes
+            a = @board.tiles[letter[:row]][letter[:col]].attribute
+            if a == "TW"
+                times *= 3
+            elsif a == "DW"
+                times *= 2
+            elsif a == "TL"
+                ltimes *= 3
+            elsif a == "DL"
+                ltimes *= 2
+            end
+            if a
+                p "ltimes: #{ltimes}"
+            end
+            points += lp * ltimes
         end
+        p "times: #{times}"
+        points *= times
 
         return points
     end
