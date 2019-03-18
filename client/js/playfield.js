@@ -74,11 +74,15 @@ class Playfield {
     removeLetter(row, col) {
         const xCorner = this.xPos + col * this.tileLength;
         const yCorner = this.yPos + row * this.tileLength;
-        rect(xCorner, yCorner, this.tileLength, this.tileLength);
         
-        fill(45);
         stroke(255);
-        rect(xCorner, yCorner, this.tileLength, this.tileLength);
+        strokeWeight(1);
+        if (row != 7 || col != 7) {
+            fill(this.colour);
+        } else {
+            fill(lightColour);
+        }
 
+        rect(xCorner, yCorner, this.tileLength, this.tileLength);
     }
 }
