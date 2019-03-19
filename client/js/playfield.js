@@ -48,7 +48,6 @@ class Playfield {
 
     // Draw special tiles such as Double word etc
     drawSpecial(attribute, row, col) {
-        console.log(attribute);
         const x = this.xPos + this.tileLength * col;
         const y = this.yPos + this.tileLength * row;
         // Set colour

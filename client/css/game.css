@@ -1,3 +1,5 @@
+@font-face { font-family: 'inconsolata'; src: url('Inconsolata-Regular.ttf'); }
+
 body {
     background-color: #474747;
     margin: 0;

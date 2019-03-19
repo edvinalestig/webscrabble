@@ -286,7 +286,7 @@ class Game
             puts "An error occured"
             p pl
             # Send the error to the client
-            return {error: {"Error" => pl}}
+            return pl
         end
 
         # Store indices for later removal
