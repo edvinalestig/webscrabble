@@ -8,7 +8,7 @@ class Words
         @words = []
         wordfile.each do |line|
             # Adds the chomped word to the words array
-            @words << line.chomp
+            @words << line.chomp.downcase
         end
     end
 
