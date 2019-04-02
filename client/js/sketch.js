@@ -148,12 +148,40 @@ function setCss() {
 // Updates the text in the score paragraph elements.
 function setScores() {
     if (gameObject) {
+        const p3div = document.getElementById("player3Score");
+        const p4div = document.getElementById("player4Score");
+        while (p3div.children.length > 0) {
+            p3div.removeChild(p3div.children[0]);
+        }
+        while (p4div.children.length > 0) {
+            p4div.removeChild(p4div.children[0]);
+        }
+
         const p1Element = document.getElementById("player1ScoreP");
         const p2Element = document.getElementById("player2ScoreP");
         const p1Points = gameObject.game.players[0].points;
         const p2Points = gameObject.game.players[1].points;
         p1Element.innerHTML = p1Points + "p";
         p2Element.innerHTML = p2Points + "p";
+
+        if (gameObject.game.players.length > 2) {
+            const p3Element = document.createElement("p");
+            p3Element.innerHTML = "player 3";
+            const p3Head = document.createElement("h3");
+            p3Head.id = "player3ScoreP";
+            p3Head.innerHTML = gameObject.game.players[2].points + "p";
+            p3div.appendChild(p3Element);
+            p3div.appendChild(p3Head);
+        }
+        if (gameObject.game.players.length > 3) {
+            const p4Element = document.createElement("p");
+            p4Element.innerHTML = "player 4";
+            const p4Head = document.createElement("h3");
+            p4Head.id = "player4ScoreP";
+            p4Head.innerHTML = gameObject.game.players[3].points + "p";
+            p4div.appendChild(p4Element);
+            p4div.appendChild(p4Head);
+        }
     }
 }
 
