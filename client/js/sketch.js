@@ -16,6 +16,7 @@ let selectedLetter;
 let placedTiles = [];
 let waitingForChar;
 let playerNumber;
+let spectator;
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
@@ -164,12 +165,17 @@ function giveUp() {
 
 // Changing the playername depending on route
 function you() {
-    if (playerNumber == "0") {
-        document.getElementById("player?").innerHTML="player 1"
-    } else if (playerNumber == "1") {
-        document.getElementById("player?").innerHTML="player 2"
+    // if (playerNumber == "0") {
+    //     document.getElementById("player?").innerHTML="player 1"
+    // } else if (playerNumber == "1") {
+    //     document.getElementById("player?").innerHTML="player 2"
+    // } else {
+    //     document.getElementById("player?").innerHTML="spectator"
+    // }
+    if (spectator) {
+        document.getElementById("player?").innerHTML = "spectator";
     } else {
-        document.getElementById("player?").innerHTML="spectator"
+        document.getElementById("player?").innerHTML = "player " + (playerNumber + 1)
     }
 }
 

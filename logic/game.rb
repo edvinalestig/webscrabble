@@ -47,6 +47,7 @@ class Game
         @latest_updated_tiles = []
         @winner = nil
         @ended = false
+        @dead = []
     end
 
     # The method to call when a player has ended their turn.
@@ -62,15 +63,27 @@ class Game
 
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
-            if player > 1
+            if player > @players.length - 1
                 return {error: {Forbidden: "You are a spectator!"}}
             end
-            @winner = (player+1) % 2
-            @ended = true
-            h = {"ended" => true, "winner" => @winner}
+            @dead << player
+            if @dead.length >= @players.length - 1
+                @ended = true
+                i = 0
+                while i < @players.length
+                    if !@dead.include? i
+                        @winner = i
+                    end
+                    i += 1
+                end
+                return {"ended" => true, "winner" => @winner}
+            else
+                if player == @current_turn
+                    end_turn()
+                end
+                return true
+            end
             p "FORFEIT"
-            
-            return h
         end
 
         if player != @current_turn
@@ -612,11 +625,18 @@ class Game
         @players[@current_turn].my_turn = false
 
         # Change the turn
-        @current_turn += 1
-        if @current_turn >= @players.length
-            @current_turn = 0
-            @round += 1
+        cont = true
+        while cont
+            @current_turn += 1
+            if @current_turn >= @players.length
+                @current_turn = 0
+                @round += 1
+            end
+            if !@dead.include? @current_turn
+                cont = false
+            end
         end
+        puts "Current turn: #{@current_turn}"
 
         @players[@current_turn].my_turn = true
 
