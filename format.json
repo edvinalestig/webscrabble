@@ -1,6 +1,7 @@
 {
     "action": "connect",
     "playerNumber": 5,
+    "spectator": false,
     "data": {
         "game": {
             "board": {

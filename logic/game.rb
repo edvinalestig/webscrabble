@@ -2,7 +2,6 @@ require_relative("board.rb")
 require_relative("letters.rb")
 require_relative("player.rb")
 require_relative("words.rb")
-require_relative("error.rb")
 
 require("json")
 
@@ -47,6 +46,7 @@ class Game
         @latest_updated_tiles = []
         @winner = nil
         @ended = false
+        @dead = []
     end
 
     # The method to call when a player has ended their turn.
@@ -62,27 +62,31 @@ class Game
 
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
-            if player > 1
-                return {
-                    error: {
-                        notYourTurn: "You are a spectator!"
-                    }
-                }
+            if player > @players.length - 1
+                return {error: {Forbidden: "You are a spectator!"}}
             end
-            @winner = (player+1) % 2
-            @ended = true
-            h = {"ended" => true, "winner" => @winner}
+            @dead << player
+            if @dead.length >= @players.length - 1
+                @ended = true
+                i = 0
+                while i < @players.length
+                    if !@dead.include? i
+                        @winner = i
+                    end
+                    i += 1
+                end
+                return {"ended" => true, "winner" => @winner}
+            else
+                if player == @current_turn
+                    end_turn()
+                end
+                return true
+            end
             p "FORFEIT"
-            
-            return h
         end
 
         if player != @current_turn
-            return {
-                error: {
-                    notYourTurn: true
-                }
-            }
+            return {error: {Forbidden: "Not your turn!"}}
         end
 
         # Check if the player passed or forfeited
@@ -148,8 +152,6 @@ class Game
             c = tile[:column]
             rows << r
             cols << c
-            p r
-            p c
 
             # Check if the tile already has a letter on it.
             if @board.tiles[r][c].letter != nil
@@ -180,7 +182,7 @@ class Game
 
         if occupied.length > 0
             puts "Occupied!"
-            return Error.create("tileOccupied", occupied)
+            return {error: {"Tile occupied" => occupied}}
         end
         
         if !extends
@@ -198,7 +200,7 @@ class Game
             
             if !centre
                 puts "Not in the centre or does not extend current board!"
-                return Error.create("invalidPlacement", true)
+                return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
             end
         end
 
@@ -209,7 +211,7 @@ class Game
 
         if !same_rows && !same_cols
             puts "Not all placed on the same row or column!"
-            return Error.create("invalidPlacement", true)
+            return {error: {"Invalid placement" => "Not all placed on the same row or column!"}}
         end
 
         # Check if the letters are placed together in a continous line.
@@ -234,7 +236,7 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[rows[0]][col].letter == nil
                         puts "Letters not placed together!"
-                        return Error.create("invalidPlacement", true)
+                        return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
             end
@@ -255,7 +257,7 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[row][cols[0]].letter == nil
                         puts "Letters not placed together!"
-                        return Error.create("invalidPlacement", true)
+                        return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
             end
@@ -277,11 +279,7 @@ class Game
         letters.each do |letter|
             if letter[:letter].is_a? Hash
                 if letter[:letter][:value] == nil
-                    return {
-                        error: {
-                            invalidPlacement: "Letter not chosen for a blank tile"
-                        }
-                    }
+                    return {error: {"Invalid placement" => "Letter not chosen for a blank tile"}}
                 end
             end
         end
@@ -329,7 +327,7 @@ class Game
         end
 
         if missing.length > 0
-            return Error.create("lettersNotOnRack", missing)
+            return {error: {"Missing letters on rack" => missing}}
         end
 
         invalid_words = []
@@ -337,23 +335,23 @@ class Game
         # Find all new words
         new_words = find_words(letters)
         # Returns the words as an array of letters, not a string. This is to preserve blanks.
-        p new_words
+        p "new_words: #{new_words}"
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            return Error.create("noWordsFound", true)
+            return {error: {Error: "No words found (at least 2 letters)"}}
         end
 
         # Turn the word arrays into strings for validity checks.
         new_words.each do |word|
             word_str = ""
             word.each do |char|
-                if char.is_a? String
-                    word_str.concat char
-                elsif char.is_a? Hash
-                    word_str.concat char[:value]
+                if char[:letter].is_a? String
+                    word_str.concat char[:letter]
+                elsif char[:letter].is_a? Hash
+                    word_str.concat char[:letter][:value]
                 else
-                    word_str.concat char.letter
+                    word_str.concat char[:letter].letter
                 end
             end
 
@@ -366,11 +364,24 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
-            return Error.create("invalidWords", invalid_words)
+            str = ""
+            invalid_words.each do |word|
+                if str != ""
+                    str.concat ", "
+                end
+                str.concat word
+            end
+
+            return {error: {"Invalid words" => str}}
         else
             # Update the tiles and calculate the points
-            lut = []
+            points = 0
+            new_words.each do |word|
+                points += calculate_points(word)
+                p "Points: #{points}"
+            end
 
+            lut = []
             letters.each do |letter|
                 @board.update_tile(letter[:row], letter[:column], letter[:letter])
 
@@ -379,14 +390,7 @@ class Game
                     column: letter[:column]
                 }
             end
-
             @latest_updated_tiles = lut
-
-            points = 0
-            new_words.each do |word|
-                points += calculate_points(word)
-                p "Points: #{points}"
-            end
 
             # Add the points to the player
             @players[@current_turn].points += points
@@ -472,7 +476,11 @@ class Game
     def check_row(tile, board_copy)
         row = tile[:row]
         col = tile[:column]
-        word = [tile[:letter]]
+        word = [{
+            row: row,
+            col: col,
+            letter: tile[:letter]
+        }]
         
         # Check to the left
         k = 1
@@ -480,7 +488,12 @@ class Game
             if col - k < 0
                 break
             end
-            word.unshift(board_copy[row][col - k].letter)
+            t = {
+                row: row,
+                col: col - k,
+                letter: board_copy[row][col - k].letter
+            }
+            word.unshift(t)
             k += 1
         end
 
@@ -488,7 +501,12 @@ class Game
         k = 1
         begin
             while board_copy[row][col + k].letter != nil
-                word.push(board_copy[row][col + k].letter)
+                t = {
+                    row: row,
+                    col: col + k,
+                    letter: board_copy[row][col + k].letter
+                }
+                word.push(t)
                 k += 1
             end
         rescue NoMethodError
@@ -510,7 +528,11 @@ class Game
     def check_column(tile, board_copy)
         row = tile[:row]
         col = tile[:column]
-        word = [tile[:letter]]
+        word = [{
+            row: row,
+            col: col,
+            letter: tile[:letter]
+        }]
         
         # Check above
         k = 1
@@ -518,7 +540,13 @@ class Game
             if row - k < 0
                 break
             end
-            word.unshift(board_copy[row - k][col].letter)
+
+            t = {
+                row: row - k,
+                col: col,
+                letter: board_copy[row - k][col].letter
+            }
+            word.unshift(t)
             k += 1
         end
 
@@ -526,7 +554,12 @@ class Game
         k = 1
         begin
             while board_copy[row + k][col].letter != nil
-                    word.push(board_copy[row + k][col].letter)
+                    t = {
+                        row: row + k,
+                        col: col,
+                        letter: board_copy[row + k][col].letter
+                    }
+                    word.push(t)
                 k += 1
             end
         rescue NoMethodError
@@ -544,26 +577,55 @@ class Game
     # Arguments: 
     # word - The word in the form of an Array of tiles.
     # Returns Integer
-    def calculate_points(word)        
+    def calculate_points(word) 
+        p "POINT CALC #{word}"
         points = 0
+        times = 1 # Word multiplier
+
         word.each do |letter|
-            points += @letter_bag.get_points(letter)
+            lp = @letter_bag.get_points(letter[:letter])
+            ltimes = 1 # Letter multiplier
+
+            # Check attributes
+            a = @board.tiles[letter[:row]][letter[:col]].attribute
+            if a == "TW"
+                times *= 3
+            elsif a == "DW"
+                times *= 2
+            elsif a == "TL"
+                ltimes *= 3
+            elsif a == "DL"
+                ltimes *= 2
+            end
+            if a
+                p "ltimes: #{ltimes}"
+            end
+            points += lp * ltimes
         end
+        p "times: #{times}"
+        points *= times
 
         return points
     end
 
-    # Method called the the turn has ended and it's the next player's turn.
+    # Method called when the turn has ended and it's the next player's turn.
     # Returns nil
     def end_turn()
         @players[@current_turn].my_turn = false
 
         # Change the turn
-        @current_turn += 1
-        if @current_turn >= @players.length
-            @current_turn = 0
-            @round += 1
+        cont = true
+        while cont
+            @current_turn += 1
+            if @current_turn >= @players.length
+                @current_turn = 0
+                @round += 1
+            end
+            if !@dead.include? @current_turn
+                cont = false
+            end
         end
+        puts "Current turn: #{@current_turn}"
 
         @players[@current_turn].my_turn = true
 

@@ -34,9 +34,44 @@ class App < Sinatra::Base
         redirect("/play")
     end
 
+    get("/new3") do
+        $game = Game.new(3)
+        update_all()
+        redirect("/play")
+    end
+
+    get("/new4") do
+        $game = Game.new(4)
+        update_all()
+        redirect("/play")
+    end
+
     get("/winner") do
         p $game.winner
-        return ($game.winner + 1).to_s
+        winner = $game.winner
+        if winner
+            winner = ($game.winner + 1).to_s
+        else
+            winner = "_"
+        end
+
+        scores = []
+        $game.players.each do |pl|
+            scores << pl.points
+        end
+        score_string = ""
+        scores.each do |s|
+            if score_string != ""
+                score_string += " - "
+            end
+            score_string += s.to_s
+        end
+
+        t = {
+            winner: winner,
+            scores: score_string
+        }
+        return t.to_json
     end
 
     get("/end_page") do
@@ -57,6 +92,7 @@ class App < Sinatra::Base
                     # Return a connection hash telling the client it has successfully connected
                     hash = {
                         action: 'connect',
+                        spectator: settings.sockets.index(ws) >= $game.players.length,
                         playerNumber: settings.sockets.index(ws)
                     }
                     ws.send(hash.to_json)
@@ -73,6 +109,8 @@ class App < Sinatra::Base
                 ws.onmessage do |msg|
                     player = settings.sockets.index(ws) # Player number
                     message = JSON.parse(msg, symbolize_names: true)
+                    spectator = player >= $game.players.length
+
                     p "Message received from #{player}:"
                     p message
 
@@ -82,6 +120,7 @@ class App < Sinatra::Base
                         ws.send({
                             action: 'data',
                             playerNumber: player,
+                            spectator: spectator,
                             data: $game.to_hash(player, true) # Sending everything
                         }.to_json)
 
@@ -97,6 +136,7 @@ class App < Sinatra::Base
                             ws.send({
                                 action: "data",
                                 playerNumber: player,
+                                spectator: spectator,
                                 data: game_check
                             }.to_json)
                         end

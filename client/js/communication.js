@@ -28,9 +28,11 @@ socket.onmessage = event => {
         } else {
             gameObject = message.data;
             playerNumber = message.playerNumber;
+            spectator = message.spectator;
             update();
         }
     } else if (message.action == 'connect') {
+        spectator = message.spectator;
         playerNumber = message.playerNumber;
     }
 }

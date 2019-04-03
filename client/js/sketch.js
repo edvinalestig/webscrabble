@@ -3,6 +3,10 @@
 // Grey colours
 const darkColour = (54, 54, 54);
 const lightColour = (71, 71, 71);
+let TWColour;
+let DWColour;
+let TLColour;
+let DLColour;
 
 // Create the required objects for the game
 let gameObject;
@@ -12,9 +16,16 @@ let selectedLetter;
 let placedTiles = [];
 let waitingForChar;
 let playerNumber;
+let spectator;
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
+    // Constants
+    TWColour = color(235, 51, 51);
+    DWColour = color(233, 134, 1);
+    TLColour = color(30, 101, 226);
+    DLColour = color(134, 168, 226);
+
     // Set up the canvas
     const canvasDiv = document.getElementById("playfield");
     let canvas = createCanvas(canvasDiv.offsetWidth, canvasDiv.offsetHeight);
@@ -137,12 +148,45 @@ function setCss() {
 // Updates the text in the score paragraph elements.
 function setScores() {
     if (gameObject) {
+        const p3div = document.getElementById("player3Score");
+        const p4div = document.getElementById("player4Score");
+        p3div.classList.remove("extrascore");
+        p4div.classList.remove("extrascore");
+
+        while (p3div.children.length > 0) {
+            p3div.removeChild(p3div.children[0]);
+        }
+        while (p4div.children.length > 0) {
+            p4div.removeChild(p4div.children[0]);
+        }
+
         const p1Element = document.getElementById("player1ScoreP");
         const p2Element = document.getElementById("player2ScoreP");
         const p1Points = gameObject.game.players[0].points;
         const p2Points = gameObject.game.players[1].points;
         p1Element.innerHTML = p1Points + "p";
         p2Element.innerHTML = p2Points + "p";
+
+        if (gameObject.game.players.length > 2) {
+            const p3Element = document.createElement("p");
+            p3Element.innerHTML = "player 3";
+            const p3Head = document.createElement("h3");
+            p3Head.id = "player3ScoreP";
+            p3Head.innerHTML = gameObject.game.players[2].points + "p";
+            p3div.appendChild(p3Element);
+            p3div.appendChild(p3Head);
+            p3div.classList.add("extrascore");
+        }
+        if (gameObject.game.players.length > 3) {
+            const p4Element = document.createElement("p");
+            p4Element.innerHTML = "player 4";
+            const p4Head = document.createElement("h3");
+            p4Head.id = "player4ScoreP";
+            p4Head.innerHTML = gameObject.game.players[3].points + "p";
+            p4div.appendChild(p4Element);
+            p4div.appendChild(p4Head);
+            p4div.classList.add("extrascore");
+        }
     }
 }
 
@@ -154,12 +198,17 @@ function giveUp() {
 
 // Changing the playername depending on route
 function you() {
-    if (playerNumber == "0") {
-        document.getElementById("player?").innerHTML="player 1"
-    } else if (playerNumber == "1") {
-        document.getElementById("player?").innerHTML="player 2"
+    // if (playerNumber == "0") {
+    //     document.getElementById("player?").innerHTML="player 1"
+    // } else if (playerNumber == "1") {
+    //     document.getElementById("player?").innerHTML="player 2"
+    // } else {
+    //     document.getElementById("player?").innerHTML="spectator"
+    // }
+    if (spectator) {
+        document.getElementById("player?").innerHTML = "spectator";
     } else {
-        document.getElementById("player?").innerHTML="spectator"
+        document.getElementById("player?").innerHTML = "player " + (playerNumber + 1)
     }
 }
 

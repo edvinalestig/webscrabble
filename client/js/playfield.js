@@ -25,11 +25,16 @@ class Playfield {
             line(this.xPos + i * this.tileLength, this.yPos, this.xPos + i * this.tileLength, this.yPos + 15 * this.tileLength);
         }
 
-        // Create a rectangle on the centre tile
-        const x = this.xPos + this.tileLength * 7;
-        const y = this.yPos + this.tileLength * 7;
-        fill(lightColour);
-        rect(x, y, this.tileLength, this.tileLength);
+
+        // Special tiles
+        for (let row = 0; row < 15; row++) {
+            for (let col = 0; col < 15; col++) {
+                const a = gameObject.game.board.tiles[row][col].attribute;
+                if (a) {
+                    this.drawSpecial(a, row, col);
+                }
+            }
+        }
 
         // Go through all the tiles and draw them if they have something placed on them
         for (let row of gameObject.game.board.tiles) {
@@ -39,6 +44,33 @@ class Playfield {
                 }
             }
         }
+    }
+
+    // Draw special tiles such as Double word etc
+    drawSpecial(attribute, row, col) {
+        const x = this.xPos + this.tileLength * col;
+        const y = this.yPos + this.tileLength * row;
+        // Set colour
+        if (attribute == "centre") {
+            fill(lightColour);
+        } else if (attribute == "TW") {
+            fill(TWColour);
+        } else if (attribute == "DW") {
+            fill(DWColour);
+        } else if (attribute == "TL") {
+            fill(TLColour);
+        } else if (attribute == "DL") {
+            fill(DLColour);
+        }
+        rect(x, y, this.tileLength, this.tileLength);
+        if (attribute == "centre") {return;}
+        // Print the tile label
+        fill(0);
+        stroke(0);
+        textSize(24);
+        textAlign(CENTER);
+        text(attribute, x + this.tileLength/2, y + this.tileLength/2 + this.tileLength * 0.2);
+        stroke(255);
     }
 
     // Method for drawing a letter on the board
@@ -74,11 +106,15 @@ class Playfield {
     removeLetter(row, col) {
         const xCorner = this.xPos + col * this.tileLength;
         const yCorner = this.yPos + row * this.tileLength;
-        rect(xCorner, yCorner, this.tileLength, this.tileLength);
         
-        fill(45);
         stroke(255);
-        rect(xCorner, yCorner, this.tileLength, this.tileLength);
-
+        strokeWeight(1);
+        const a = gameObject.game.board.tiles[row][col].attribute;
+        if (a) {
+            this.drawSpecial(a, row, col);
+        } else {
+            fill(this.colour);
+            rect(xCorner, yCorner, this.tileLength, this.tileLength);
+        }
     }
 }

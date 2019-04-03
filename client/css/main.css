@@ -1,3 +1,5 @@
+@font-face { font-family: 'inconsolata'; src: url('Inconsolata-Regular.ttf'); }
+
 main {
     height: 80vh;
 }
@@ -17,6 +19,16 @@ h1 {
     font-size: 100px;
     font-weight: normal;
     margin-bottom: 30px;
+    text-align: center;
+}
+
+h2 {
+    padding-top: 50px;
+    color: #ffffff;
+    font-family: 'inconsolata', monospace;
+    font-size: 75px;
+    font-weight: normal;
+    /* margin-bottom: 30px; */
     text-align: center;
 }
 
