@@ -2,7 +2,6 @@ require_relative("board.rb")
 require_relative("letters.rb")
 require_relative("player.rb")
 require_relative("words.rb")
-require_relative("error.rb")
 
 require("json")
 
@@ -153,8 +152,6 @@ class Game
             c = tile[:column]
             rows << r
             cols << c
-            p r
-            p c
 
             # Check if the tile already has a letter on it.
             if @board.tiles[r][c].letter != nil
@@ -185,7 +182,6 @@ class Game
 
         if occupied.length > 0
             puts "Occupied!"
-            # return Error.create("tileOccupied", occupied)
             return {error: {"Tile occupied" => occupied}}
         end
         
@@ -204,7 +200,6 @@ class Game
             
             if !centre
                 puts "Not in the centre or does not extend current board!"
-                # return Error.create("invalidPlacement", true)
                 return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
             end
         end
@@ -216,7 +211,6 @@ class Game
 
         if !same_rows && !same_cols
             puts "Not all placed on the same row or column!"
-            # return Error.create("invalidPlacement", true)
             return {error: {"Invalid placement" => "Not all placed on the same row or column!"}}
         end
 
@@ -242,7 +236,6 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[rows[0]][col].letter == nil
                         puts "Letters not placed together!"
-                        # return Error.create("invalidPlacement", true)
                         return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
@@ -264,7 +257,6 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[row][cols[0]].letter == nil
                         puts "Letters not placed together!"
-                        # return Error.create("invalidPlacement", true)
                         return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
@@ -335,7 +327,6 @@ class Game
         end
 
         if missing.length > 0
-            # return Error.create("lettersNotOnRack", missing)
             return {error: {"Missing letters on rack" => missing}}
         end
 
@@ -348,7 +339,6 @@ class Game
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            # return Error.create("noWordsFound", true)
             return {error: {Error: "No words found (at least 2 letters)"}}
         end
 
@@ -374,7 +364,6 @@ class Game
         if invalid_words.length > 0
             # Not a valid turn, return to the client
             p "INVALID! #{invalid_words} are not valid words."
-            # return Error.create("invalidWords", invalid_words)
             str = ""
             invalid_words.each do |word|
                 if str != ""
