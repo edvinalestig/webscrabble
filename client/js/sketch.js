@@ -150,6 +150,9 @@ function setScores() {
     if (gameObject) {
         const p3div = document.getElementById("player3Score");
         const p4div = document.getElementById("player4Score");
+        p3div.classList.remove("extrascore");
+        p4div.classList.remove("extrascore");
+
         while (p3div.children.length > 0) {
             p3div.removeChild(p3div.children[0]);
         }
@@ -172,6 +175,7 @@ function setScores() {
             p3Head.innerHTML = gameObject.game.players[2].points + "p";
             p3div.appendChild(p3Element);
             p3div.appendChild(p3Head);
+            p3div.classList.add("extrascore");
         }
         if (gameObject.game.players.length > 3) {
             const p4Element = document.createElement("p");
@@ -181,6 +185,7 @@ function setScores() {
             p4Head.innerHTML = gameObject.game.players[3].points + "p";
             p4div.appendChild(p4Element);
             p4div.appendChild(p4Head);
+            p4div.classList.add("extrascore");
         }
     }
 }
