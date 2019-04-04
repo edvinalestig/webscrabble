@@ -115,27 +115,29 @@ class App < Sinatra::Base
                 # Closing the socket
                 ws.onclose do |msg|
                     p "Connection terminated"
-                    
+
                     $rooms.each do |key, value|
                         if value[:players].include? ws
                             # Remove the player from the games
                             $rooms[key][:players].slice!($rooms[key][:players].index(ws))
+                            update_all(value)
                         end
                     end
                     settings.sockets.delete(ws)
-                    update_all()
+                    
                 end
 
                 # Message received
                 ws.onmessage do |msg|
-                    player = settings.sockets.index(ws) # Player number
+                    # player = settings.sockets.index(ws) # Player number
                     message = JSON.parse(msg, symbolize_names: true)
-                    spectator = player >= $game.players.length
+                    # spectator = player >= $game.players.length
 
                     if message[:action] == 'connect'
+                        room_id = message[:room].to_i
                         p "Connection established"
                         p message
-                        if !$rooms.keys.include? message[:room].to_i
+                        if !$rooms.keys.include? room_id
                             ws.send({
                                 action: 'data',
                                 data: {
@@ -144,34 +146,50 @@ class App < Sinatra::Base
                                     }
                                 }
                             }.to_json)
+                        else
+                            # Add the player to the room
+                            $rooms[room_id][:players] << ws
+
+                            player = $rooms[room_id][:players].index(ws)
+                            spectator = player >= $rooms[room_id][:game].players.length
+
+                            # Send the game status to the client
+                            ws.send({
+                                action: 'data',
+                                playerNumber: player,
+                                spectator: spectator,
+                                data: $rooms[room_id][:game].to_hash(player, true) # Sending everything
+                            }.to_json)
                         end
-
-                        # Add the player to the room
-                        $rooms[message[:room].to_i][:players] << ws
-
-                        # Send the game status to the client
-                        ws.send({
-                            action: 'data',
-                            playerNumber: player,
-                            spectator: spectator,
-                            data: $game.to_hash(player, true) # Sending everything
-                        }.to_json)
 
                     elsif message[:action] == 'data'
                         # Give the data to the game logic
-                        game_check = $game.response(message[:data], player)
-                        # If true is returned then the turn was successful
-                        # Then send the new game state to all players
-                        # Otherwise send the error message given
-                        if game_check == true
-                            update_all()
-                        else
-                            ws.send({
-                                action: "data",
-                                playerNumber: player,
-                                spectator: spectator,
-                                data: game_check
-                            }.to_json)
+                        game_check = nil
+                        $rooms.each do |key, value|
+                            p key
+                            # Find the game which the player is connected to
+                            if value[:players].include? ws
+                                player = value[:players].index(ws)
+                                spectator = player >= value[:game].players.length
+
+                                game_check = value[:game].response(message[:data], player)
+
+                                # If true is returned then the turn was successful
+                                # Then send the new game state to all players
+                                # Otherwise send the error message given
+                                if game_check == true
+                                    update_all(value)
+                                else
+                                    ws.send({
+                                        action: "data",
+                                        playerNumber: player,
+                                        spectator: spectator,
+                                        data: game_check
+                                    }.to_json)
+                                end
+
+                                break
+                            end
                         end
                     end
                 end
@@ -180,13 +198,13 @@ class App < Sinatra::Base
     end
 
     # Update all the players currently connected including spectators
-    def update_all()
+    def update_all(room)
         p "Updating all players"
-        settings.sockets.each_with_index do |ws, player|
+        room[:players].each_with_index do |ws, player|
             ws.send({
                 action: "data",
                 playerNumber: player,
-                data: $game.to_hash(player, true) # Change to not send everything once implemented
+                data: room[:game].to_hash(player, true) # Change to not send everything once implemented
             }.to_json)
         end
     end
