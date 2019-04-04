@@ -1,4 +1,5 @@
 // Websocket stuff is in communication.js
+let room;
 
 // Grey colours
 const darkColour = (54, 54, 54);
@@ -18,8 +19,15 @@ let waitingForChar;
 let playerNumber;
 let spectator;
 
+
+
 // Built-in function in p5.js which runs just after preload.
 function setup() {
+    room = prompt("Enter room name");
+    if (!room) {
+        document.location = "/";
+    }
+
     // Constants
     TWColour = color(235, 51, 51);
     DWColour = color(233, 134, 1);

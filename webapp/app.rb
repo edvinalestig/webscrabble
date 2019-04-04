@@ -1,6 +1,7 @@
 require_relative("../logic/game.rb")
 require 'json'
 $game = nil
+$rooms = {}
 
 # The web application
 # The core of the game
@@ -19,7 +20,22 @@ class App < Sinatra::Base
 
     # Get the start page
     get("/") do
-        return File.read('client/index.html')
+        # return File.read('client/index.html')
+        @rooms = $rooms
+        return slim :room
+    end
+
+    # Create new room
+    post("/room") do
+        room_name = Random.rand(100000).floor
+        while $rooms.keys.include? room_name
+            room_name = Random.rand(100000).floor
+        end
+        $rooms[room_name] = {
+            game: Game.new(params[:players].to_i),
+            players: []
+        }
+        redirect("/")
     end
 
     # The route for the game
@@ -91,9 +107,7 @@ class App < Sinatra::Base
                     settings.sockets << ws
                     # Return a connection hash telling the client it has successfully connected
                     hash = {
-                        action: 'connect',
-                        spectator: settings.sockets.index(ws) >= $game.players.length,
-                        playerNumber: settings.sockets.index(ws)
+                        action: 'connect'
                     }
                     ws.send(hash.to_json)
                 end
@@ -101,6 +115,13 @@ class App < Sinatra::Base
                 # Closing the socket
                 ws.onclose do |msg|
                     p "Connection terminated"
+                    
+                    $rooms.each do |key, value|
+                        if value[:players].include? ws
+                            # Remove the player from the games
+                            $rooms[key][:players].slice!($rooms[key][:players].index(ws))
+                        end
+                    end
                     settings.sockets.delete(ws)
                     update_all()
                 end
@@ -111,11 +132,23 @@ class App < Sinatra::Base
                     message = JSON.parse(msg, symbolize_names: true)
                     spectator = player >= $game.players.length
 
-                    p "Message received from #{player}:"
-                    p message
-
                     if message[:action] == 'connect'
                         p "Connection established"
+                        p message
+                        if !$rooms.keys.include? message[:room].to_i
+                            ws.send({
+                                action: 'data',
+                                data: {
+                                    error: {
+                                        Error: "Room does not exist"
+                                    }
+                                }
+                            }.to_json)
+                        end
+
+                        # Add the player to the room
+                        $rooms[message[:room].to_i][:players] << ws
+
                         # Send the game status to the client
                         ws.send({
                             action: 'data',
