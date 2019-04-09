@@ -47,7 +47,7 @@
             "lettersLeft": 74,
             "ended": false
         },
-        "roomName": "Room 1",
+        "room": "Room 1",
         "error": {
             "invalidWords": [
                 "FRWQ",

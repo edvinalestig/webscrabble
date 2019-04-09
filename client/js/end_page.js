@@ -8,7 +8,7 @@ function getReq() {
         }
     };
 
-    xhttp.open("GET", "/winner", true);
+    xhttp.open("GET", "/winner?room=" + document.location.href.split("?room=")[1], true);
     xhttp.send();
 }
 

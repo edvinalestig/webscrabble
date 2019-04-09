@@ -1,4 +1,5 @@
 {
+    "room": "room1",
     "action": "connect",
     "player": 1,
     "data": {
