@@ -38,8 +38,8 @@ function comm() {
                     alert(type + ": " + msg);
                 }
             } else if (message.data.ended) {
-                // The game has ended, redirect to /end_page
-                document.location = "/end_page";
+                // The game has ended, redirect to /end_page with the room name attached
+                document.location = "/end_page?room=" + room;
             } else {
                 gameObject = message.data;
                 playerNumber = message.playerNumber;

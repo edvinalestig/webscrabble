@@ -20,7 +20,17 @@ html lang="en"
                     h2 = "Room ID: #{r}"
                     p = "Game for #{@rooms[r][:game].players.length} players"
                     p = "#{@rooms[r][:players].length} players connected"
+                    form action="/play" method="get"
+                        input type="hidden" name="room" value="#{r}"
+                        button type="submit" PLAY!
+                    br
+                    
+                    - if @rooms[r][:game].ended
+                        h3 Game has ended
+                        form action="/delete" method="post"
+                            input type="hidden" name="room" value="#{r}"
+                            button type="submit" Delete game
 
-        form action="/play" method="get"
-            button type="submit" PLAY!
+        / form action="/play" method="get"
+        /     button type="submit" PLAY!
             

@@ -23,10 +23,14 @@ let spectator;
 
 // Built-in function in p5.js which runs just after preload.
 function setup() {
-    room = prompt("Enter room name");
-    if (!room) {
-        document.location = "/";
+    room = document.location.href.split("?room=")[1];
+    if (room == undefined) {
+        room = prompt("Enter room name");
+        if (!room) {
+            document.location = "/";
+        }
     }
+    
 
     // Constants
     TWColour = color(235, 51, 51);

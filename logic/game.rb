@@ -11,7 +11,7 @@ require("json")
 # number_of_players - 2, 3 or 4.
 class Game
     attr_reader :players, :current_turn
-    attr_accessor :winner
+    attr_accessor :winner, :ended
 
     # Creates the game and sets up the start conditions. The board, the players and the letter bag are created.
     def initialize(number_of_players)

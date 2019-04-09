@@ -1,6 +1,5 @@
 require_relative("../logic/game.rb")
 require 'json'
-$game = nil
 $rooms = {}
 
 # The web application
@@ -11,12 +10,6 @@ class App < Sinatra::Base
     set :server, 'thin'
     set :sockets, []
 
-    # Create a new game if no game is in progress
-    before() do
-        if $game == nil
-            $game = Game.new(2)
-        end
-    end
 
     # Get the start page
     get("/") do
@@ -38,61 +31,55 @@ class App < Sinatra::Base
         redirect("/")
     end
 
+    # Delete finished game
+    post("/delete") do
+        room = params["room"].to_i
+        $rooms.delete(room)
+        redirect("/")
+    end
+
     # The route for the game
     get('/play') do
         return File.read('client/game.html')
     end
 
-    # Create a new game for 2 players
-    get("/newgame") do
-        $game = Game.new(2)
-        update_all()
-        redirect("/play")
-    end
-
-    get("/new3") do
-        $game = Game.new(3)
-        update_all()
-        redirect("/play")
-    end
-
-    get("/new4") do
-        $game = Game.new(4)
-        update_all()
-        redirect("/play")
-    end
-
     get("/winner") do
-        p $game.winner
-        winner = $game.winner
-        if winner
-            winner = ($game.winner + 1).to_s
-        else
-            winner = "_"
-        end
-
-        scores = []
-        $game.players.each do |pl|
-            scores << pl.points
-        end
-        score_string = ""
-        scores.each do |s|
-            if score_string != ""
-                score_string += " - "
+        if $rooms.keys.include? params["room"].to_i
+            game = $rooms[params["room"].to_i][:game]
+            p game.winner
+            winner = game.winner
+            if winner
+                winner = (game.winner + 1).to_s
+            else
+                winner = "_"
             end
-            score_string += s.to_s
-        end
 
-        t = {
-            winner: winner,
-            scores: score_string
-        }
-        return t.to_json
+            scores = []
+            game.players.each do |pl|
+                scores << pl.points
+            end
+            score_string = ""
+            scores.each do |s|
+                if score_string != ""
+                    score_string += " - "
+                end
+                score_string += s.to_s
+            end
+
+            t = {
+                winner: winner,
+                scores: score_string
+            }
+            return t.to_json
+        else
+            return {
+                winner: nil,
+                scores: "Room does not exist"
+            }.to_json
+        end
     end
 
     get("/end_page") do
-        p "########## WINNER ###########"
-        p $game.winner
         return File.read('client/end_page.html')
     end
 

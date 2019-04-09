@@ -3,7 +3,7 @@ Bundler.require
 
 #rake run
 task :run do
-  sh 'bundle exec rerun -b --ignore "*.{slim,js,css,html,json}" "rackup --host 0.0.0.0"'
+  sh 'bundle exec rerun -b --ignore "*.{slim,js,css,html}" "rackup --host 0.0.0.0"'
 end
 
 #rake debug
