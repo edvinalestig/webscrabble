@@ -9,8 +9,9 @@ A gymnasiearbete (thesis of upper secondary education) about recreating Scrabble
 5. In the command prompt, run ```gem install bundler```
 6. Run ```bundle install```
 7. Run ```rake run```
-8. Open the browser and go to ```localhost:9292/play```
-9. Enjoy the game!
+8. Open the browser and go to ```localhost:9292```
+9. Create a room and click play!
+10. Enjoy the game!
 
 If the error ```Unable to load the EventMachine C extension; To use the pure-ruby reactor, require 'em/pure_ruby'```is encountered, run ```gem uninstall eventmachine``` followed by ```gem install eventmachine --platform ruby```.
 
