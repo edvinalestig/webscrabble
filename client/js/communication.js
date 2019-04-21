@@ -49,8 +49,16 @@ function comm() {
         } else if (message.action == 'connect') {
             spectator = message.spectator;
             playerNumber = message.playerNumber;
+
+            setTimeout(keepAlive, 10000);
         }
     }
+}
+
+function keepAlive() {
+    socket.send(JSON.stringify({"action": "keepAlive"}));
+    console.log("keepAlive message sent");
+    setTimeout(keepAlive, 10000);
 }
 
 function sendWebsocket(object) {
