@@ -2,6 +2,11 @@
 A gymnasiearbete (thesis of upper secondary education) about recreating Scrabble with network support.
 
 ## How to run it
+[Webscrabble online](http://webscrabble.herokuapp.com)
+
+OR
+
+
 1. Click on the green 'Clone or download' button and choose download zip.
 2. Extract the folder
 3. Install ruby

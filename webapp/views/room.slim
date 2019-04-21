@@ -5,7 +5,7 @@ html lang="en"
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
         meta http-equiv="X-UA-Compatible" content="ie=edge"/
         title Room
-    body
+    body style="padding-left:10vw; padding-right:10vw;"
         form action="/room" method="post"
             label for="players" Number of players:
             input type="radio" name="players" value="2" checked="checked" 2
@@ -16,7 +16,7 @@ html lang="en"
         div
             h1 Rooms
             - for r in @rooms.keys
-                .room style="border: solid black 1px;"
+                .room style="border: solid black 1px; padding: 1vw;"
                     h2 = "Room ID: #{r}"
                     p = "Game for #{@rooms[r][:game].players.length} players"
                     p = "#{@rooms[r][:players].length} players connected"
@@ -24,7 +24,7 @@ html lang="en"
                         input type="hidden" name="room" value="#{r}"
                         button type="submit" PLAY!
                     br
-                    
+
                     - if @rooms[r][:game].ended
                         h3 Game has ended
                         form action="/delete" method="post"
