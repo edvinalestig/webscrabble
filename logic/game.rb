@@ -119,7 +119,7 @@ class Game
     end
 
     # Checks if the game has ended
-    # Goes through the racks and the bag to see if they are all 
+    # Goes through the racks and the bag to see if they are  
     # empty in which case the game has ended
     # Returns nil
     def check_end()
@@ -128,12 +128,12 @@ class Game
         end
 
         @players.each do |player|
-            if player.rack.length > 0
-                return false
+            if player.rack.length == 0
+                return true
             end
         end
 
-        return true
+        return false
     end
 
 

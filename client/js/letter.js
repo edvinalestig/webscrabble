@@ -12,7 +12,14 @@ class LetterRack {
     }
 
     // Draw it!
-    show() {
+    show(blankBG) {
+        if (blankBG) {
+            // Create a blank canvas on the bottom, removing any old letters
+            fill(lightColour);
+            strokeWeight(0);
+            rect(this.xPos-20, 0, this.width+40, height);
+        }
+
         for (let i = 0; i < gameObject.game.you.rack.length; i++) {
             if (this.hidden.includes(i)) {
                 continue;

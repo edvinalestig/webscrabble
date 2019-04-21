@@ -74,7 +74,7 @@ function update() {
     setCss();
     setScores();
     // Draw the things
-    letterRack.show();
+    letterRack.show(true);
     playfield.show();
 }
 
@@ -210,13 +210,6 @@ function giveUp() {
 
 // Changing the playername depending on route
 function you() {
-    // if (playerNumber == "0") {
-    //     document.getElementById("player?").innerHTML="player 1"
-    // } else if (playerNumber == "1") {
-    //     document.getElementById("player?").innerHTML="player 2"
-    // } else {
-    //     document.getElementById("player?").innerHTML="spectator"
-    // }
     if (spectator) {
         document.getElementById("player?").innerHTML = "spectator";
     } else {
