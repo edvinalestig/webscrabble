@@ -41,7 +41,11 @@ function comm() {
                 // The game has ended, redirect to /end_page with the room name attached
                 document.location = "/end_page?room=" + room;
             } else {
-                gameObject = message.data;
+                if (!gameObject) {
+                    gameObject = message.data;
+                } else {
+                    updateData(message.data);
+                }
                 playerNumber = message.playerNumber;
                 spectator = message.spectator;
                 update();
@@ -69,4 +73,17 @@ function sendWebsocket(object) {
     }
     console.log("Sending", sendobj);
     socket.send(JSON.stringify(sendobj));
+}
+
+function updateData(newData) {
+    // Deep copy of the board
+    let oldBoard = JSON.parse(JSON.stringify(gameObject.game.board.tiles));
+    gameObject = newData;
+
+    // Update the board
+    let lut = newData.game.board.latestUpdatedTiles;
+    for (let t of lut) {
+        oldBoard[t.row][t.column].letter = t.letter;
+    }
+    gameObject.game.board.tiles = oldBoard;
 }

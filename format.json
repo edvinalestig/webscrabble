@@ -25,7 +25,8 @@
                 "latestUpdatedTiles": [
                     {
                         "row": 4,
-                        "column": 9
+                        "column": 9,
+                        "letter": "K"
                     }
                 ]
             },

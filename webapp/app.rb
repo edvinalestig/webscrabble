@@ -192,7 +192,7 @@ class App < Sinatra::Base
             ws.send({
                 action: "data",
                 playerNumber: player,
-                data: room[:game].to_hash(player, true) # Change to not send everything once implemented
+                data: room[:game].to_hash(player)
             }.to_json)
         end
     end

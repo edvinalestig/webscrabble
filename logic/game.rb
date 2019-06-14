@@ -410,7 +410,8 @@ class Game
 
                 lut << {
                     row: letter[:row],
-                    column: letter[:column]
+                    column: letter[:column],
+                    letter: letter[:letter]
                 }
             end
             @latest_updated_tiles = lut
