@@ -70,11 +70,11 @@ class LetterRack {
 
     // Hide a letter when placed
     hide(index) {
-        const xCorner = this.xPos - 6; 
-        const yCorner = this.yPos + index * (this.height + 28.5) - 6;
+        const xCorner = this.xPos - 10; 
+        const yCorner = this.yPos + index * (this.height + 28.5) - 10;
         stroke(lightColour);
         fill(lightColour);
-        rect(xCorner, yCorner, this.width + 12, this.height + 12);
+        rect(xCorner, yCorner, this.width + 20, this.height + 20);
     }
     
     // Update this.letters with the current rack in the game object
