@@ -213,9 +213,14 @@ class Game
             end
             
             if !centre
-                puts "Not in the centre or does not extend current board!"
-                # return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
-                return Response.new(error: true, error_type: "Invalid placement", message: "Not in the centre or does not extend current board!")
+                if @latest_updated_tiles.length == 0
+                    puts "Not in the centre!"
+                    return Response.new(error: true, error_type: "Invalid placement", message: "Not in the centre!")
+                else
+                    puts "Does not extend current board!"
+                    # return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
+                    return Response.new(error: true, error_type: "Invalid placement", message: "Does not extend current board!")
+                end
             end
         end
 
