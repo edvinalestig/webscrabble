@@ -169,10 +169,15 @@ class Game
 
             # Check if there is at least one placed tile next to a new one.
             # The letters has to be connected to the old letters already on the board.
-            if @board.tiles[r-1][c].letter != nil
-                extends = true
-            elsif @board.tiles[r][c-1].letter != nil
-                extends = true
+            if r != 0
+                if @board.tiles[r-1][c].letter != nil
+                    extends = true
+                end
+            end
+            if !extends && c != 0
+                if @board.tiles[r][c-1].letter != nil
+                    extends = true
+                end
             end
             begin
                 if @board.tiles[r+1][c].letter != nil
