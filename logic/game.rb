@@ -1,7 +1,9 @@
-require_relative("board.rb")
-require_relative("letters.rb")
-require_relative("player.rb")
-require_relative("words.rb")
+require_relative("board")
+require_relative("letters")
+require_relative("player")
+require_relative("words")
+require_relative("response")
+require_relative("utility")
 
 require("json")
 
@@ -52,7 +54,7 @@ class Game
     # The method to call when a player has ended their turn.
     # Arguments:
     # obj - A hash in the clienttoserver.json format
-    # Returns boolean or Hash if the player forfeited or someone has won.
+    # Returns a Response object.
     def response(obj, player=nil)
         p obj
 
@@ -63,10 +65,12 @@ class Game
         if obj[:forfeit]
             # The other player has won or the player will be excluded if there are more players
             if player > @players.length - 1
-                return {error: {Forbidden: "You are a spectator!"}}
+                # return {error: {Forbidden: "You are a spectator!"}}
+                return Response.new(error: true, error_type: "Forbidden", message: "You are a spectator")
             end
             @dead << player
             if @dead.length >= @players.length - 1
+                # Only one survivor, now detemine the winner
                 @ended = true
                 i = 0
                 while i < @players.length
@@ -75,33 +79,36 @@ class Game
                     end
                     i += 1
                 end
-                return {"ended" => true, "winner" => @winner}
+                # return {"ended" => true, "winner" => @winner}
+                return Response.new(success: true, game_ended: true, winner: @winner)
             else
                 if player == @current_turn
                     end_turn()
                 end
-                return true
+                # return true
+                return Response.new(success: true)
             end
             p "FORFEIT"
         end
 
         if player != @current_turn
-            return {error: {Forbidden: "Not your turn!"}}
+            # return {error: {Forbidden: "Not your turn!"}}
+            return Response.new(error: true, error_type: "Forbidden", message: "Not your turn!")
         end
 
         # Check if the player passed or forfeited
         if obj[:passed]
             end_turn()
-            return true
+            # return true
+            return Response.new(success: true)
         end
 
         success = add_new_letters(obj[:tiles])
-        # Returns either true or an error hash
         # Send it to the client via the websocket
 
         # Check if the game has ended and if so who the winner is
         # No draws allowed!
-        if check_end()
+        if check_end() #---------------------------------------------------------------------------------------
             player = nil
             points = 0
             @players.each_with_index do |players, i|
@@ -112,7 +119,8 @@ class Game
             @winner = player
             @ended = true
             p "WINNER"
-            return {"ended" => true, "winner" => @winner}
+            # return {"ended" => true, "winner" => @winner}
+            return Response.new(success: true, game_ended: true, winner: @winner)
         end
 
         return success
@@ -140,7 +148,7 @@ class Game
     # Method to check if the placement is valid or not.
     # Arguments:
     # tiles - Array with the newly placed letters.
-    # Returns true or an error message in the form of a Hash.
+    # Returns a Response object.
     def check_placement(tiles)
         extends = false
         rows = []
@@ -161,10 +169,15 @@ class Game
 
             # Check if there is at least one placed tile next to a new one.
             # The letters has to be connected to the old letters already on the board.
-            if @board.tiles[r-1][c].letter != nil
-                extends = true
-            elsif @board.tiles[r][c-1].letter != nil
-                extends = true
+            if r != 0
+                if @board.tiles[r-1][c].letter != nil
+                    extends = true
+                end
+            end
+            if !extends && c != 0
+                if @board.tiles[r][c-1].letter != nil
+                    extends = true
+                end
             end
             begin
                 if @board.tiles[r+1][c].letter != nil
@@ -182,7 +195,8 @@ class Game
 
         if occupied.length > 0
             puts "Occupied!"
-            return {error: {"Tile occupied" => occupied}}
+            # return {error: {"Tile occupied" => occupied}}
+            return Response.new(error: true, error_type: "Tile occupied", message: occupied)
         end
         
         if !extends
@@ -199,8 +213,14 @@ class Game
             end
             
             if !centre
-                puts "Not in the centre or does not extend current board!"
-                return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
+                if @latest_updated_tiles.length == 0
+                    puts "Not in the centre!"
+                    return Response.new(error: true, error_type: "Invalid placement", message: "Not in the centre!")
+                else
+                    puts "Does not extend current board!"
+                    # return {error: {"Invalid placement" => "Not in the centre or does not extend current board!"}}
+                    return Response.new(error: true, error_type: "Invalid placement", message: "Does not extend current board!")
+                end
             end
         end
 
@@ -211,7 +231,8 @@ class Game
 
         if !same_rows && !same_cols
             puts "Not all placed on the same row or column!"
-            return {error: {"Invalid placement" => "Not all placed on the same row or column!"}}
+            return Response.new(error: true, error_type: "Invalid placement", message: "Not all letters placed on the same row or column!")
+            # return {error: {"Invalid placement" => "Not all placed on the same row or column!"}}
         end
 
         # Check if the letters are placed together in a continous line.
@@ -236,7 +257,8 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[rows[0]][col].letter == nil
                         puts "Letters not placed together!"
-                        return {error: {"Invalid placement" => "Letters not placed together!"}}
+                        return Response.new(error: true, error_type: "Invalid placement", message: "Letters not placed together!")
+                        # return {error: {"Invalid placement" => "Letters not placed together!"}}
                     end
                 end
             end
@@ -257,14 +279,16 @@ class Game
                     # Check if the gaps already have letters
                     if @board.tiles[row][cols[0]].letter == nil
                         puts "Letters not placed together!"
-                        return {error: {"Invalid placement" => "Letters not placed together!"}}
+                        # return {error: {"Invalid placement" => "Letters not placed together!"}}
+                        return Response.new(error: true, error_type: "Invalid placement", message: "Letters not placed together!")
                     end
                 end
             end
         end
 
         puts "Whohoo!"
-        return true
+        # return true
+        return Response.new(success: true)
     end
 
 
@@ -272,14 +296,15 @@ class Game
     # Error checks are performed before committing.
     # Arguments: 
     # letters - Array of the placed tiles.
-    # Returns true or an error message in the form of a Hash.
+    # Returns a Response object.
     def add_new_letters(letters)
         p letters
 
         letters.each do |letter|
             if letter[:letter].is_a? Hash
                 if letter[:letter][:value] == nil
-                    return {error: {"Invalid placement" => "Letter not chosen for a blank tile"}}
+                    # return {error: {"Invalid placement" => "Letter not chosen for a blank tile"}}
+                    return Response.new(error: true, error_type: "Invalid placement", message: "Letter not chosen for a blank tile")
                 end
             end
         end
@@ -287,9 +312,9 @@ class Game
         # Check if an error has been returned.
         # Does not do it currently but should be implemented
         pl = check_placement(letters)
-        if pl.is_a? Hash
+        # if pl.is_a? Hash
+        if !pl.ok?
             puts "An error occured"
-            p pl
             # Send the error to the client
             return pl
         end
@@ -327,7 +352,8 @@ class Game
         end
 
         if missing.length > 0
-            return {error: {"Missing letters on rack" => missing}}
+            # return {error: {"Missing letters on rack" => missing}}
+            return Response.new(error: true, error_type: "Missing letters on rack", message: missing)
         end
 
         invalid_words = []
@@ -339,7 +365,8 @@ class Game
 
         if new_words.length == 0
             p "No words found (at least 2 letters)"
-            return {error: {Error: "No words found (at least 2 letters)"}}
+            # return {error: {Error: "No words found (at least 2 letters)"}}
+            return Response.new(error: true, error_type: "Error", message: "No words found (at least 2 letters)")
         end
 
         # Turn the word arrays into strings for validity checks.
@@ -372,12 +399,13 @@ class Game
                 str.concat word
             end
 
-            return {error: {"Invalid words" => str}}
+            # return {error: {"Invalid words" => str}}
+            return Response.new(error: true, error_type: "Invalid words", message: str)
         else
             # Update the tiles and calculate the points
             points = 0
             new_words.each do |word|
-                points += calculate_points(word)
+                points += Utility.calculate_points(word, @board)
                 p "Points: #{points}"
             end
 
@@ -387,7 +415,8 @@ class Game
 
                 lut << {
                     row: letter[:row],
-                    column: letter[:column]
+                    column: letter[:column],
+                    letter: letter[:letter]
                 }
             end
             @latest_updated_tiles = lut
@@ -406,7 +435,8 @@ class Game
             end
 
             end_turn() # Move this out of the method
-            return true
+            # return true
+            return Response.new(success: true)
         end
     end
 
@@ -573,40 +603,6 @@ class Game
         end
     end
 
-    # Method for calculating the points which should be given for the word.
-    # Arguments: 
-    # word - The word in the form of an Array of tiles.
-    # Returns Integer
-    def calculate_points(word) 
-        p "POINT CALC #{word}"
-        points = 0
-        times = 1 # Word multiplier
-
-        word.each do |letter|
-            lp = @letter_bag.get_points(letter[:letter])
-            ltimes = 1 # Letter multiplier
-
-            # Check attributes
-            a = @board.tiles[letter[:row]][letter[:col]].attribute
-            if a == "TW"
-                times *= 3
-            elsif a == "DW"
-                times *= 2
-            elsif a == "TL"
-                ltimes *= 3
-            elsif a == "DL"
-                ltimes *= 2
-            end
-            if a
-                p "ltimes: #{ltimes}"
-            end
-            points += lp * ltimes
-        end
-        p "times: #{times}"
-        points *= times
-
-        return points
-    end
 
     # Method called when the turn has ended and it's the next player's turn.
     # Returns nil

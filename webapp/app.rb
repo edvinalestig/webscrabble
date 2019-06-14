@@ -46,14 +46,15 @@ class App < Sinatra::Base
     get("/winner") do
         if $rooms.keys.include? params["room"].to_i
             game = $rooms[params["room"].to_i][:game]
-            p game.winner
             winner = game.winner
+            
             if winner
                 winner = (game.winner + 1).to_s
             else
                 winner = "_"
             end
 
+            # Get the scores
             scores = []
             game.players.each do |pl|
                 scores << pl.points
@@ -164,14 +165,14 @@ class App < Sinatra::Base
                                 # If true is returned then the turn was successful
                                 # Then send the new game state to all players
                                 # Otherwise send the error message given
-                                if game_check == true
+                                if game_check.ok?
                                     update_all(value)
                                 else
                                     ws.send({
                                         action: "data",
                                         playerNumber: player,
                                         spectator: spectator,
-                                        data: game_check
+                                        data: game_check.to_hash
                                     }.to_json)
                                 end
 
@@ -191,7 +192,7 @@ class App < Sinatra::Base
             ws.send({
                 action: "data",
                 playerNumber: player,
-                data: room[:game].to_hash(player, true) # Change to not send everything once implemented
+                data: room[:game].to_hash(player)
             }.to_json)
         end
     end

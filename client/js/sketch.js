@@ -113,6 +113,8 @@ function setCss() {
         const currentTurn = gameObject.game.currentTurn;
         const player1 = document.getElementById("player1Score");
         const player2 = document.getElementById("player2Score");
+        const player3 = document.getElementById("player3Score");
+        const player4 = document.getElementById("player4Score");
 
         // Determine which player you are.
         let me;
@@ -128,10 +130,26 @@ function setCss() {
             // Player 1's turn
             player1.classList.add("activePlayer");
             player2.classList.remove("activePlayer");
-        } else {
+            player3.classList.remove("activePlayer");
+            player4.classList.remove("activePlayer");
+        } else if (currentTurn == 1) {
             // Player 2's turn
             player1.classList.remove("activePlayer");
             player2.classList.add("activePlayer");
+            player3.classList.remove("activePlayer");
+            player4.classList.remove("activePlayer");
+        } else if (currentTurn == 2) {
+            // Player 3's turn
+            player1.classList.remove("activePlayer");
+            player2.classList.remove("activePlayer");
+            player3.classList.add("activePlayer");
+            player4.classList.remove("activePlayer");
+        } else {
+            // Player 4's turn
+            player1.classList.remove("activePlayer");
+            player2.classList.remove("activePlayer");
+            player3.classList.remove("activePlayer");
+            player4.classList.add("activePlayer");
         }
 
         const playButtonDiv = document.getElementById("playButton");
