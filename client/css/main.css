@@ -1,7 +1,8 @@
 @font-face { font-family: 'inconsolata'; src: url('Inconsolata-Regular.ttf'); }
 
-main {
-    height: 80vh;
+a {
+    /* height: 80vh; */
+    text-decoration: none;
 }
 
 footer {
@@ -13,7 +14,7 @@ body {
 }
 
 h1 {
-    padding-top: 200px;
+    padding-top: 75px;
     color: #ffffff;
     font-family: 'inconsolata', monospace;
     font-size: 100px;
