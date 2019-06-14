@@ -54,7 +54,7 @@ class Game
     # The method to call when a player has ended their turn.
     # Arguments:
     # obj - A hash in the clienttoserver.json format
-    # Returns boolean or Hash if the player forfeited or someone has won.
+    # Returns a Response object.
     def response(obj, player=nil)
         p obj
 
@@ -104,7 +104,6 @@ class Game
         end
 
         success = add_new_letters(obj[:tiles])
-        # Returns either true or an error hash
         # Send it to the client via the websocket
 
         # Check if the game has ended and if so who the winner is
@@ -149,7 +148,7 @@ class Game
     # Method to check if the placement is valid or not.
     # Arguments:
     # tiles - Array with the newly placed letters.
-    # Returns true or an error message in the form of a Hash.
+    # Returns a Response object.
     def check_placement(tiles)
         extends = false
         rows = []
@@ -287,7 +286,7 @@ class Game
     # Error checks are performed before committing.
     # Arguments: 
     # letters - Array of the placed tiles.
-    # Returns true or an error message in the form of a Hash.
+    # Returns a Response object.
     def add_new_letters(letters)
         p letters
 

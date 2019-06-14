@@ -31,7 +31,6 @@ class Utility
     }
 
     # Get the points for a letter
-    # Should this be moved elsewhere?
     # Arguments:
     # letter - The letter which points are requested for
     # Returns Integer of the points
