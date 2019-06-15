@@ -60,6 +60,7 @@ class Game
         @round = game[:round]
         @latest_updated_tiles = game[:latest_updated_tiles]
         @ended = game[:ended]
+        @winner = game[:winner]
 
         # Players
         game[:players].each_with_index do |player, i|
@@ -360,7 +361,7 @@ class Game
             end
 
             @players[@current_turn].rack.each_with_index do |letter, i|
-                if (blank && letter.is_a?(Hash)) || (!blank && tile[:letter] == letter)
+                if (blank && letter.is_a?(Blank)) || (!blank && tile[:letter] == letter)
                     if !indices.include? i
                         # Save the index
                         found = true
@@ -368,7 +369,7 @@ class Game
                         break
                     end
                 elsif !blank && tile[:letter] == letter
-
+                    # Why is this here?
                 end
             end            
 
@@ -735,7 +736,8 @@ class Game
             latest_updated_tiles: @latest_updated_tiles,
             letter_bag: @letter_bag.bag,
             ended: @ended,
-            board: board
+            board: board,
+            winner: @winner
         }
 
         return dict.to_json

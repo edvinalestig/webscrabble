@@ -1,1 +1,532 @@
-{"number_of_players":4,"players":[{"rack":["H","O","E","N","E","E","H"],"points":5,"my_turn":false,"dead":false},{"rack":["E","E","E","L","D","E","A"],"points":0,"my_turn":true,"dead":false},{"rack":["G","P","M","T","S","O","Blank"],"points":0,"my_turn":false,"dead":false},{"rack":["D","U","C","E","O","I","Z"],"points":0,"my_turn":false,"dead":false}],"current_turn":1,"round":1,"latest_updated_tiles":[{"row":7,"column":7,"letter":"P"},{"row":7,"column":8,"letter":"E"},{"row":7,"column":9,"letter":"T"}],"letter_bag":["W","E","O","S","A","V","K","N","T","U","I","I","A","I","R","S","O","E","V","X","L","B","F","C","O","I","I","A","W","T","R","A","D","U","J","O","I","A","F","G","T","R","Q","U","G","Y","N","L","M","A","R","R","S","Blank","N","D","T","A","O","I","B","I","N","A","N","R","L","E","Y"],"ended":false,"board":[{"attribute":"TW","row":0,"column":0,"letter":null},{"attribute":"DL","row":0,"column":3,"letter":null},{"attribute":"TW","row":0,"column":7,"letter":null},{"attribute":"DL","row":0,"column":11,"letter":null},{"attribute":"TW","row":0,"column":14,"letter":null},{"attribute":"DW","row":1,"column":1,"letter":null},{"attribute":"TL","row":1,"column":5,"letter":null},{"attribute":"TL","row":1,"column":9,"letter":null},{"attribute":"DW","row":1,"column":13,"letter":null},{"attribute":"DW","row":2,"column":2,"letter":null},{"attribute":"DL","row":2,"column":6,"letter":null},{"attribute":"DL","row":2,"column":8,"letter":null},{"attribute":"DW","row":2,"column":12,"letter":null},{"attribute":"DL","row":3,"column":0,"letter":null},{"attribute":"DW","row":3,"column":3,"letter":null},{"attribute":"DL","row":3,"column":7,"letter":null},{"attribute":"DW","row":3,"column":11,"letter":null},{"attribute":"DL","row":3,"column":14,"letter":null},{"attribute":"DW","row":4,"column":4,"letter":null},{"attribute":"DW","row":4,"column":10,"letter":null},{"attribute":"TL","row":5,"column":1,"letter":null},{"attribute":"TL","row":5,"column":5,"letter":null},{"attribute":"TL","row":5,"column":9,"letter":null},{"attribute":"TL","row":5,"column":13,"letter":null},{"attribute":"DL","row":6,"column":2,"letter":null},{"attribute":"DL","row":6,"column":6,"letter":null},{"attribute":"DL","row":6,"column":8,"letter":null},{"attribute":"DL","row":6,"column":12,"letter":null},{"attribute":"TW","row":7,"column":0,"letter":null},{"attribute":"DL","row":7,"column":3,"letter":null},{"attribute":null,"row":7,"column":7,"letter":"P"},{"attribute":null,"row":7,"column":8,"letter":"E"},{"attribute":null,"row":7,"column":9,"letter":"T"},{"attribute":"DL","row":7,"column":11,"letter":null},{"attribute":"TW","row":7,"column":14,"letter":null},{"attribute":"DL","row":8,"column":2,"letter":null},{"attribute":"DL","row":8,"column":6,"letter":null},{"attribute":"DL","row":8,"column":8,"letter":null},{"attribute":"DL","row":8,"column":12,"letter":null},{"attribute":"TL","row":9,"column":1,"letter":null},{"attribute":"TL","row":9,"column":5,"letter":null},{"attribute":"TL","row":9,"column":9,"letter":null},{"attribute":"TL","row":9,"column":13,"letter":null},{"attribute":"DW","row":10,"column":4,"letter":null},{"attribute":"DW","row":10,"column":10,"letter":null},{"attribute":"DL","row":11,"column":0,"letter":null},{"attribute":"DW","row":11,"column":3,"letter":null},{"attribute":"DL","row":11,"column":7,"letter":null},{"attribute":"DW","row":11,"column":11,"letter":null},{"attribute":"DL","row":11,"column":14,"letter":null},{"attribute":"DW","row":12,"column":2,"letter":null},{"attribute":"DL","row":12,"column":6,"letter":null},{"attribute":"DL","row":12,"column":8,"letter":null},{"attribute":"DW","row":12,"column":12,"letter":null},{"attribute":"DW","row":13,"column":1,"letter":null},{"attribute":"TL","row":13,"column":5,"letter":null},{"attribute":"TL","row":13,"column":9,"letter":null},{"attribute":"DW","row":13,"column":13,"letter":null},{"attribute":"TW","row":14,"column":0,"letter":null},{"attribute":"DL","row":14,"column":3,"letter":null},{"attribute":"TW","row":14,"column":7,"letter":null},{"attribute":"DL","row":14,"column":11,"letter":null},{"attribute":"TW","row":14,"column":14,"letter":null}]}
+{
+    "number_of_players": 4,
+    "players": [
+        {
+            "rack": [
+                "H",
+                "O",
+                "E",
+                "N",
+                "E",
+                "E",
+                "H"
+            ],
+            "points": 5,
+            "my_turn": false,
+            "dead": false
+        },
+        {
+            "rack": [
+                "E",
+                "E",
+                "E",
+                "L",
+                "D",
+                "E",
+                "A"
+            ],
+            "points": 0,
+            "my_turn": true,
+            "dead": false
+        },
+        {
+            "rack": [
+                "G",
+                "P",
+                "M",
+                "T",
+                "S",
+                "O",
+                "Blank"
+            ],
+            "points": 0,
+            "my_turn": false,
+            "dead": false
+        },
+        {
+            "rack": [
+                "D",
+                "U",
+                "C",
+                "E",
+                "O",
+                "I",
+                "Z"
+            ],
+            "points": 0,
+            "my_turn": false,
+            "dead": false
+        }
+    ],
+    "current_turn": 1,
+    "round": 1,
+    "latest_updated_tiles": [
+        {
+            "row": 7,
+            "column": 7,
+            "letter": "P"
+        },
+        {
+            "row": 7,
+            "column": 8,
+            "letter": "E"
+        },
+        {
+            "row": 7,
+            "column": 9,
+            "letter": "T"
+        }
+    ],
+    "letter_bag": [
+        "W",
+        "E",
+        "O",
+        "S",
+        "A",
+        "V",
+        "K",
+        "N",
+        "T",
+        "U",
+        "I",
+        "I",
+        "A",
+        "I",
+        "R",
+        "S",
+        "O",
+        "E",
+        "V",
+        "X",
+        "L",
+        "B",
+        "F",
+        "C",
+        "O",
+        "I",
+        "I",
+        "A",
+        "W",
+        "T",
+        "R",
+        "A",
+        "D",
+        "U",
+        "J",
+        "O",
+        "I",
+        "A",
+        "F",
+        "G",
+        "T",
+        "R",
+        "Q",
+        "U",
+        "G",
+        "Y",
+        "N",
+        "L",
+        "M",
+        "A",
+        "R",
+        "R",
+        "S",
+        "Blank",
+        "N",
+        "D",
+        "T",
+        "A",
+        "O",
+        "I",
+        "B",
+        "I",
+        "N",
+        "A",
+        "N",
+        "R",
+        "L",
+        "E",
+        "Y"
+    ],
+    "ended": false,
+    "board": [
+        {
+            "attribute": "TW",
+            "row": 0,
+            "column": 0,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 0,
+            "column": 3,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 0,
+            "column": 7,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 0,
+            "column": 11,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 0,
+            "column": 14,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 1,
+            "column": 1,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 1,
+            "column": 5,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 1,
+            "column": 9,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 1,
+            "column": 13,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 2,
+            "column": 2,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 2,
+            "column": 6,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 2,
+            "column": 8,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 2,
+            "column": 12,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 3,
+            "column": 0,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 3,
+            "column": 3,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 3,
+            "column": 7,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 3,
+            "column": 11,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 3,
+            "column": 14,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 4,
+            "column": 4,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 4,
+            "column": 10,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 5,
+            "column": 1,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 5,
+            "column": 5,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 5,
+            "column": 9,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 5,
+            "column": 13,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 6,
+            "column": 2,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 6,
+            "column": 6,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 6,
+            "column": 8,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 6,
+            "column": 12,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 7,
+            "column": 0,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 7,
+            "column": 3,
+            "letter": null
+        },
+        {
+            "attribute": null,
+            "row": 7,
+            "column": 7,
+            "letter": "P"
+        },
+        {
+            "attribute": null,
+            "row": 7,
+            "column": 8,
+            "letter": "E"
+        },
+        {
+            "attribute": null,
+            "row": 7,
+            "column": 9,
+            "letter": "T"
+        },
+        {
+            "attribute": "DL",
+            "row": 7,
+            "column": 11,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 7,
+            "column": 14,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 8,
+            "column": 2,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 8,
+            "column": 6,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 8,
+            "column": 8,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 8,
+            "column": 12,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 9,
+            "column": 1,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 9,
+            "column": 5,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 9,
+            "column": 9,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 9,
+            "column": 13,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 10,
+            "column": 4,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 10,
+            "column": 10,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 11,
+            "column": 0,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 11,
+            "column": 3,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 11,
+            "column": 7,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 11,
+            "column": 11,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 11,
+            "column": 14,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 12,
+            "column": 2,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 12,
+            "column": 6,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 12,
+            "column": 8,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 12,
+            "column": 12,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 13,
+            "column": 1,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 13,
+            "column": 5,
+            "letter": null
+        },
+        {
+            "attribute": "TL",
+            "row": 13,
+            "column": 9,
+            "letter": null
+        },
+        {
+            "attribute": "DW",
+            "row": 13,
+            "column": 13,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 14,
+            "column": 0,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 14,
+            "column": 3,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 14,
+            "column": 7,
+            "letter": null
+        },
+        {
+            "attribute": "DL",
+            "row": 14,
+            "column": 11,
+            "letter": null
+        },
+        {
+            "attribute": "TW",
+            "row": 14,
+            "column": 14,
+            "letter": null
+        }
+    ]
+}

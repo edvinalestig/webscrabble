@@ -1,11 +1,9 @@
 require_relative("../logic/game.rb")
+require_relative("db-comm")
 require 'json'
-$rooms = {}
-gjson = File.read("game.json")
-$rooms[1] = {
-    game: Game.parse(gjson),
-    players: []
-}
+
+$rooms = {} # Change to only have rooms, not the games
+# The games should be run from the database
 
 # The web application
 # The core of the game
@@ -18,7 +16,7 @@ class App < Sinatra::Base
 
     # Get the start page
     get("/") do
-        # return File.read('client/index.html')
+        @games = Database.all_games
         @rooms = $rooms
         return slim :room
     end
@@ -26,13 +24,11 @@ class App < Sinatra::Base
     # Create new room
     post("/room") do
         room_name = Random.rand(100000).floor
-        while $rooms.keys.include? room_name
+        while Database.get_game room_name
             room_name = Random.rand(100000).floor
         end
-        $rooms[room_name] = {
-            game: Game.new(params[:players].to_i),
-            players: []
-        }
+        $rooms[room_name] = []
+        Database.create_game(room_name, nil, Game.new(params[:players].to_i).stringify)
         redirect("/")
     end
 
@@ -40,6 +36,7 @@ class App < Sinatra::Base
     post("/delete") do
         room = params["room"].to_i
         $rooms.delete(room)
+        Database.delete_game room
         redirect("/")
     end
 
@@ -49,8 +46,10 @@ class App < Sinatra::Base
     end
 
     get("/winner") do
-        if $rooms.keys.include? params["room"].to_i
-            game = $rooms[params["room"].to_i][:game]
+        result = Database.get_game params["room"].to_i
+        if result
+        # if $rooms.keys.include? params["room"].to_i
+            game = Game.parse(result["game_data"])
             winner = game.winner
             
             if winner
@@ -109,11 +108,11 @@ class App < Sinatra::Base
                 ws.onclose do |msg|
                     p "Connection terminated"
 
-                    $rooms.each do |key, value|
-                        if value[:players].include? ws
+                    $rooms.each do |room, players|
+                        if players.include? ws
                             # Remove the player from the games
-                            $rooms[key][:players].slice!($rooms[key][:players].index(ws))
-                            update_all(value)
+                            $rooms[room].slice!($rooms[room].index(ws))
+                            update_all(room, Database.get_game(room)["game_data"])
                         end
                     end
                     settings.sockets.delete(ws)
@@ -130,7 +129,8 @@ class App < Sinatra::Base
                         room_id = message[:room].to_i
                         p "Connection established"
                         p message
-                        if !$rooms.keys.include? room_id
+                        
+                        if Database.get_game(room_id) == nil
                             ws.send({
                                 action: 'data',
                                 data: {
@@ -140,38 +140,45 @@ class App < Sinatra::Base
                                 }
                             }.to_json)
                         else
-                            # Add the player to the room
-                            $rooms[room_id][:players] << ws
+                            if !$rooms.keys.include? room_id
+                                $rooms[room_id] = []
+                            end
 
-                            player = $rooms[room_id][:players].index(ws)
-                            spectator = player >= $rooms[room_id][:game].players.length
+                            # Add the player to the room
+                            $rooms[room_id] << ws
+
+                            player = $rooms[room_id].index(ws)
+
+                            game = Game.parse(Database.get_game(room_id)["game_data"])
+                            spectator = player >= game.players.length
 
                             # Send the game status to the client
                             ws.send({
                                 action: 'data',
                                 playerNumber: player,
                                 spectator: spectator,
-                                data: $rooms[room_id][:game].to_hash(player, true) # Sending everything
+                                data: game.to_hash(player, true) # Sending everything
                             }.to_json)
                         end
 
                     elsif message[:action] == 'data'
                         # Give the data to the game logic
                         game_check = nil
-                        $rooms.each do |key, value|
-                            p key
+                        $rooms.each do |room, players|
                             # Find the game which the player is connected to
-                            if value[:players].include? ws
-                                player = value[:players].index(ws)
-                                spectator = player >= value[:game].players.length
+                            if players.include? ws
+                                player = players.index(ws)
 
-                                game_check = value[:game].response(message[:data], player)
+                                game = Game.parse(Database.get_game(room)["game_data"])
+                                spectator = player >= game.players.length
+
+                                game_check = game.response(message[:data], player)
 
                                 # If true is returned then the turn was successful
                                 # Then send the new game state to all players
                                 # Otherwise send the error message given
                                 if game_check.ok?
-                                    update_all(value)
+                                    update_all(room, game.stringify)
                                 else
                                     ws.send({
                                         action: "data",
@@ -185,10 +192,11 @@ class App < Sinatra::Base
                             end
                         end
                     elsif message[:action] == 'save'
-                        $rooms.each do |key, value|
+                        $rooms.each do |room, players|
                             # Find the game which the player is connected to
-                            if value[:players].include? ws
-                                File.write("game.json", value[:game].stringify)
+                            if players.include? ws
+                                game = Game.parse(Database.get_game(room)["game_data"])
+                                File.write("game.json", game.stringify)
                             end
                         end
                     end
@@ -198,13 +206,15 @@ class App < Sinatra::Base
     end
 
     # Update all the players currently connected including spectators
-    def update_all(room)
+    def update_all(room, data)
+        game = Game.parse(Database.update_game(room, data)["game_data"])
+        
         p "Updating all players"
-        room[:players].each_with_index do |ws, player|
+        $rooms[room].each_with_index do |ws, player|
             ws.send({
                 action: "data",
                 playerNumber: player,
-                data: room[:game].to_hash(player)
+                data: game.to_hash(player)
             }.to_json)
         end
     end

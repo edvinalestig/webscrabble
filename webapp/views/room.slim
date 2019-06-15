@@ -15,20 +15,23 @@ html lang="en"
 
         div
             h1 Rooms
-            - for r in @rooms.keys
+            - for r in @games
+                - game = JSON.parse(r["game_data"], symbolize_names: true)
+                - player_num = @rooms[r["room_id"]] != nil ? @rooms[r["room_id"]].length : 0
+
                 .room style="border: solid black 1px; padding: 1vw;"
-                    h2 = "Room ID: #{r}"
-                    p = "Game for #{@rooms[r][:game].players.length} players"
-                    p = "#{@rooms[r][:players].length} players connected"
+                    h2 = "Room ID: #{r["room_id"]}"
+                    p = "Game for #{game[:number_of_players]} players"
+                    p = "#{player_num} players connected"
                     form action="/play" method="get"
-                        input type="hidden" name="room" value="#{r}"
+                        input type="hidden" name="room" value="#{r["room_id"]}"
                         button type="submit" PLAY!
                     br
 
-                    - if @rooms[r][:game].ended
+                    - if game[:ended]
                         h3 Game has ended
                         form action="/delete" method="post"
-                            input type="hidden" name="room" value="#{r}"
+                            input type="hidden" name="room" value="#{r["room_id"]}"
                             button type="submit" Delete game
 
         / form action="/play" method="get"
