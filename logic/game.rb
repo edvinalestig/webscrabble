@@ -69,6 +69,7 @@ class Game
                 return Response.new(error: true, error_type: "Forbidden", message: "You are a spectator")
             end
             @dead << player
+            @players[player].dead = true
             if @dead.length >= @players.length - 1
                 # Only one survivor, now detemine the winner
                 @ended = true
@@ -692,6 +693,30 @@ class Game
             game: dict,
             ended: @ended
         }
+    end
+
+    def stringify()
+        board = []
+        @board.to_array.each do |row|
+            board.concat row.select { |tile| tile if (tile[:attribute] || tile[:letter])}
+        end
+
+        dict = {
+            number_of_players: @players.length,
+            players: @players.map { |player| player.to_hash },
+            current_turn: @current_turn,
+            round: @round,
+            latest_updated_tiles: @latest_updated_tiles,
+            letter_bag: @letter_bag.bag,
+            ended: @ended,
+            board: board
+        }
+
+        return dict.to_json
+    end
+
+    def self.parse(string)
+        
     end
 
 end

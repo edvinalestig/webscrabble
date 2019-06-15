@@ -1,13 +1,14 @@
 # Class for the players
 class Player
 
-    attr_accessor :points, :my_turn
+    attr_accessor :points, :my_turn, :dead
     attr_reader :rack
 
-    def initialize()
-        @rack = [] # The player's current letters
-        @points = 0
-        @my_turn = false
+    def initialize(rack: [], points: 0, my_turn: false, dead: false)
+        @rack = rack # The player's current letters
+        @points = points
+        @my_turn = my_turn
+        @dead = dead
     end
 
     # Add letters to the rack
@@ -26,5 +27,14 @@ class Player
                 @rack << letter
             end
         end
+    end
+
+    def to_hash
+        return {
+            rack: @rack.map { |letter| letter.is_a? Blank ? "Blank" : letter },
+            points: @points,
+            my_turn: @my_turn,
+            dead: @dead
+        }
     end
 end

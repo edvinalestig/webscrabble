@@ -179,6 +179,13 @@ class App < Sinatra::Base
                                 break
                             end
                         end
+                    elsif message[:action] == 'save'
+                        $rooms.each do |key, value|
+                            # Find the game which the player is connected to
+                            if value[:players].include? ws
+                                File.write("game.json", value[:game].stringify)
+                            end
+                        end
                     end
                 end
             end

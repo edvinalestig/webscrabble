@@ -87,3 +87,8 @@ function updateData(newData) {
     }
     gameObject.game.board.tiles = oldBoard;
 }
+
+function saveGame() {
+    console.log("saving..");
+    socket.send(JSON.stringify({"action":"save"}));
+}
