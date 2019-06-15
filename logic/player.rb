@@ -31,7 +31,7 @@ class Player
 
     def to_hash
         return {
-            rack: @rack.map { |letter| letter.is_a? Blank ? "Blank" : letter },
+            rack: @rack.map { |letter| letter.is_a?(Blank) ? "Blank" : letter },
             points: @points,
             my_turn: @my_turn,
             dead: @dead

@@ -1,6 +1,11 @@
 require_relative("../logic/game.rb")
 require 'json'
 $rooms = {}
+gjson = File.read("game.json")
+$rooms[1] = {
+    game: Game.parse(gjson),
+    players: []
+}
 
 # The web application
 # The core of the game

@@ -1,12 +1,8 @@
 # Class handling the letters in the game
 class Letters
-    def initialize(bag: nil)
-        if bag
-            @letter_bag = bag
-        else
-            # Fill the letter bag with all the 100 letters
-            @letter_bag = add_letters_to_bag()
-        end
+    def initialize()
+        # Fill the letter bag with all the 100 letters
+        @letter_bag = add_letters_to_bag()
     end
 
     # Add the 100 letters to the bag
@@ -74,7 +70,12 @@ class Letters
 
     
     def bag()
-        return @letter_bag.map { |letter| letter.is_a?(Blank) ? "Blank" : letter}
+        k = @letter_bag.map { |letter| letter.is_a?(Blank) ? "Blank" : letter}
+        return k
+    end
+
+    def replace_bag(new_bag)
+        @letter_bag = new_bag
     end
 
 end

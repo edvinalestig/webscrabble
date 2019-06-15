@@ -16,7 +16,7 @@ class Game
     attr_accessor :winner, :ended
 
     # Creates the game and sets up the start conditions. The board, the players and the letter bag are created.
-    def initialize(number_of_players)
+    def initialize(number_of_players, game: nil)
 
         if number_of_players > 4
             raise ArgumentError, "The maximum amount of players is 4."
@@ -49,6 +49,32 @@ class Game
         @winner = nil
         @ended = false
         @dead = []
+
+        if game
+            setGame(game)
+        end
+    end
+
+    def setGame(game)
+        @current_turn = game[:current_turn]
+        @round = game[:round]
+        @latest_updated_tiles = game[:latest_updated_tiles]
+        @ended = game[:ended]
+
+        # Players
+        game[:players].each_with_index do |player, i|
+            rack = player[:rack].map { |l| l == "Blank" ? Blank.new : l}
+            @players[i] = Player.new(rack: rack, points: player[:points], my_turn: player[:my_turn], dead: player[:dead])
+        end
+
+        # Letter bag
+        @letter_bag.replace_bag(game[:letter_bag].map { |l| l == "Blank" ? Blank.new : l })
+        
+        # Board
+        game[:board].each do |tile|
+            @board.tiles[tile[:row]][tile[:column]].attribute = tile[:attribute]
+            @board.tiles[tile[:row]][tile[:column]].letter = tile[:letter]
+        end
     end
 
     # The method to call when a player has ended their turn.
@@ -659,7 +685,7 @@ class Game
         end
         
         if player_number < @players.length
-            rack = @players[player_number].rack
+            rack = @players[player_number].rack.dup
             rack.each_with_index do |letter, index|
                 if letter.is_a? Blank
                     rack[index] = {
@@ -716,7 +742,8 @@ class Game
     end
 
     def self.parse(string)
-        
+        to_parse = JSON.parse(string, symbolize_names: true)
+        game = self.new(to_parse[:number_of_players], game: to_parse)
     end
 
 end
