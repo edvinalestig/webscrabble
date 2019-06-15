@@ -66,6 +66,9 @@ class Game
         game[:players].each_with_index do |player, i|
             rack = player[:rack].map { |l| l == "Blank" ? Blank.new : l}
             @players[i] = Player.new(rack: rack, points: player[:points], my_turn: player[:my_turn], dead: player[:dead])
+            if player[:dead]
+                @dead << i
+            end
         end
 
         # Letter bag
@@ -95,26 +98,31 @@ class Game
                 # return {error: {Forbidden: "You are a spectator!"}}
                 return Response.new(error: true, error_type: "Forbidden", message: "You are a spectator")
             end
-            @dead << player
-            @players[player].dead = true
-            if @dead.length >= @players.length - 1
-                # Only one survivor, now detemine the winner
-                @ended = true
-                i = 0
-                while i < @players.length
-                    if !@dead.include? i
-                        @winner = i
-                    end
-                    i += 1
-                end
-                # return {"ended" => true, "winner" => @winner}
-                return Response.new(success: true, game_ended: true, winner: @winner)
+
+            if @dead.include? player
+                return Response.new(error: true, error_type: "Error", message: "You are already dead!")
             else
-                if player == @current_turn
-                    end_turn()
+                @dead << player
+                @players[player].dead = true
+                if @dead.length >= @players.length - 1
+                    # Only one survivor, now detemine the winner
+                    @ended = true
+                    i = 0
+                    while i < @players.length
+                        if !@dead.include? i
+                            @winner = i
+                        end
+                        i += 1
+                    end
+                    # return {"ended" => true, "winner" => @winner}
+                    return Response.new(success: true, game_ended: true, winner: @winner)
+                else
+                    if player == @current_turn
+                        end_turn()
+                    end
+                    # return true
+                    return Response.new(success: true)
                 end
-                # return true
-                return Response.new(success: true)
             end
             p "FORFEIT"
         end

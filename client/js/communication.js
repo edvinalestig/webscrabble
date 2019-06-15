@@ -57,6 +57,11 @@ function comm() {
             setTimeout(keepAlive, 10000);
         }
     }
+
+    socket.onclose = event => {
+        console.log("Websocket closed:", event);
+        setTimeout(() => { alert("Connection lost, please reload the page.") }, 1000);
+    }
 }
 
 function keepAlive() {
