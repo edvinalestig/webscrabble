@@ -26,6 +26,6 @@ class Response
     end
 
     def ok?
-        return @success && !@game_ended
+        return @success
     end
 end
